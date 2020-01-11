@@ -23,12 +23,10 @@ void DefaultDrive::Execute() {
   double forward = joystick.GetY();
   double turn = -joystick.GetZ();
 
-  double backLeftSpeed = forward + turn;
-  double frontLeftSpeed = forward + turn;
-  double backRightSpeed = forward - turn;
-  double frontRightSpeed = forward - turn;
+  double leftSpeed = forward + turn;
+  double rightSpeed = forward - turn;
 
-  drivetrain->SetAllSpeed(backLeftSpeed, backRightSpeed, frontLeftSpeed, frontRightSpeed);
+  drivetrain->SetAllSpeed(leftSpeed, rightSpeed);
 }
 
 // Called once the command ends or is interrupted.

@@ -8,29 +8,26 @@
 #include "subsystems/Drivetrain.h"
 
 Drivetrain::Drivetrain() :
-    backLeft(DriveConsts::BACK_LEFT_ID),
-    backRight(DriveConsts::BACK_RIGHT_ID),
-    frontLeft(DriveConsts::FRONT_LEFT_ID),
-    frontRight(DriveConsts::FRONT_RIGHT_ID)
+    leftBack(DriveConsts::BACK_LEFT_ID),
+    leftFront(DriveConsts::FRONT_LEFT_ID),
+    rightBack(DriveConsts::BACK_RIGHT_ID),
+    rightFront(DriveConsts::FRONT_RIGHT_ID)
 {
-    backLeft.SetInverted(true);
-    frontLeft.SetInverted(true);
+
 }
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic() {}
 
 void Drivetrain::SetSpeed(double speed) {
-    backLeft.Set(ControlMode::PercentOutput, speed);
-    backRight.Set(ControlMode::PercentOutput, speed);
-    frontLeft.Set(ControlMode::PercentOutput, speed);
-    frontRight.Set(ControlMode::PercentOutput, speed);
+    SetAllSpeed(speed, speed);
 }
 
 
-void Drivetrain::SetAllSpeed(double backLeftSpeed, double backRightSpeed, double frontLeftSpeed, double frontRightSpeed) {
-    backLeft.Set(ControlMode::PercentOutput, backLeftSpeed);
-    backRight.Set(ControlMode::PercentOutput, backRightSpeed);
-    frontLeft.Set(ControlMode::PercentOutput, frontLeftSpeed);
-    frontRight.Set(ControlMode::PercentOutput, frontRightSpeed);
+void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
+    leftBack.Set(leftSpeed);
+    leftFront.Set(leftSpeed);
+
+    rightBack.Set(rightSpeed);
+    rightFront.Set(rightSpeed);
 }

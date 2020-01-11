@@ -8,7 +8,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <ctre/Phoenix.h>
+#include <rev/SparkMax.h>
 
 namespace DriveConsts {
   const int BACK_LEFT_ID = 4;
@@ -28,14 +28,14 @@ class Drivetrain : public frc2::SubsystemBase {
 
   void SetSpeed(double speed);
 
-  void SetAllSpeed(double backLeftSpeed, double backRightSpeed, double frontLeftSpeed, double frontRightSpeed);
+  void SetAllSpeed(double leftSpeed, double rightSpeed);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  TalonSRX backLeft;
-  TalonSRX backRight;
-  TalonSRX frontLeft;
-  TalonSRX frontRight;
+  rev::SparkMax leftBack;
+  rev::SparkMax leftFront;
+  rev::SparkMax rightBack;
+  rev::SparkMax rightFront;
 };
