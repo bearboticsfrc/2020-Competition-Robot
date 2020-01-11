@@ -7,7 +7,10 @@
 
 #include "RobotContainer.h"
 
-RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
+RobotContainer::RobotContainer() :
+  m_autonomousCommand(&m_subsystem),
+  m_defaultDrive(&m_drivetrain)
+{
   // Initialize all of your commands and subsystems here
 
   // Configure the button bindings
@@ -21,4 +24,8 @@ void RobotContainer::ConfigureButtonBindings() {
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
   return &m_autonomousCommand;
+}
+
+frc2::Command* RobotContainer::GetTeleopCommand() {
+  return &m_defaultDrive;
 }

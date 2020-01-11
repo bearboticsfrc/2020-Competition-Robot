@@ -8,9 +8,12 @@
 #pragma once
 
 #include <frc/TimedRobot.h>
+#include <frc/Joystick.h>
 #include <frc2/command/Command.h>
 
 #include "RobotContainer.h"
+
+extern frc::Joystick joystick;
 
 class Robot : public frc::TimedRobot {
  public:
@@ -28,6 +31,7 @@ class Robot : public frc::TimedRobot {
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc2::Command* m_autonomousCommand = nullptr;
+  frc2::Command* m_teleopCommand = nullptr;
 
   RobotContainer m_container;
 };
