@@ -11,8 +11,9 @@
 #include "subsystems/Shooter.h"
 #include <frc2/command/SubsystemBase.h>
 
-ManualShooter::ManualShooter(Shooter *s) :
-  shooter(s)
+ManualShooter::ManualShooter(Shooter *s, frc::Joystick *joystick) :
+  shooter(s),
+  joystick(joystick)
 {
   AddRequirements(shooter);
   // Use addRequirements() here to declare subsystem dependencies.
@@ -24,7 +25,7 @@ void ManualShooter::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void ManualShooter::Execute() {
   //TODO
-  bool shoot = joystick.GetTrigger();
+  bool shoot = joystick->GetTrigger();
 
   if (shoot) {
     shooter->setSpeed(1.0);

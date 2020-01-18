@@ -8,8 +8,9 @@
 #include "commands/DefaultDrive.h"
 #include "Robot.h"
 
-DefaultDrive::DefaultDrive(Drivetrain *drive) :
-  drivetrain(drive)
+DefaultDrive::DefaultDrive(Drivetrain *drive, frc::Joystick *joystick) :
+  drivetrain(drive),
+  joystick(joystick)
 {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({ drive });
@@ -20,8 +21,8 @@ void DefaultDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void DefaultDrive::Execute() {
-  double forward = joystick.GetY();
-  double turn = -joystick.GetZ();
+  double forward = joystick->GetY();
+  double turn = -joystick->GetZ();
 
   double leftSpeed = forward + turn;
   double rightSpeed = forward - turn;

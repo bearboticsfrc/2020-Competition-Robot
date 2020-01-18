@@ -7,11 +7,8 @@
 
 #include "Robot.h"
 
-#include <frc/Joystick.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
-
-frc::Joystick joystick(0);
 
 void Robot::RobotInit() {}
 

@@ -12,6 +12,10 @@
 
 class Drivetrain;
 
+namespace frc {
+  class Joystick;
+}
+
 /**
  * An example command.
  *
@@ -22,7 +26,7 @@ class Drivetrain;
 class DefaultDrive
     : public frc2::CommandHelper<frc2::CommandBase, DefaultDrive> {
  public:
-  DefaultDrive(Drivetrain *drivetrain);
+  DefaultDrive(Drivetrain *drivetrain, frc::Joystick *joystick);
 
   void Initialize() override;
 
@@ -34,4 +38,5 @@ class DefaultDrive
  
  private:
   Drivetrain *drivetrain;
+  frc::Joystick *joystick;
 };

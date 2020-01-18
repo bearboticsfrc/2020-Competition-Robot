@@ -12,6 +12,10 @@
 
 class Shooter;
 
+namespace frc {
+  class Joystick;
+}
+
 /**
  * An example command.
  *
@@ -22,7 +26,7 @@ class Shooter;
 class ManualShooter
     : public frc2::CommandHelper<frc2::CommandBase, ManualShooter> {
  public:
-  ManualShooter(Shooter *shooter);
+  ManualShooter(Shooter *shooter, frc::Joystick *joystick);
 
   void Initialize() override;
 
@@ -35,4 +39,5 @@ class ManualShooter
  private:
 
   Shooter *shooter;
+  frc::Joystick *joystick;
 };

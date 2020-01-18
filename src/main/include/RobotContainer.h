@@ -8,9 +8,13 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc/Joystick.h>
+#include <frc/XboxController.h>
 
 #include "commands/ExampleCommand.h"
 #include "commands/DefaultDrive.h"
+#include "commands/AlignTarget.h"
+#include "commands/ManualShooter.h"
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h" 
@@ -32,14 +36,20 @@ class RobotContainer {
   frc2::Command* GetTeleopCommand();
 
  private:
-  // The robot's subsystems and commands are defined here...
-  ExampleSubsystem m_subsystem;
+  /* --- Controls --- */
+  frc::Joystick m_joystick;
+  frc::XboxController m_xboxController;
+
+  /* --- Subsystems --- */
   Drivetrain m_drivetrain;
   Shooter m_shooter;
   Intake m_intake;
   ColorSensor m_colorSensor;
-  ExampleCommand m_autonomousCommand;
+
+  /* --- Commands --- */
   DefaultDrive m_defaultDrive;
+  ManualShooter m_manualShooter;
+  AlignTarget m_alignTarget;
 
   void ConfigureButtonBindings();
 };

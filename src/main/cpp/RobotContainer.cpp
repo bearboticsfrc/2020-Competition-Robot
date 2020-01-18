@@ -8,8 +8,11 @@
 #include "RobotContainer.h"
 
 RobotContainer::RobotContainer() :
-  m_autonomousCommand(&m_subsystem),
-  m_defaultDrive(&m_drivetrain)
+  m_joystick(0),
+  m_xboxController(1),
+  m_defaultDrive(&m_drivetrain, &m_joystick),
+  m_manualShooter(&m_shooter, &m_joystick),
+  m_alignTarget(&m_drivetrain)
 {
   // Initialize all of your commands and subsystems here
 
@@ -23,7 +26,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return &m_autonomousCommand;
+  return nullptr;
 }
 
 frc2::Command* RobotContainer::GetTeleopCommand() {
