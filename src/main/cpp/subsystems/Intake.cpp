@@ -15,12 +15,10 @@ using intake_consts::MOTOR_2_ID;
 Intake::Intake() :
     motor1(MOTOR_1_ID, MotorType::kBrushless),
     motor2(MOTOR_2_ID, MotorType::kBrushless)
-
 {}
 
 // This method will be called once per scheduler run
 void Intake::Periodic() {}
-
 
 void Intake::setIntake(bool intake) {
     motor1.Set(intake);

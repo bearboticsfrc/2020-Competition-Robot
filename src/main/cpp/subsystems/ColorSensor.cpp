@@ -6,8 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include <frc/TimedRobot.h>
-#include <frc/smartdashboard/smartdashboard.h>
-#include <frc/util/color.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/util/Color.h>
 #include <string>
 
 #include "subsystems/ColorSensor.h"
