@@ -15,6 +15,7 @@
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h" 
 #include "subsystems/Intake.h"
+#include "subsystems/ColorSensor.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -36,6 +37,7 @@ class RobotContainer {
   Drivetrain m_drivetrain;
   Shooter m_shooter;
   Intake m_intake;
+  ColorSensor m_colorSensor;
   ExampleCommand m_autonomousCommand;
   DefaultDrive m_defaultDrive;
 

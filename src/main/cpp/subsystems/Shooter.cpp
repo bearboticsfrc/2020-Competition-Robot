@@ -12,6 +12,7 @@ using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using shooter_consts::MOTOR_1_ID;
 
 
+
 Shooter::Shooter() :
     motor1(MOTOR_1_ID, MotorType::kBrushless)
 {}
