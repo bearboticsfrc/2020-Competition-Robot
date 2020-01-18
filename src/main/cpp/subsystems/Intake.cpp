@@ -5,21 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Shooter.h"
+#include "subsystems/Intake.h"
 #include <rev/CANSparkMaxLowLevel.h>
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
-using shooter_consts::MOTOR_1_ID;
+using intake_consts::MOTOR_1_ID;
+using intake_consts::MOTOR_2_ID;
 
+Intake::Intake() :
+    motor1(MOTOR_1_ID, MotorType::kBrushless),
+    motor2(MOTOR_2_ID, MotorType::kBrushless)
 
-Shooter::Shooter() :
-    motor1(MOTOR_1_ID, MotorType::kBrushless)
 {}
 
 // This method will be called once per scheduler run
-void Shooter::Periodic() {}
+void Intake::Periodic() {}
 
 
-void Shooter::setSpeed(double speed) {
-    motor1.Set(speed);
+void Intake::setIntake(bool intake) {
+    motor1.Set(intake);
+    motor2.Set(intake);
 }

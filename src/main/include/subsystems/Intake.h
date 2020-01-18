@@ -11,15 +11,17 @@
 #include <rev/CANSparkMax.h>
 
 // TODO: Determine motor IDs
- namespace shooter_consts {
+namespace intake_consts {
   const int MOTOR_1_ID = 3;
+  const int MOTOR_2_ID = 4;
 }
 
-class Shooter : public frc2::SubsystemBase {
+class Intake : public frc2::SubsystemBase {
  public:
-  Shooter();
+  Intake();
 
-  void setSpeed(double speed);
+  void setIntake(bool intake);
+
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -31,6 +33,6 @@ class Shooter : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   rev::CANSparkMax motor1;
-
+  rev::CANSparkMax motor2;
 
 };
