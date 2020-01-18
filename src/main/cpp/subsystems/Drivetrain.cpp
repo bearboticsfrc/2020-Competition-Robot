@@ -6,12 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Drivetrain.h"
+#include <rev/CANSparkMaxLowLevel.h>
+
+using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 
 Drivetrain::Drivetrain() :
-    leftBack(DriveConsts::BACK_LEFT_ID),
-    leftFront(DriveConsts::FRONT_LEFT_ID),
-    rightBack(DriveConsts::BACK_RIGHT_ID),
-    rightFront(DriveConsts::FRONT_RIGHT_ID)
+    leftBack(DriveConsts::BACK_LEFT_ID, MotorType::kBrushless),
+    leftFront(DriveConsts::FRONT_LEFT_ID, MotorType::kBrushless),
+    rightBack(DriveConsts::BACK_RIGHT_ID, MotorType::kBrushless),
+    rightFront(DriveConsts::FRONT_RIGHT_ID, MotorType::kBrushless)
 {
 
 }

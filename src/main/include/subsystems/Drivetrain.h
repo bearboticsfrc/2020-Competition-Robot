@@ -8,7 +8,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <rev/SparkMax.h>
+#include <rev/CANSparkMax.h>
 
 namespace DriveConsts {
   const int BACK_LEFT_ID = 4;
@@ -34,8 +34,8 @@ class Drivetrain : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  rev::SparkMax leftBack;
-  rev::SparkMax leftFront;
-  rev::SparkMax rightBack;
-  rev::SparkMax rightFront;
+  rev::CANSparkMax leftBack;
+  rev::CANSparkMax leftFront;
+  rev::CANSparkMax rightBack;
+  rev::CANSparkMax rightFront;
 };
