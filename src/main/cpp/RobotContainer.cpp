@@ -6,13 +6,17 @@
 /*----------------------------------------------------------------------------*/
 
 #include "RobotContainer.h"
+#include <frc/GenericHID.h>
+
+using JoystickHand = frc::GenericHID::JoystickHand;
 
 RobotContainer::RobotContainer() :
   m_joystick(0),
   m_xboxController(1),
   m_defaultDrive(&m_drivetrain, &m_joystick),
   m_manualShooter(&m_shooter, &m_joystick),
-  m_alignTarget(&m_drivetrain)
+  m_alignTarget(&m_drivetrain),
+  m_showColors(&m_colorSensor)
 {
   // Initialize all of your commands and subsystems here
 
@@ -22,6 +26,7 @@ RobotContainer::RobotContainer() :
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
+  m_xboxController.GetBumper(JoystickHand::kLeftHand);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

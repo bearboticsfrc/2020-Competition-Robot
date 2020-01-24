@@ -15,10 +15,13 @@
 //TODO: Find I2c port
 static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
 
-//TODO: get exact colors to assign
+        // BLUE: R: 0.1, G: 0.42, B: 0.46
 static constexpr frc::Color kBlueTarget = frc::Color(0.143, 0.427, 0.429);
-static constexpr frc::Color kGreenTarget = frc::Color(0.197, 0.561, 0.240);
-static constexpr frc::Color kRedTarget = frc::Color(0.561, 0.232, 0.114);
+        // GREEN: R: 0.14, G: 0.6, B: 0.25
+static constexpr frc::Color kGreenTarget = frc::Color(0.197, 0.6, 0.240);
+        // RED: R: 0.55, G: 0.33, B: 0.11
+static constexpr frc::Color kRedTarget = frc::Color(0.561, 0.33, 0.114);
+        // YELLOW: R: 0.31, G: 0.57, B: 0.1
 static constexpr frc::Color kYellowTarget = frc::Color(0.361, 0.524, 0.113);
 
 ColorSensor::ColorSensor() :

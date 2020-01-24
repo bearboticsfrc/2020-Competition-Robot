@@ -15,6 +15,7 @@
 #include "commands/DefaultDrive.h"
 #include "commands/AlignTarget.h"
 #include "commands/ManualShooter.h"
+#include "commands/ShowColors.h"
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h" 
@@ -50,6 +51,9 @@ class RobotContainer {
   DefaultDrive m_defaultDrive;
   ManualShooter m_manualShooter;
   AlignTarget m_alignTarget;
+  ShowColors m_showColors;
+
+  /* --- Buttons --- */
 
   void ConfigureButtonBindings();
 };
