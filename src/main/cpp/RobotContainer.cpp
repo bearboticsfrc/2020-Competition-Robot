@@ -6,7 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 #include "RobotContainer.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/GenericHID.h>
+#include <iostream>
 
 using JoystickHand = frc::GenericHID::JoystickHand;
 
@@ -45,9 +47,50 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return &m_autonomous;
+  switch (choosers.autonomousChoice()) {
+    case AutonomousChoice::Disabled:
+      return nullptr;
+    case AutonomousChoice::Default:
+      return &m_autonomous;
+    default:
+      std::cerr << "UNHANDLED OPTION FOR AUTONOMOUS\n";
+      break;
+  }
 }
 
-frc2::Command* RobotContainer::GetTeleopCommand() {
-  return &m_defaultDrive;
+std::vector<frc2::Command*> RobotContainer::GetTeleopCommands() {
+  std::vector<frc2::Command*> commands;
+
+  switch (choosers.driveChoice()) {
+    case DriveChoice::Disabled:
+      break;
+    case DriveChoice::Manual: 
+      commands.push_back(&m_defaultDrive);
+      break;
+    default:
+      std::cerr << "UNHANDLED OPTION\n";
+  }
+
+  switch (choosers.shooterChoice()) {
+    case ShooterChoice::Disabled:
+      break;
+    case ShooterChoice::Manual:
+      commands.push_back(&m_manualShooter);
+      break;
+    default:
+      std::cerr << "UNHANDLED OPTION FOR SHOOTER\n";
+  }
+
+  switch (choosers.intakeChoice()) {
+    case IntakeChoice::Disabled:
+      break;
+    case IntakeChoice::Manual:
+      commands.push_back(&m_manualIntake);
+      break;
+    default:
+      std::cerr << "UNHANDLED OPTION FOR INTAKE\n";
+  }
+
+  // TODO: Check for subsystem requirement conflicts between the commands
+  return commands;
 }

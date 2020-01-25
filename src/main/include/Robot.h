@@ -31,7 +31,7 @@ class Robot : public frc::TimedRobot {
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc2::Command* m_autonomousCommand = nullptr;
-  frc2::Command* m_teleopCommand = nullptr;
+  std::vector<frc2::Command*> m_teleopCommands;
 
   RobotContainer m_container;
 };

@@ -26,6 +26,8 @@
 #include "subsystems/Intake.h"
 #include "subsystems/ColorSensor.h"
 #include "subsystems/Arduino.h"
+#include "Choosers.h"
+#include <vector>
 
 
 using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
@@ -42,7 +44,7 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
-  frc2::Command* GetTeleopCommand();
+  std::vector<frc2::Command*> GetTeleopCommands();
 
  private:
   /* --- Controls --- */
@@ -69,6 +71,9 @@ class RobotContainer {
 
   /* --- Buttons --- */
   frc2::Button m_alignButton;
+
+  /* --- Choosers --- */
+  Choosers choosers;
 
   void ConfigureButtonBindings();
 };
