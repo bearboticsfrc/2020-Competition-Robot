@@ -11,6 +11,13 @@
 #include <rev/CANSparkMax.h>
 #include <frc/geometry/Pose2d.h>
 
+namespace ctre {
+  namespace phoenix {
+    namespace sensors {
+      class PigeonIMU;
+    }
+  }
+}
 
 namespace DriveConsts {
   const int BACK_LEFT_ID = 4;
@@ -21,7 +28,7 @@ namespace DriveConsts {
 
 class Drivetrain : public frc2::SubsystemBase {
  public:
-  Drivetrain();
+  Drivetrain(ctre::phoenix::sensors::PigeonIMU *gyro);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -34,12 +41,16 @@ class Drivetrain : public frc2::SubsystemBase {
 
   void SetSpeeds(units::meters_per_second_t leftSpeed, units::meters_per_second_t rightSpeed);
 
-
   frc::Pose2d GetPose();
 
+
  private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
+  void updatePose(units::meter_t leftChange, units::meter_t rightSpeed);
+
+  ctre::phoenix::sensors::PigeonIMU *gyro;
+
+  units::meter_t lastLeft;
+  units::meter_t lastRight;
 
   rev::CANSparkMax leftBack;
   rev::CANSparkMax leftFront;
