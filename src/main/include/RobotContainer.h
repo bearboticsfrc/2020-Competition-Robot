@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc2/command/button/JoystickButton.h>
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
 
@@ -16,6 +17,7 @@
 #include "commands/AlignTarget.h"
 #include "commands/ManualShooter.h"
 #include "commands/ShowColors.h"
+#include "commands/ManualIntake.h"
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h" 
@@ -50,10 +52,12 @@ class RobotContainer {
   /* --- Commands --- */
   DefaultDrive m_defaultDrive;
   ManualShooter m_manualShooter;
+  ManualIntake m_manualIntake;
   AlignTarget m_alignTarget;
   ShowColors m_showColors;
 
   /* --- Buttons --- */
+  frc2::Button m_alignButton;
 
   void ConfigureButtonBindings();
 };

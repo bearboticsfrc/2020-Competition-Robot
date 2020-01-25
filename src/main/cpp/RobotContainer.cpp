@@ -14,9 +14,11 @@ RobotContainer::RobotContainer() :
   m_joystick(0),
   m_xboxController(1),
   m_defaultDrive(&m_drivetrain, &m_joystick),
-  m_manualShooter(&m_shooter, &m_joystick),
+  m_manualShooter(&m_shooter, [this]() { return m_joystick.GetTrigger(); }),
+  m_manualIntake(&m_intake, [this]() { return m_xboxController.GetAButton(); }),
   m_alignTarget(&m_drivetrain),
-  m_showColors(&m_colorSensor)
+  m_showColors(&m_colorSensor),
+  m_alignButton([this]() { return m_xboxController.GetAButton();})
 {
   // Initialize all of your commands and subsystems here
 
@@ -26,7 +28,7 @@ RobotContainer::RobotContainer() :
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  m_xboxController.GetBumper(JoystickHand::kLeftHand);
+  m_alignButton.WhenPressed(m_alignTarget);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

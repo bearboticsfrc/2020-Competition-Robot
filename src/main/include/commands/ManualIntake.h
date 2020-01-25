@@ -10,12 +10,6 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-class Shooter;
-
-namespace frc {
-  class Joystick;
-}
-
 /**
  * An example command.
  *
@@ -23,10 +17,12 @@ namespace frc {
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ManualShooter
-    : public frc2::CommandHelper<frc2::CommandBase, ManualShooter> {
- public:
-  ManualShooter(Shooter *shooter, std::function<bool()> shouldShoot);
+class Intake;
+
+class ManualIntake
+    : public frc2::CommandHelper<frc2::CommandBase, ManualIntake> {
+public:
+  ManualIntake(Intake *intake, std::function<bool()> shouldIntake);
 
   void Initialize() override;
 
@@ -36,8 +32,7 @@ class ManualShooter
 
   bool IsFinished() override;
 
- private:
-
-  Shooter *shooter;
-  std::function<bool()> shouldShoot;
+private:
+  Intake *intake;
+  std::function<bool()> shouldIntake;
 };
