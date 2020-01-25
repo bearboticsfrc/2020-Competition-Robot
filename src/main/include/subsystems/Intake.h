@@ -8,12 +8,14 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc/Solenoid.h>
 #include <rev/CANSparkMax.h>
 
 // TODO: Determine motor IDs
 namespace intake_consts {
   const int MOTOR_1_ID = 3;
   const int MOTOR_2_ID = 4;
+  const int SOLENOID_ID = 1;
 }
 
 class Intake : public frc2::SubsystemBase {
@@ -22,6 +24,7 @@ class Intake : public frc2::SubsystemBase {
 
   void setIntake(bool intake);
 
+  void setExtended(bool extended);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -35,4 +38,5 @@ class Intake : public frc2::SubsystemBase {
   rev::CANSparkMax motor1;
   rev::CANSparkMax motor2;
 
+  frc::Solenoid solenoid;
 };

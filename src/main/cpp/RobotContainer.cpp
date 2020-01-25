@@ -10,6 +10,9 @@
 
 using JoystickHand = frc::GenericHID::JoystickHand;
 
+// TODO: Determine this
+const int GYRO_ID = 5;
+
 RobotContainer::RobotContainer() :
   m_joystick(0),
   m_xboxController(1),
@@ -18,9 +21,11 @@ RobotContainer::RobotContainer() :
   m_manualIntake(&m_intake, [this]() { return m_xboxController.GetAButton(); }),
   m_alignTarget(&m_drivetrain),
   m_showColors(&m_colorSensor),
-  m_alignButton([this]() { return m_xboxController.GetAButton();})
+  m_alignButton([this]() { return m_xboxController.GetAButton();}),
+  m_gyro(GYRO_ID)
 {
   // Initialize all of your commands and subsystems here
+  m_gyro.SetYaw(0.0);
 
   // Configure the button bindings
   ConfigureButtonBindings();

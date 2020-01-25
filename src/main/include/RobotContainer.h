@@ -11,6 +11,7 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
+#include <ctre/phoenix/sensors/PigeonIMU.h>
 
 #include "commands/ExampleCommand.h"
 #include "commands/DefaultDrive.h"
@@ -23,6 +24,8 @@
 #include "subsystems/Shooter.h" 
 #include "subsystems/Intake.h"
 #include "subsystems/ColorSensor.h"
+
+using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -42,6 +45,9 @@ class RobotContainer {
   /* --- Controls --- */
   frc::Joystick m_joystick;
   frc::XboxController m_xboxController;
+
+  /* --- Sensors --- */
+  PigeonIMU m_gyro;
 
   /* --- Subsystems --- */
   Drivetrain m_drivetrain;
