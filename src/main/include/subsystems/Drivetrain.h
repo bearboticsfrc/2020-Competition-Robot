@@ -9,6 +9,8 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <frc/geometry/Pose2d.h>
+
 
 namespace DriveConsts {
   const int BACK_LEFT_ID = 4;
@@ -30,6 +32,11 @@ class Drivetrain : public frc2::SubsystemBase {
 
   void SetAllSpeed(double leftSpeed, double rightSpeed);
 
+  void SetSpeeds(units::meters_per_second_t leftSpeed, units::meters_per_second_t rightSpeed);
+
+
+  frc::Pose2d GetPose();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -38,4 +45,7 @@ class Drivetrain : public frc2::SubsystemBase {
   rev::CANSparkMax leftFront;
   rev::CANSparkMax rightBack;
   rev::CANSparkMax rightFront;
+
+  frc::Pose2d pose;
+
 };

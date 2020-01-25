@@ -7,6 +7,13 @@
 
 #include "subsystems/Drivetrain.h"
 #include <rev/CANSparkMaxLowLevel.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/geometry/Transform2d.h>
+#include <frc/geometry/Translation2d.h>
+#include <frc/geometry/Rotation2d.h>
+#include <vector>
+#include <cmath>
+
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 
@@ -26,6 +33,10 @@ void Drivetrain::SetSpeed(double speed) {
     SetAllSpeed(speed, speed);
 }
 
+frc::Pose2d Drivetrain::GetPose() {
+    return pose;
+}   
+
 
 void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
     leftBack.Set(leftSpeed);
@@ -33,4 +44,9 @@ void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
 
     rightBack.Set(rightSpeed);
     rightFront.Set(rightSpeed);
+}
+
+//TODO: Use setPositionConversionFactor()
+void Drivetrain::SetSpeeds(units::meters_per_second_t lSpeed, units::meters_per_second_t rSpeed) {
+
 }
