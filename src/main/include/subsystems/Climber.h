@@ -9,43 +9,32 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
-#include <frc/geometry/Pose2d.h>
 
-
-namespace DriveConsts {
-  const int BACK_LEFT_ID = 4;
-  const int BACK_RIGHT_ID = 3;
-  const int FRONT_LEFT_ID = 6;
-  const int FRONT_RIGHT_ID = 8;
+// TODO: Determine motor IDs
+ namespace climber_consts {
+  const int MOTOR_1_ID = 3;
+  const int MOTOR_2_ID = 6;
 }
 
-class Drivetrain : public frc2::SubsystemBase {
+//TODO: What is the rotation direction
+class Climber : public frc2::SubsystemBase {
  public:
-  Drivetrain();
+  Climber();
+
+    void setClimb(bool climb);
+    void setSpeed(double speed);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic();
 
-  void SetSpeed(double speed);
-
-  void SetAllSpeed(double leftSpeed, double rightSpeed);
-
-  void SetSpeeds(units::meters_per_second_t leftSpeed, units::meters_per_second_t rightSpeed);
-
-
-  frc::Pose2d GetPose();
-
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  rev::CANSparkMax leftBack;
-  rev::CANSparkMax leftFront;
-  rev::CANSparkMax rightBack;
-  rev::CANSparkMax rightFront;
+  rev::CANSparkMax motor1;
+  rev::CANSparkMax motor2;
 
-  frc::Pose2d pose;
 
 };

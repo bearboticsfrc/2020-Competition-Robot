@@ -12,10 +12,8 @@
 
 #include "subsystems/ColorSensor.h"
 
-//TODO: Find I2c port
 static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
 
-        // BLUE: R: 0.1, G: 0.42, B: 0.46
 static constexpr frc::Color kBlueTarget = frc::Color(0.143, 0.427, 0.429);
         // GREEN: R: 0.14, G: 0.6, B: 0.25
 static constexpr frc::Color kGreenTarget = frc::Color(0.197, 0.6, 0.240);
