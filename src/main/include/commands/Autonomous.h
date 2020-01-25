@@ -10,19 +10,19 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/SequentialCommandGroup.h>
-#include "commands/BallPickup.h"
-#include "commands/AutoDrive.h"
+
+class Drivetrain;
+class Intake;
+class Arduino;
+class Shooter;
 
 class Autonomous
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  Autonomous> {
- public:
-  Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino);
+public:
+  Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *s);
 
-  private:
-  Arduino *arduino;
-  Drivetrain *drivetrain;
-  Intake *intake;
+private:
 };
 
 

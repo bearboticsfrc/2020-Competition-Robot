@@ -6,20 +6,25 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/Autonomous.h"
+#include "commands/BallPickup.h"
+#include "commands/AutoDrive.h"
+#include "commands/AutoShoot.h"
+#include "commands/AlignTarget.h"
 
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-Autonomous::Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino) {
+Autonomous::Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *s) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
 
   AddCommands(
-    //TODO: Shoot
+    AutoShoot(s),
     AutoDrive(),
-    BallPickup(drivetrain, intake, arduino)
+    BallPickup(drivetrain, intake, arduino),
     // TODO: Drive back
-    // TODO: Shoot again
+    AlignTarget(drivetrain),
+    AutoShoot(s)
   );
 }

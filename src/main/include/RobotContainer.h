@@ -19,11 +19,14 @@
 #include "commands/ManualShooter.h"
 #include "commands/ShowColors.h"
 #include "commands/ManualIntake.h"
+#include "commands/Autonomous.h"
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h" 
 #include "subsystems/Intake.h"
 #include "subsystems/ColorSensor.h"
+#include "subsystems/Arduino.h"
+
 
 using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
 
@@ -54,6 +57,7 @@ class RobotContainer {
   Shooter m_shooter;
   Intake m_intake;
   ColorSensor m_colorSensor;
+  Arduino m_arduino;
 
   /* --- Commands --- */
   DefaultDrive m_defaultDrive;
@@ -61,6 +65,7 @@ class RobotContainer {
   ManualIntake m_manualIntake;
   AlignTarget m_alignTarget;
   ShowColors m_showColors;
+  Autonomous m_autonomous;
 
   /* --- Buttons --- */
   frc2::Button m_alignButton;

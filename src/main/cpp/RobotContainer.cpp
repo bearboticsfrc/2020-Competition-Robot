@@ -27,6 +27,7 @@ RobotContainer::RobotContainer() :
   m_manualIntake(&m_intake, [this]() { return m_xboxController.GetAButton(); }),
   m_alignTarget(&m_drivetrain),
   m_showColors(&m_colorSensor),
+  m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   /* --- Buttons --- */
   m_alignButton([this]() { return m_xboxController.GetAButton();})
 {
@@ -44,7 +45,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return nullptr;
+  return &m_autonomous;
 }
 
 frc2::Command* RobotContainer::GetTeleopCommand() {
