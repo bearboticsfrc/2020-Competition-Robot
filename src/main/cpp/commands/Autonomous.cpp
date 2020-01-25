@@ -10,6 +10,7 @@
 #include "commands/AutoDrive.h"
 #include "commands/AutoShoot.h"
 #include "commands/AlignTarget.h"
+#include <frc2/command/RamseteCommand.h>
 
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
@@ -21,7 +22,7 @@ Autonomous::Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino,
 
   AddCommands(
     AutoShoot(s),
-    AutoDrive(),
+    getTrajectoryCommand(*drivetrain),
     BallPickup(drivetrain, intake, arduino),
     // TODO: Drive back
     AlignTarget(drivetrain),

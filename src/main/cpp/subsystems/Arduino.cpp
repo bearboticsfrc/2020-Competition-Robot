@@ -37,7 +37,7 @@ bool Arduino::handshake() {
 	std::cout << "Recieved: 0x" << std::hex << int(recieve_buffer[1]) << "\n";
 
 	return (recieve_buffer[0] - '0' == value + 1);
-};
+}
 
 template< typename T >
 T correctEndianness(T value) {
@@ -59,7 +59,12 @@ std::pair< SensorFrame, bool > Arduino::readData() {
 	}
 
 	return {
-		{ rawFrame.x, rawFrame.y, rawFrame.width, rawFrame.height },
+		{ 
+			static_cast<double>(rawFrame.x),
+			static_cast<double>(rawFrame.y),
+			static_cast<double>(rawFrame.width),
+			static_cast<double>(rawFrame.height)
+		},
 		true
 	};
 }

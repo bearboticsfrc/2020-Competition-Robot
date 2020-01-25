@@ -12,6 +12,7 @@
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc/trajectory/TrajectoryUtil.h>
 #include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
+#include <frc/kinematics/DifferentialDriveKinematics.h>
 #include <frc2/command/RamseteCommand.h>
 #include "subsystems/Drivetrain.h"
 
@@ -33,8 +34,8 @@ namespace constants {
   double MAX_ACCEL = 0.0; // TODO
 }
 
-std::unique_ptr<frc2::Command> getTrajectoryCommand(Drivetrain &drivetrain) {
-  return std::unique_ptr<frc2::Command>(new frc2::RamseteCommand(
+frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain) {
+  return frc2::RamseteCommand(
     generateTrajectory(),
     [&drivetrain]() { return drivetrain.GetPose(); },
     frc::RamseteController(
@@ -44,19 +45,5 @@ std::unique_ptr<frc2::Command> getTrajectoryCommand(Drivetrain &drivetrain) {
     getKinematics(),
     [&drivetrain](units::meters_per_second_t left, units::meters_per_second_t right) { drivetrain.SetSpeeds(left, right); },
     { &drivetrain }
-  ));
+  );
 }
-
-AutoDrive::AutoDrive() {
-  // Use addRequirements() here to declare subsystem dependencies.
-}
-
-// Called when the command is initially scheduled.
-void AutoDrive::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void AutoDrive::Execute() {}
-
-void AutoDrive::End(bool interrupted) {}
-
-bool AutoDrive::IsFinished() { return false; }

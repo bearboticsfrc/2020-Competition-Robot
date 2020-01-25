@@ -35,7 +35,7 @@ class BallPickup
   bool IsFinished() override;
 
  private:
-  Arduino *arduino;
   Drivetrain *drivetrain;
   Intake *intake;
+  Arduino *arduino;
 };
