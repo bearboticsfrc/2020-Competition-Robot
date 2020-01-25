@@ -9,6 +9,9 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <chrono>
+
+class Shooter;
 
 /**
  * An example command.
@@ -19,8 +22,8 @@
  */
 class AutoShoot
     : public frc2::CommandHelper<frc2::CommandBase, AutoShoot> {
- public:
-  AutoShoot();
+public:
+  AutoShoot(Shooter *shooter);
 
   void Initialize() override;
 
@@ -29,4 +32,8 @@ class AutoShoot
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+private:
+  Shooter *shooter;
+  std::chrono::time_point<std::chrono::steady_clock> startTime;
 };
