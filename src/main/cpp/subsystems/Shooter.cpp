@@ -7,14 +7,19 @@
 
 #include "subsystems/Shooter.h"
 #include <rev/CANSparkMaxLowLevel.h>
+#include <rev/CANSparkMax.h>
+#include <rev/ControlType.h>
+
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using shooter_consts::MOTOR_1_ID;
+using shooter_consts::FEEDMOTOR_1_ID;
 
 
 
 Shooter::Shooter() :
-    motor1(MOTOR_1_ID, MotorType::kBrushless)
+    motor1(MOTOR_1_ID, MotorType::kBrushless),
+    feedMotor(FEEDMOTOR_1_ID, MotorType::kBrushless)
 {}
 
 // This method will be called once per scheduler run
@@ -23,4 +28,9 @@ void Shooter::Periodic() {}
 
 void Shooter::setSpeed(double speed) {
     motor1.Set(speed);
+}
+
+void Shooter::shootOne() {
+    double position = feedMotor.GetEncoder().GetPosition();
+    feedMotor.GetPIDController().SetReference(position + 1.0, rev::ControlType::kPosition);
 }
