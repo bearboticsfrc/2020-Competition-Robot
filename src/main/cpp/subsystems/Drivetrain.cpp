@@ -23,10 +23,10 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     gyro(gyro),
     lastLeft(0),
     lastRight(0),
-    leftBack(DriveConsts::BACK_LEFT_ID, MotorType::kBrushless),
-    leftFront(DriveConsts::FRONT_LEFT_ID, MotorType::kBrushless),
-    rightBack(DriveConsts::BACK_RIGHT_ID, MotorType::kBrushless),
-    rightFront(DriveConsts::FRONT_RIGHT_ID, MotorType::kBrushless)
+    leftBack(DriveConsts::LEFT_2_ID, MotorType::kBrushless),
+    leftFront(DriveConsts::LEFT_1_ID, MotorType::kBrushless),
+    rightBack(DriveConsts::RIGHT_2_ID, MotorType::kBrushless),
+    rightFront(DriveConsts::RIGHT_1_ID, MotorType::kBrushless)
 {
     leftBack.Follow(leftFront);
     rightBack.Follow(rightFront);
