@@ -33,6 +33,8 @@ RobotContainer::RobotContainer() :
   /* --- Buttons --- */
   m_alignButton([this]() { return m_xboxController.GetAButton();})
 {
+  std::cout << "Constructor\n";
+  std::cout.flush();
   // Initialize all of your commands and subsystems here
   m_gyro.SetYaw(0.0);
 
@@ -42,7 +44,7 @@ RobotContainer::RobotContainer() :
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  m_alignButton.WhenPressed(m_alignTarget);
+  //m_alignButton.WhenPressed(m_alignTarget);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
@@ -54,7 +56,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return &m_autonomous;
     default:
       std::cerr << "UNHANDLED OPTION FOR AUTONOMOUS\n";
-      break;
+      return nullptr;
   }
 }
 
@@ -65,16 +67,19 @@ std::vector<frc2::Command*> RobotContainer::GetTeleopCommands() {
     case DriveChoice::Disabled:
       break;
     case DriveChoice::Manual: 
+      std::cout << "Adding default drive command\n";
       commands.push_back(&m_defaultDrive);
       break;
     default:
       std::cerr << "UNHANDLED OPTION\n";
+      break;
   }
 
   switch (choosers.shooterChoice()) {
     case ShooterChoice::Disabled:
       break;
     case ShooterChoice::Manual:
+      std::cout << "Adding manual shooter command\n";
       commands.push_back(&m_manualShooter);
       break;
     default:

@@ -13,8 +13,8 @@
 
 // TODO: Determine motor IDs
 namespace intake_consts {
-  const int MOTOR_1_ID = 3;
-  const int MOTOR_2_ID = 4;
+  const int MOTOR_1_ID = 250;
+  const int MOTOR_2_ID = 249;
   const int SOLENOID_ID = 1;
 }
 

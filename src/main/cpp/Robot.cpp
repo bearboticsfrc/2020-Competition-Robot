@@ -8,8 +8,12 @@
 #include "Robot.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
+#include <iostream>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  std::cout << "Hello, world!\n";
+  std::cout.flush();
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use

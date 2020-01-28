@@ -1,4 +1,5 @@
 #include "Choosers.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 Choosers::Choosers() {
     m_driveChooser.AddObject("Drive disabled", DriveChoice::Disabled);
@@ -12,6 +13,11 @@ Choosers::Choosers() {
 
     m_autonomousChooser.AddObject("Autonomous disabled", AutonomousChoice::Disabled);
     m_autonomousChooser.AddObject("Autonomous default", AutonomousChoice::Default);
+
+    frc::SmartDashboard::PutData("DriveChooser", &m_driveChooser);
+    frc::SmartDashboard::PutData("ShooterChooser", &m_shooterChooser);
+    frc::SmartDashboard::PutData("IntakeChooser", &m_intakeChooser);
+    frc::SmartDashboard::PutData("AutoChooser", &m_autonomousChooser);
 }
 
 DriveChoice Choosers::driveChoice() {

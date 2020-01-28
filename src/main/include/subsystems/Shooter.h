@@ -12,8 +12,8 @@
 
 // TODO: Determine motor IDs
  namespace shooter_consts {
-  const int MOTOR_1_ID = 3;
-  const int FEEDMOTOR_1_ID = 123456789;
+  const int MOTOR_1_ID = 254;
+  const int FEEDMOTOR_1_ID = 253;
 }
 
 class Shooter : public frc2::SubsystemBase {

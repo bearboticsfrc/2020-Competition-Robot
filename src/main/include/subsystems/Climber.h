@@ -12,7 +12,7 @@
 
 // TODO: Determine motor IDs
  namespace climber_consts {
-  const int MOTOR_1_ID = 3;
+  const int MOTOR_1_ID = 5;
   const int MOTOR_2_ID = 6;
 }
 
