@@ -22,8 +22,6 @@ Autonomous::Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino,
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
 
-  drivetrain->SetPose(generateTrajectory().States()[0].pose);
-
   AddCommands(
     //AutoShoot(s),
     getTrajectoryCommand(*drivetrain),

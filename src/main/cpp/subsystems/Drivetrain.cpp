@@ -101,6 +101,7 @@ void Drivetrain::Periodic() {
 }
 
 void Drivetrain::SetPose(frc::Pose2d newPose) {
+    gyro->SetYaw(newPose.Rotation().Degrees().to<double>());
     pose = newPose;
 }
 
@@ -160,8 +161,8 @@ void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
 
 // Maybe use setPositionConversionFactor() ?
 void Drivetrain::SetSpeeds(units::meters_per_second_t lSpeed, units::meters_per_second_t rSpeed) {
-    auto l = lSpeed.to<double>() / METERS_PER_REV / 10.0;
-    auto r = rSpeed.to<double>() / METERS_PER_REV / 10.0;
+    auto l = lSpeed.to<double>() / METERS_PER_REV * 60.0;
+    auto r = rSpeed.to<double>() / METERS_PER_REV * 60.0;
 
     frc::SmartDashboard::PutNumber("Target speed average", (l + r) / 2.0);
 

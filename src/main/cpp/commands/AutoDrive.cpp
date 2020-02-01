@@ -16,7 +16,7 @@
 #include "subsystems/Drivetrain.h"
 
 frc::Trajectory generateTrajectory() {
-  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Default.wpilib.json");
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Unnamed.wpilib.json");
   return trajectory;
 }
 

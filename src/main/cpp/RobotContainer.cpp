@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "RobotContainer.h"
+#include "commands/AutoDrive.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/GenericHID.h>
 #include <iostream>
@@ -48,6 +49,9 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
+  // TODO: Move this somewhere sensible
+  m_drivetrain.SetPose(generateTrajectory().States()[0].pose);
+
   // An example command will be run in autonomous
   switch (choosers.autonomousChoice()) {
     case AutonomousChoice::Disabled:
