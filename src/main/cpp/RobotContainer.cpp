@@ -29,6 +29,7 @@ RobotContainer::RobotContainer() :
   m_manualShooter(&m_shooter, [this]() { return m_joystick.GetTrigger(); }),
   m_manualIntake(&m_intake, [this]() { return m_xboxController.GetAButton(); }),
   m_alignTarget(&m_drivetrain),
+  m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   /* --- Buttons --- */
@@ -41,6 +42,9 @@ RobotContainer::RobotContainer() :
 
   // Configure the button bindings
   ConfigureButtonBindings();
+
+  frc::SmartDashboard::PutData("Align Target", &m_alignTarget);
+  frc::SmartDashboard::PutData("Ball Pickup", &m_ballPickup);
 }
 
 void RobotContainer::ConfigureButtonBindings() {

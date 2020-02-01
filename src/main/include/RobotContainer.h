@@ -16,6 +16,7 @@
 #include "commands/ExampleCommand.h"
 #include "commands/DefaultDrive.h"
 #include "commands/AlignTarget.h"
+#include "commands/BallPickup.h"
 #include "commands/ManualShooter.h"
 #include "commands/ShowColors.h"
 #include "commands/ManualIntake.h"
@@ -66,6 +67,7 @@ class RobotContainer {
   ManualShooter m_manualShooter;
   ManualIntake m_manualIntake;
   AlignTarget m_alignTarget;
+  BallPickup m_ballPickup;
   ShowColors m_showColors;
   Autonomous m_autonomous;
 

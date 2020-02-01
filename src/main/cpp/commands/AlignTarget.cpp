@@ -17,20 +17,25 @@ AlignTarget::AlignTarget(Drivetrain *drivetrain) :
 }
 
 // Called when the command is initially scheduled.
-void AlignTarget::Initialize() {}
+void AlignTarget::Initialize() {
+  Limelight::setLights(true);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void AlignTarget::Execute() {
   double x = Limelight::getX();
-  drivetrain->SetAllSpeed(-x / 30.0, x / 30.0);
+  drivetrain->SetAllSpeed(x / 30.0, -x / 30.0);
 }
 
 // Called once the command ends or is interrupted.
 void AlignTarget::End(bool interrupted) {
+  Limelight::setLights(false);
   drivetrain->SetAllSpeed(0.0, 0.0);
 }
 
 // Returns true when the command should end.
 bool AlignTarget::IsFinished() {
-  return !Limelight::targetFound() || std::abs(Limelight::getX()) < 1.0;
+  //return !Limelight::targetFound() || std::abs(Limelight::getX()) < 1.0;
+  //return std::abs(Limelight::getX()) < 1.0;
+  return false;
 }

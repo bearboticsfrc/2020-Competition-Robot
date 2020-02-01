@@ -11,15 +11,26 @@
 Limelight::Limelight() {}
 
 bool Limelight::targetFound() {
-    return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetEntry("tv").GetDouble(0.0);
+    return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
 }
 
 double Limelight::getX() {
-    return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetEntry("tx").GetDouble(0.0);
+    return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
 }
 
 double Limelight::getY() {
-    return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetEntry("ty").GetDouble(0.0);
+    return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty", 0.0);
+}
+
+void Limelight::setLights(bool enabled) {
+    double mode;
+    if (enabled) {
+        mode = 3.0;
+    } else {
+        mode = 1.0;
+    }
+
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", mode);
 }
 
 // This method will be called once per scheduler run

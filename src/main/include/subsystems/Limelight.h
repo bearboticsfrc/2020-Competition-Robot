@@ -19,6 +19,8 @@ class Limelight : public frc2::SubsystemBase {
 
   static double getY();
 
+  static void setLights(bool enabled);
+
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */

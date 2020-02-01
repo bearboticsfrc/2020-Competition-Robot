@@ -10,6 +10,7 @@
 #include <time.h>
 #include <string>
 #include <iostream>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 // "Sending _"
 // "_"
@@ -57,11 +58,22 @@ std::pair< std::vector<SensorFrame>, bool > Arduino::readData() {
 // TODO: Check endianness
 // RoboRio is likely big endian and Arduinos are little endian
 std::vector<Arduino::RxFrame> Arduino::readRawData() {
-	uint8_t len = 0;
-	m_i2c.ReadOnly(1, &len);
+	uint8_t b[4] = { 'o', 'w', 'o', 0 };
+	m_i2c.WriteBulk(b, 3);
 
-	std::vector<RxFrame> buffer(len, RxFrame{ 0, 0, 0, 0 });
-	m_i2c.ReadOnly(6 * len, reinterpret_cast< uint8_t* >(buffer.data()));
+	uint8_t buf[7] = { 0 };
+	m_i2c.ReadOnly(7, buf);
+
+	std::vector<RxFrame> buffer;
+	for (int i = 0; i < buf[0]; ++i) {
+		uint16_t x = (static_cast<uint16_t>(buf[1 + i * 6]) << 8) | buf[2 + i * 6];
+		uint16_t width = (static_cast<uint16_t>(buf[3 + i * 6]) << 8) | buf[4 + i * 6];
+		uint8_t y = buf[5 + i * 6];
+		uint8_t height = buf[6 + i * 6];
+		buffer.push_back(RxFrame{ x, y, width, height });
+	}
+
+	frc::SmartDashboard::PutNumber("Balls found", buf[0]);
 
 	return buffer;
 }
