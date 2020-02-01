@@ -23,8 +23,9 @@ void BallPickup::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void BallPickup::Execute() {
-  auto [data, valid] = arduino->readData();
+  auto [all_data, valid] = arduino->readData();
   if (valid) {
+    auto data = all_data[0];
     if (!(data.x == 0 && data.y == 0 && data.width == 0 && data.height == 0)) {
       intake->setIntake(true);
 
