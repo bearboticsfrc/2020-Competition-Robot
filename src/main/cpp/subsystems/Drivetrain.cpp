@@ -45,6 +45,7 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     rightBack.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     rightFront.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
+    // TODO: Determine P gains
     leftBack.GetPIDController().SetFF(1.0 / 5700.0);
     leftFront.GetPIDController().SetFF(1.0 / 5700.0);
     rightBack.GetPIDController().SetFF(1.0 / 5700.0);
@@ -80,7 +81,6 @@ void Drivetrain::Periodic() {
     frc::SmartDashboard::PutNumber("Y", pose.Translation().Y().to<double>());
     frc::SmartDashboard::PutNumber("Angle", pose.Rotation().Radians().to<double>());
     
-
     auto l = units::meter_t(leftPos * METERS_PER_REV);
     auto r = units::meter_t(rightPos * METERS_PER_REV);
 
@@ -111,32 +111,16 @@ void Drivetrain::updatePose(units::meter_t leftChange, units::meter_t rightChang
     double yaw = ypr[0];
     double yaw_rad = (yaw / 360.0) * (2.0 * M_PI);
 
-    if (std::abs(leftChange.to<double>()) < 0.001 || std::abs(rightChange.to<double>()) < 0.001) {
-        return;
-    }
-
-    // TODO: Confirm that these angles are the correct direction
     pose = frc::Pose2d(pose.Translation(), frc::Rotation2d(units::radian_t(yaw_rad)));
 
-    //if (std::abs((leftChange - rightChange).to<double>()) < 0.01) {
-        auto avg = (leftChange + rightChange) / 2.0;
-        pose += frc::Transform2d(
-            frc::Translation2d(
-                avg,
-                units::meter_t(0.0)
-            ),
-            frc::Rotation2d()
-        );
-    /*} else {
-        units::meter_t r = WHEELBASE / 2.0 * (leftChange + rightChange) / (leftChange - rightChange);
-        units::meter_t icc_x = pose.Translation().X() - r * pose.Rotation().Sin();
-        units::meter_t icc_y = pose.Translation().Y() + r * pose.Rotation().Cos();
-        auto w = units::radian_t(((rightChange - leftChange) / WHEELBASE).to<double>());
-
-        pose = frc::Pose2d(pose.Translation() + frc::Translation2d(-icc_x, -icc_y), pose.Rotation());
-        pose = frc::Pose2d(pose.Translation().RotateBy(frc::Rotation2d{ w }), pose.Rotation());
-        pose = frc::Pose2d(pose.Translation() + frc::Translation2d(icc_x, icc_y), pose.Rotation());
-    }*/
+    auto avg = (leftChange + rightChange) / 2.0;
+    pose += frc::Transform2d(
+        frc::Translation2d(
+            avg,
+            units::meter_t(0.0)
+        ),
+        frc::Rotation2d()
+    );
 }
 
 void Drivetrain::SetSpeed(double speed) {
@@ -149,17 +133,10 @@ frc::Pose2d Drivetrain::GetPose() {
 
 
 void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
-    /*leftFront.Set(leftSpeed);
-    rightFront.Set(rightSpeed);
-
-    frc::SmartDashboard::PutNumber("Left Power", leftSpeed);
-    frc::SmartDashboard::PutNumber("Right Power", rightSpeed);*/
-
     leftFront.GetPIDController().SetReference(leftSpeed * 5700.0, rev::ControlType::kVelocity);
     rightFront.GetPIDController().SetReference(rightSpeed * 5700.0, rev::ControlType::kVelocity);
 }
 
-// Maybe use setPositionConversionFactor() ?
 void Drivetrain::SetSpeeds(units::meters_per_second_t lSpeed, units::meters_per_second_t rSpeed) {
     auto l = lSpeed.to<double>() / METERS_PER_REV * 60.0;
     auto r = rSpeed.to<double>() / METERS_PER_REV * 60.0;
