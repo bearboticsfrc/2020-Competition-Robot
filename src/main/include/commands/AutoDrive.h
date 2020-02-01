@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <frc/trajectory/Trajectory.h>
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include <memory>
@@ -18,3 +19,5 @@ namespace frc2 {
 }
 
 frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain);
+
+frc::Trajectory generateTrajectory();

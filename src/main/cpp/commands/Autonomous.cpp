@@ -10,9 +10,11 @@
 #include "commands/AutoDrive.h"
 #include "commands/AutoShoot.h"
 #include "commands/AlignTarget.h"
+#include "subsystems/Drivetrain.h"
 #include <frc2/command/RamseteCommand.h>
 
 
+// TODO: Programmable delay
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
@@ -20,8 +22,10 @@ Autonomous::Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino,
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
 
+  drivetrain->SetPose(generateTrajectory().States()[0].pose);
+
   AddCommands(
-    AutoShoot(s),
+    //AutoShoot(s),
     getTrajectoryCommand(*drivetrain),
     BallPickup(drivetrain, intake, arduino),
     // TODO: Drive back

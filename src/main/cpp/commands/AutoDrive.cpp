@@ -7,7 +7,6 @@
 
 #include "commands/AutoDrive.h"
 
-#include <frc/trajectory/Trajectory.h>
 #include <frc/trajectory/TrajectoryConfig.h>
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc/trajectory/TrajectoryUtil.h>
@@ -22,7 +21,7 @@ frc::Trajectory generateTrajectory() {
 }
 
 frc::DifferentialDriveKinematics getKinematics() {
-  return frc::DifferentialDriveKinematics { 12_in };
+  return frc::DifferentialDriveKinematics { 24_in };
 }
 
 namespace constants {

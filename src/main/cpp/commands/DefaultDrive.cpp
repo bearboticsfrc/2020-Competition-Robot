@@ -21,8 +21,8 @@ void DefaultDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void DefaultDrive::Execute() {
-  double forward = joystick->GetY();
-  double turn = -joystick->GetZ();
+  double forward = -joystick->GetY();
+  double turn = 0.1 * joystick->GetZ();
 
   double leftSpeed = forward + turn;
   double rightSpeed = forward - turn;

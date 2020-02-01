@@ -13,7 +13,7 @@
 using JoystickHand = frc::GenericHID::JoystickHand;
 
 // TODO: Determine this
-const int GYRO_ID = 5;
+const int GYRO_ID = 10;
 
 RobotContainer::RobotContainer() :
   /* --- Controllers --- */
