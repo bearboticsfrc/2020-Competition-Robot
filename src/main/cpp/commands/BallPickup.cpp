@@ -20,23 +20,20 @@ BallPickup::BallPickup(Drivetrain *drivetrain, Intake *intake, Arduino *arduino)
 }
 
 // Called when the command is initially scheduled.
-void BallPickup::Initialize() {}
+void BallPickup::Initialize() {
+  leftSpeed = 0.0;
+  rightSpeed = 0.0;
+}
 
-// Called repeatedly when this Command is scheduled to run
-void BallPickup::Execute() {
+std::pair<double, double> BallPickup::getTargetSpeeds() {
   auto [all_data, valid] = arduino->readData();
-  frc::SmartDashboard::PutNumber("ball valid", valid);
-  if (valid) {
+  if (valid && all_data.size() > 0) {
     auto data = all_data[0];
     if (!(data.x == 0 && data.y == 0 && data.width == 0 && data.height == 0)) {
-      frc::SmartDashboard::PutNumber("ball x", data.x);
       intake->setIntake(true);
 
-      // Follow the ball!
-      // TODO: Determine what the center of the camera vision is
       const double CENTER = 160.0;
 
-      // TODO: Should this be swapped around
       double angleError = data.x - CENTER;
       angleError /= 500.0;
 
@@ -46,11 +43,32 @@ void BallPickup::Execute() {
       double ballDistance = 100.0 / (data.width * data.height);
 
       // TODO: Maybe adjust how sensitive this is
-      drivetrain->SetAllSpeed(ballDistance + angleError, ballDistance - angleError);
+      return { ballDistance + angleError, ballDistance - angleError };
+    } else {
+      return { 0.0, 0.0 };
     }
   } else {
-    drivetrain->SetAllSpeed(0.0, 0.0);
+    std::cout << "BALL TRACKING INFORMATION NOT VALID\n";
+    return { 0.0, 0.0 };
   }
+}
+
+// Called repeatedly when this Command is scheduled to run
+void BallPickup::Execute() {
+  auto [leftTargetSpeed, rightTargetSpeed] = getTargetSpeeds();
+
+  double leftDiff = leftTargetSpeed - leftSpeed;
+  double rightDiff = rightTargetSpeed - rightSpeed;
+
+  const double MAX_CHANGE = 0.01;
+
+  double leftChange = std::clamp(leftDiff, -MAX_CHANGE, MAX_CHANGE);
+  double rightChange = std::clamp(rightDiff, -MAX_CHANGE, MAX_CHANGE);
+
+  leftSpeed += leftChange;
+  rightSpeed += rightChange;
+
+  drivetrain->SetAllSpeed(leftSpeed, rightSpeed);
 }
 
 // Called once the command ends or is interrupted.

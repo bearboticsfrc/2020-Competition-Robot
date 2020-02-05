@@ -23,7 +23,8 @@ Autonomous::Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino,
   // AddCommands(FooCommand(), BarCommand());
 
   AddCommands(
-    //AutoShoot(s),
+    AlignTarget(drivetrain),
+    AutoShoot(s),
     getTrajectoryCommand(*drivetrain),
     // TODO: Put this back in
     //BallPickup(drivetrain, intake, arduino),

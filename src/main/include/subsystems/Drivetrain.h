@@ -43,9 +43,13 @@ class Drivetrain : public frc2::SubsystemBase {
 
   frc::Pose2d GetPose();
 
+  frc::Pose2d GetLastPose();
+
   void SetPose(frc::Pose2d newPose);
 
- private:
+private:
+  frc::Pose2d previousPose;
+
   void updatePose(units::meter_t leftChange, units::meter_t rightSpeed);
 
   ctre::phoenix::sensors::PigeonIMU *gyro;

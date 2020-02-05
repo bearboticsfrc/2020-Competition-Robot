@@ -38,4 +38,9 @@ class BallPickup
   Drivetrain *drivetrain;
   Intake *intake;
   Arduino *arduino;
+
+  std::pair<double, double> getTargetSpeeds();
+
+  double leftSpeed = 0.0;
+  double rightSpeed = 0.0;
 };

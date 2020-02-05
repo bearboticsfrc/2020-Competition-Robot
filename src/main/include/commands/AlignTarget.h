@@ -31,7 +31,9 @@ class AlignTarget
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
 private:
+  int successes = 0;
+  int fails = 0;
+
   Drivetrain *drivetrain;
 };

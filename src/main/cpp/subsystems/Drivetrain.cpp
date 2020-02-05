@@ -66,13 +66,13 @@ void Drivetrain::Periodic() {
     double leftPos = leftFront.GetEncoder().GetPosition();
     double rightPos = rightFront.GetEncoder().GetPosition();
 
-    frc::SmartDashboard::PutNumber("Left Motor Rotations", leftPos);
-    frc::SmartDashboard::PutNumber("Right Motor Rotations", rightPos);
+    //frc::SmartDashboard::PutNumber("Left Motor Rotations", leftPos);
+    //frc::SmartDashboard::PutNumber("Right Motor Rotations", rightPos);
 
-    frc::SmartDashboard::PutNumber("Left Motor Current", leftFront.GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("Right Motor Current", rightFront.GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("Left Motor Current back", leftBack.GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("Right Motor Current back", rightBack.GetOutputCurrent());
+    //frc::SmartDashboard::PutNumber("Left Motor Current", leftFront.GetOutputCurrent());
+    //frc::SmartDashboard::PutNumber("Right Motor Current", rightFront.GetOutputCurrent());
+    //frc::SmartDashboard::PutNumber("Left Motor Current back", leftBack.GetOutputCurrent());
+    //frc::SmartDashboard::PutNumber("Right Motor Current back", rightBack.GetOutputCurrent());
 
     frc::SmartDashboard::PutNumber("Left Motor Velocity", leftFront.GetEncoder().GetVelocity());
     frc::SmartDashboard::PutNumber("Right Motor Velocity", rightFront.GetEncoder().GetVelocity());
@@ -106,6 +106,8 @@ void Drivetrain::SetPose(frc::Pose2d newPose) {
 }
 
 void Drivetrain::updatePose(units::meter_t leftChange, units::meter_t rightChange) {
+    previousPose = pose;
+
     double ypr[3];
     gyro->GetYawPitchRoll(ypr);
     double yaw = ypr[0];
@@ -131,6 +133,10 @@ frc::Pose2d Drivetrain::GetPose() {
     return pose;
 }   
 
+frc::Pose2d Drivetrain::GetLastPose() {
+    return previousPose;
+}
+
 
 void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
     leftFront.GetPIDController().SetReference(leftSpeed * 5700.0, rev::ControlType::kVelocity);
@@ -141,7 +147,7 @@ void Drivetrain::SetSpeeds(units::meters_per_second_t lSpeed, units::meters_per_
     auto l = lSpeed.to<double>() / METERS_PER_REV * 60.0;
     auto r = rSpeed.to<double>() / METERS_PER_REV * 60.0;
 
-    frc::SmartDashboard::PutNumber("Target speed average", (l + r) / 2.0);
+    //frc::SmartDashboard::PutNumber("Target speed average", (l + r) / 2.0);
 
     leftFront.GetPIDController().SetReference(l, rev::ControlType::kVelocity);
     rightFront.GetPIDController().SetReference(r, rev::ControlType::kVelocity);
