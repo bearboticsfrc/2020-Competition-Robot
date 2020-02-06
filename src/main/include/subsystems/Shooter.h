@@ -9,11 +9,13 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <ctre/Phoenix.h>
 
 // TODO: Determine motor IDs
  namespace shooter_consts {
   const int MOTOR_1_ID = 254;
   const int FEEDMOTOR_1_ID = 253;
+  const int ACCELERATOR_ID = 252;
 }
 
 class Shooter : public frc2::SubsystemBase {
@@ -23,6 +25,8 @@ class Shooter : public frc2::SubsystemBase {
   void setSpeed(double speed);
   void shootOne();
   void setFeed(double speed);
+
+  void setDistance(units::meter_t distance);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -35,4 +39,6 @@ class Shooter : public frc2::SubsystemBase {
 
   rev::CANSparkMax motor1;
   rev::CANSparkMax feedMotor;
+
+  VictorSPX accelerator;
 };

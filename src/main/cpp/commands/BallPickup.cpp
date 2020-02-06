@@ -23,6 +23,8 @@ BallPickup::BallPickup(Drivetrain *drivetrain, Intake *intake, Arduino *arduino)
 void BallPickup::Initialize() {
   leftSpeed = 0.0;
   rightSpeed = 0.0;
+  intake->setExtended(true);
+  intake->setIntake(true);
 }
 
 std::pair<double, double> BallPickup::getTargetSpeeds() {

@@ -29,4 +29,8 @@ void Intake::setIntake(bool intake) {
 
 void Intake::setExtended(bool extended) {
     solenoid.Set(extended);
+
+    if (!extended) {
+        setIntake(false);
+    }
 }

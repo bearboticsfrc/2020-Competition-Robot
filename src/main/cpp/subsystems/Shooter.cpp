@@ -14,20 +14,25 @@
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using shooter_consts::MOTOR_1_ID;
 using shooter_consts::FEEDMOTOR_1_ID;
-
-
+using shooter_consts::ACCELERATOR_ID;
 
 Shooter::Shooter() :
     motor1(MOTOR_1_ID, MotorType::kBrushless),
-    feedMotor(FEEDMOTOR_1_ID, MotorType::kBrushless)
+    feedMotor(FEEDMOTOR_1_ID, MotorType::kBrushless),
+    accelerator(ACCELERATOR_ID)
 {}
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {}
 
-
 void Shooter::setSpeed(double speed) {
     motor1.Set(speed);
+    accelerator.Set(ControlMode::PercentOutput, speed);
+}
+
+void Shooter::setDistance(units::meter_t distance) {
+    // TODO: Determine correspondance
+    setSpeed(distance.to<double>() / 10.0);
 }
 
 void Shooter::shootOne() {
