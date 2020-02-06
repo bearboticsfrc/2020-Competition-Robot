@@ -28,6 +28,7 @@
 #include "subsystems/ColorSensor.h"
 #include "subsystems/Singulator.h"
 #include "subsystems/Arduino.h"
+#include "subsystems/ControlPanelManip.h"
 #include "Choosers.h"
 #include <vector>
 
@@ -63,6 +64,7 @@ class RobotContainer {
   ColorSensor m_colorSensor;
   Arduino m_arduino;
   Singulator m_singulator;
+  ControlPanelManip m_controlPanelManip;
 
   /* --- Commands --- */
   DefaultDrive m_defaultDrive;
