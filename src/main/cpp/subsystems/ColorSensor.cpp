@@ -9,7 +9,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/util/Color.h>
 #include <string>
-
+#include <frc/DriverStation.h>
 #include "subsystems/ColorSensor.h"
 
 static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
@@ -50,6 +50,28 @@ std::string color_to_string(WheelColor color) {
     }
 }
 
+WheelColor get_target_color(){
+    std::string gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+    if(gameData.length() > 0)
+    {
+        switch (gameData[0])
+        {
+            case 'B' :
+                return WheelColor::Blue;
+            case 'G' :
+                return WheelColor::Green;
+            case 'R' :
+                return WheelColor::Red;
+            case 'Y' :
+                return WheelColor::Yellow;
+            default :
+                return WheelColor::Unknown;
+        }
+    } else {
+        return WheelColor::Unknown;
+    }
+}
+
 // This method will be called once per scheduler run
 void ColorSensor::Periodic() {
     /* GetColor() returns a normal color, instead of a raw color
@@ -81,4 +103,6 @@ void ColorSensor::Periodic() {
     frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
     frc::SmartDashboard::PutNumber("Confidence", confidence);
     frc::SmartDashboard::PutString("Detected Color", color_to_string(wheelColor));
+
+    
 }
