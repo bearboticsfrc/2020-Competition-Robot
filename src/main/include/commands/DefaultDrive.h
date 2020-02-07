@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "Input.h"
 
 class Drivetrain;
 
@@ -26,7 +27,7 @@ namespace frc {
 class DefaultDrive
     : public frc2::CommandHelper<frc2::CommandBase, DefaultDrive> {
  public:
-  DefaultDrive(Drivetrain *drivetrain, frc::Joystick *joystick);
+  DefaultDrive(Drivetrain *drivetrain, Input *joystick);
 
   void Initialize() override;
 
@@ -38,5 +39,5 @@ class DefaultDrive
  
  private:
   Drivetrain *drivetrain;
-  frc::Joystick *joystick;
+  Input *input;
 };

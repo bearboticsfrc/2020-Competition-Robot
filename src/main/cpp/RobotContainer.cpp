@@ -17,23 +17,20 @@ using JoystickHand = frc::GenericHID::JoystickHand;
 const int GYRO_ID = 10;
 
 RobotContainer::RobotContainer() :
-  /* --- Controllers --- */
-  m_joystick(0),
-  m_xboxController(1),
   /* --- Sensors --- */
   m_gyro(GYRO_ID),
   /* --- Subsystems --- */
   m_drivetrain(&m_gyro),
   /* --- Commands --- */
-  m_defaultDrive(&m_drivetrain, &m_joystick),
-  m_manualShooter(&m_shooter, [this]() { return m_joystick.GetTrigger(); }),
-  m_manualIntake(&m_intake, [this]() { return m_xboxController.GetAButton(); }),
+  m_defaultDrive(&m_drivetrain, &m_input),
+  m_manualShooter(&m_shooter, [this]() { return m_input.joystick.GetTrigger(); }),
+  m_manualIntake(&m_intake, [this]() { return m_input.xboxController.GetAButton(); }),
   m_alignTarget(&m_drivetrain),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   /* --- Buttons --- */
-  m_alignButton([this]() { return m_xboxController.GetAButton();})
+  m_alignButton([this]() { return m_input.xboxController.GetAButton();})
 {
   std::cout << "Constructor\n";
   std::cout.flush();

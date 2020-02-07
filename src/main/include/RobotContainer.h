@@ -9,8 +9,6 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/button/JoystickButton.h>
-#include <frc/Joystick.h>
-#include <frc/XboxController.h>
 #include <ctre/phoenix/sensors/PigeonIMU.h>
 
 #include "commands/ExampleCommand.h"
@@ -30,6 +28,7 @@
 #include "subsystems/Arduino.h"
 #include "subsystems/ControlPanelManip.h"
 #include "Choosers.h"
+#include "Input.h"
 #include <vector>
 
 
@@ -51,8 +50,7 @@ class RobotContainer {
 
  private:
   /* --- Controls --- */
-  frc::Joystick m_joystick;
-  frc::XboxController m_xboxController;
+  Input m_input;
 
   /* --- Sensors --- */
   PigeonIMU m_gyro;
