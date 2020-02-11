@@ -20,7 +20,10 @@ Shooter::Shooter() :
     motor1(MOTOR_1_ID, MotorType::kBrushless),
     feedMotor(FEEDMOTOR_1_ID, MotorType::kBrushless),
     accelerator(ACCELERATOR_ID)
-{}
+{
+    motor1.SetSmartCurrentLimit(40);
+    feedMotor.SetSmartCurrentLimit(40);
+}
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {}

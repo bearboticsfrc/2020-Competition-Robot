@@ -19,6 +19,8 @@ ControlPanelManip::ControlPanelManip() :
 {
     extendSolenoid.Set(false);
     retractSolenoid.Set(true);
+
+    motor.SetSmartCurrentLimit(40);
 }
 
 void ControlPanelManip::setPosition(double pos) {

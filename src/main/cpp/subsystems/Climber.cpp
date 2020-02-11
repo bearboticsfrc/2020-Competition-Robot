@@ -12,10 +12,15 @@ using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using climber_consts::MOTOR_1_ID;
 using climber_consts::MOTOR_2_ID;
 
+
+
 Climber::Climber() :
     motor1(MOTOR_1_ID, MotorType::kBrushless),
     motor2(MOTOR_2_ID, MotorType::kBrushless)
-{}
+{
+    motor1.SetSmartCurrentLimit(40);
+    motor2.SetSmartCurrentLimit(40);
+}
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {}

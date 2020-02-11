@@ -14,8 +14,9 @@ using MotorType = rev::CANSparkMax::MotorType;
 using hopper_consts::MOTOR_1_ID;
 
 Hopper::Hopper() :
-    motor1(MOTOR_1_ID, MotorType::kBrushless) {
-}
+    motor1(MOTOR_1_ID, MotorType::kBrushless){
+    motor1.SetSmartCurrentLimit(40);
+    }
 
 // This method will be called once per scheduler run
 void Hopper::Periodic() {}
