@@ -5,20 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/MovableAutonomous.h"
-#include "commands/AlignTarget.h"
-#include "commands/AlignAngle.h"
-#include "commands/AutoShoot.h"
+#include "commands/automatic/MovableAutonomous.h"
+#include "commands/automatic/AlignTarget.h"
+#include "commands/automatic/AlignAngle.h"
+#include "commands/automatic/AutoShoot.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h"
 
 units::degree_t calcDestAngle(units::degree_t startAngle) {
-  units::meter_t x = units::foot_t(-10 * tan(static_cast<units::radian_t>(startAngle).to<double>()));
-  units::meter_t h = units::centimeter_t(86.63);
-  units::meter_t d = units::centimeter_t(94.66);
+  // All distances in meters, but this uses double for the sake of compile time
+  double x = -3.048 * tan(static_cast<units::radian_t>(startAngle).to<double>());
+  double h = 0.8663;
+  double d = 0.9466;
 
-  auto ang = units::radian_t(atan2(h.to<double>(), (d + x).to<double>()));
-  return units::degree_t(-90) - static_cast<units::degree_t>(ang);
+  double ang = atan2(h, d + x) * 360.0 / (2.0 * M_PI);
+  return units::degree_t(-90 - ang);
 }
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.

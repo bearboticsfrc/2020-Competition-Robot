@@ -5,11 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Autonomous.h"
-#include "commands/BallPickup.h"
-#include "commands/AutoDrive.h"
-#include "commands/AutoShoot.h"
-#include "commands/AlignTarget.h"
+#include "commands/automatic/Autonomous.h"
+#include "commands/automatic/BallPickup.h"
+#include "commands/automatic/AutoDrive.h"
+#include "commands/automatic/AutoShoot.h"
+#include "commands/automatic/AlignTarget.h"
 #include "subsystems/Drivetrain.h"
 #include <frc2/command/RamseteCommand.h>
 

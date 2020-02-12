@@ -35,9 +35,9 @@ class AlignAngle
   bool IsFinished() override;
 
 private:
+  Drivetrain *drivetrain;
   units::degree_t target;
   units::degree_t *target2 = nullptr;
-  Drivetrain *drivetrain;
   int successes = 0;
 };
 

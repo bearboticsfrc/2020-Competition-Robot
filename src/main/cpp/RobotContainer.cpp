@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "RobotContainer.h"
-#include "commands/AutoDrive.h"
+#include "commands/automatic/AutoDrive.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/GenericHID.h>
 #include <iostream>

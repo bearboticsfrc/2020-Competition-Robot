@@ -2,19 +2,19 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 Choosers::Choosers() {
-    m_driveChooser.AddObject("Drive disabled", DriveChoice::Disabled);
-    m_driveChooser.AddObject("Drive manual", DriveChoice::Manual);
+    m_driveChooser.AddOption("Drive disabled", DriveChoice::Disabled);
+    m_driveChooser.AddOption("Drive manual", DriveChoice::Manual);
 
-    m_shooterChooser.AddObject("Shooter disabled", ShooterChoice::Disabled);
-    m_shooterChooser.AddObject("Shooter manual", ShooterChoice::Manual);
+    m_shooterChooser.AddOption("Shooter disabled", ShooterChoice::Disabled);
+    m_shooterChooser.AddOption("Shooter manual", ShooterChoice::Manual);
 
-    m_intakeChooser.AddObject("Intake disabled", IntakeChoice::Disabled);
-    m_intakeChooser.AddObject("Intake manual", IntakeChoice::Manual);
+    m_intakeChooser.AddOption("Intake disabled", IntakeChoice::Disabled);
+    m_intakeChooser.AddOption("Intake manual", IntakeChoice::Manual);
 
-    m_autonomousChooser.AddObject("Autonomous disabled", AutonomousChoice::Disabled);
-    m_autonomousChooser.AddObject("Autonomous default", AutonomousChoice::Default);
-    m_autonomousChooser.AddObject("Autonomous default2", AutonomousChoice::Default2);
-    m_autonomousChooser.AddObject("Autonomous movable", AutonomousChoice::Movable);
+    m_autonomousChooser.AddOption("Autonomous disabled", AutonomousChoice::Disabled);
+    m_autonomousChooser.AddOption("Autonomous default", AutonomousChoice::Default);
+    m_autonomousChooser.AddOption("Autonomous default2", AutonomousChoice::Default2);
+    m_autonomousChooser.AddOption("Autonomous movable", AutonomousChoice::Movable);
 
     frc::SmartDashboard::PutData("DriveChooser", &m_driveChooser);
     frc::SmartDashboard::PutData("ShooterChooser", &m_shooterChooser);

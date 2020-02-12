@@ -5,41 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/AutoShoot.h"
-#include <frc2/command/SubsystemBase.h>
+#include "commands/manual/ManualDrive.h"
 #include "Robot.h"
-#include <rev/CANSparkMax.h>
-#include "subsystems/Shooter.h"
-#include "subsystems/Limelight.h"
 
-AutoShoot::AutoShoot(Shooter *s) :
-shooter(s)
-
- {
+DefaultDrive::DefaultDrive(Drivetrain *drive, Input *in) :
+  drivetrain(drive),
+  input(in)
+{
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(shooter);
+  AddRequirements({ drive });
 }
 
 // Called when the command is initially scheduled.
-void AutoShoot::Initialize() {
-  startTime = std::chrono::steady_clock::now();
-  shooter->setDistance(Limelight::getDistance());
-}
+void DefaultDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void AutoShoot::Execute() {
-  shooter->shootOne();
+void DefaultDrive::Execute() {
+  double forward = -input->GetY();
+  double turn = 0.2 * input->GetZ();
+
+  double leftSpeed = forward + turn;
+  double rightSpeed = forward - turn;
+
+  drivetrain->SetAllSpeed(leftSpeed, rightSpeed);
 }
+
 // Called once the command ends or is interrupted.
-void AutoShoot::End(bool interrupted) {
-  shooter->setSpeed(0.0);
-}
+void DefaultDrive::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool AutoShoot::IsFinished() {
-  auto diff = std::chrono::steady_clock::now() - startTime;
-
-  // TODO: Determine how long we need to spend shooting or 
-  // find a better system to shoot all of the power cells
-  return diff > std::chrono::seconds(5);
-}
+bool DefaultDrive::IsFinished() { return false; }

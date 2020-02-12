@@ -5,29 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ManualIntake.h"
-#include "subsystems/Intake.h"
+#include "commands/manual/ManualShooter.h"
+#include "Robot.h"
+#include <rev/CANSparkMax.h>
+#include "subsystems/Shooter.h"
+#include <frc2/command/SubsystemBase.h>
 
-ManualIntake::ManualIntake(Intake *intake, std::function<bool()> shouldIntake) :
-  intake(intake),
-  shouldIntake(shouldIntake)
+ManualShooter::ManualShooter(Shooter *s, std::function<bool()> shouldShoot) :
+  shooter(s),
+  shouldShoot(shouldShoot)
 {
-  AddRequirements(intake);
+  AddRequirements(shooter);
+  // Use addRequirements() here to declare subsystem dependencies.
 }
 
 // Called when the command is initially scheduled.
-void ManualIntake::Initialize() {
-  intake->setExtended(true);
-}
+void ManualShooter::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void ManualIntake::Execute() {
-  bool doIntake = shouldIntake();
-  intake->setIntake(doIntake);
+void ManualShooter::Execute() {
+  bool shoot = shouldShoot();
+
+  if (shoot) {
+    shooter->setSpeed(1.0);
+  } else {
+    shooter->setSpeed(0.0);
+  }
 }
 
+
+
+
 // Called once the command ends or is interrupted.
-void ManualIntake::End(bool interrupted) {}
+void ManualShooter::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool ManualIntake::IsFinished() { return false; }
+bool ManualShooter::IsFinished() { return false; }

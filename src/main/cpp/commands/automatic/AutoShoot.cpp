@@ -5,39 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ManualShooter.h"
+#include "commands/automatic/AutoShoot.h"
+#include <frc2/command/SubsystemBase.h>
 #include "Robot.h"
 #include <rev/CANSparkMax.h>
 #include "subsystems/Shooter.h"
-#include <frc2/command/SubsystemBase.h>
+#include "subsystems/Limelight.h"
 
-ManualShooter::ManualShooter(Shooter *s, std::function<bool()> shouldShoot) :
-  shooter(s),
-  shouldShoot(shouldShoot)
-{
-  AddRequirements(shooter);
+AutoShoot::AutoShoot(Shooter *s) :
+shooter(s)
+
+ {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(shooter);
 }
 
 // Called when the command is initially scheduled.
-void ManualShooter::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void ManualShooter::Execute() {
-  bool shoot = shouldShoot();
-
-  if (shoot) {
-    shooter->setSpeed(1.0);
-  } else {
-    shooter->setSpeed(0.0);
-  }
+void AutoShoot::Initialize() {
+  startTime = std::chrono::steady_clock::now();
+  shooter->setDistance(Limelight::getDistance());
 }
 
-
-
-
+// Called repeatedly when this Command is scheduled to run
+void AutoShoot::Execute() {
+  shooter->shootOne();
+}
 // Called once the command ends or is interrupted.
-void ManualShooter::End(bool interrupted) {}
+void AutoShoot::End(bool interrupted) {
+  shooter->setSpeed(0.0);
+}
 
 // Returns true when the command should end.
-bool ManualShooter::IsFinished() { return false; }
+bool AutoShoot::IsFinished() {
+  auto diff = std::chrono::steady_clock::now() - startTime;
+
+  // TODO: Determine how long we need to spend shooting or 
+  // find a better system to shoot all of the power cells
+  return diff > std::chrono::seconds(5);
+}

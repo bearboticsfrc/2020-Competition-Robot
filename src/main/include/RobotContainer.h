@@ -11,16 +11,15 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <ctre/phoenix/sensors/PigeonIMU.h>
 
-#include "commands/ExampleCommand.h"
-#include "commands/DefaultDrive.h"
-#include "commands/AlignTarget.h"
-#include "commands/BallPickup.h"
-#include "commands/ManualShooter.h"
+#include "commands/manual/ManualDrive.h"
+#include "commands/manual/ManualShooter.h"
+#include "commands/manual/ManualIntake.h"
+#include "commands/automatic/AlignTarget.h"
+#include "commands/automatic/BallPickup.h"
+#include "commands/automatic/Autonomous.h"
+#include "commands/automatic/MovableAutonomous.h"
 #include "commands/ShowColors.h"
-#include "commands/ManualIntake.h"
-#include "commands/Autonomous.h"
-#include "commands/MovableAutonomous.h"
-#include "subsystems/ExampleSubsystem.h"
+
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h" 
 #include "subsystems/Intake.h"

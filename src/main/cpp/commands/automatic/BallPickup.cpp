@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/BallPickup.h"
+#include "commands/automatic/BallPickup.h"
 #include "subsystems/Arduino.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Intake.h"

@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/AlignAngle.h"
+#include "commands/automatic/AlignAngle.h"
 #include "subsystems/Drivetrain.h"
 
 AlignAngle::AlignAngle(units::degree_t target, Drivetrain *drivetrain) :
@@ -54,10 +54,10 @@ double mod(double f, double value) {
 bool doAlign(Drivetrain *drivetrain, units::degree_t target) {
   auto currentYaw = drivetrain->GetPose().Rotation().Degrees();
 
-  auto angleError = target - currentYaw;
-  angleError = units::degree_t(mod(angleError.to<double>() + 180.0, 360.0) - 180.0);
+  auto rawAngleError = target - currentYaw;
+  double angleError = mod(rawAngleError.to<double>() + 180.0, 360.0) - 180.0;
 
-  double speed = angleError.to<double>() / 40.0;
+  double speed = angleError / 40.0;
 
   const double ANGLE_THRESHOLD = 1.0;
   const double MAX_SPEED = 0.3;
@@ -71,5 +71,5 @@ bool doAlign(Drivetrain *drivetrain, units::degree_t target) {
 
   drivetrain->SetAllSpeed(speed, -speed);
 
-  return std::abs(angleError.to<double>()) < ANGLE_THRESHOLD;
+  return std::abs(angleError) < ANGLE_THRESHOLD;
 }

@@ -5,33 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DefaultDrive.h"
-#include "Robot.h"
+#include "commands/manual/ManualIntake.h"
+#include "subsystems/Intake.h"
 
-DefaultDrive::DefaultDrive(Drivetrain *drive, Input *in) :
-  drivetrain(drive),
-  input(in)
+ManualIntake::ManualIntake(Intake *intake, std::function<bool()> shouldIntake) :
+  intake(intake),
+  shouldIntake(shouldIntake)
 {
-  // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({ drive });
+  AddRequirements(intake);
 }
 
 // Called when the command is initially scheduled.
-void DefaultDrive::Initialize() {}
+void ManualIntake::Initialize() {
+  intake->setExtended(true);
+}
 
 // Called repeatedly when this Command is scheduled to run
-void DefaultDrive::Execute() {
-  double forward = -input->GetY();
-  double turn = 0.2 * input->GetZ();
-
-  double leftSpeed = forward + turn;
-  double rightSpeed = forward - turn;
-
-  drivetrain->SetAllSpeed(leftSpeed, rightSpeed);
+void ManualIntake::Execute() {
+  bool doIntake = shouldIntake();
+  intake->setIntake(doIntake);
 }
 
 // Called once the command ends or is interrupted.
-void DefaultDrive::End(bool interrupted) {}
+void ManualIntake::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool DefaultDrive::IsFinished() { return false; }
+bool ManualIntake::IsFinished() { return false; }

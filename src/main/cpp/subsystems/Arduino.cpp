@@ -74,7 +74,7 @@ std::vector<Arduino::RxFrame> Arduino::readRawData() {
 		uint16_t width = (static_cast<uint16_t>(buf[3 + i * 6]) << 8) | buf[4 + i * 6];
 		uint8_t y = buf[5 + i * 6];
 		uint8_t height = buf[6 + i * 6];
-		buffer.push_back(RxFrame{ x, y, width, height });
+		buffer.push_back(RxFrame{ x, width, y, height });
 	}
 
 	frc::SmartDashboard::PutNumber("Balls found", buf[0]);

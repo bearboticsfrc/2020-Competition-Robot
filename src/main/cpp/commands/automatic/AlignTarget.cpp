@@ -5,8 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/AlignTarget.h"
-#include "commands/AlignAngle.h"
+#include "commands/automatic/AlignTarget.h"
+#include "commands/automatic/AlignAngle.h"
 #include "subsystems/Limelight.h"
 #include "subsystems/Drivetrain.h"
 
