@@ -37,3 +37,7 @@ void Intake::setExtended(bool extended) {
         setIntake(false);
     }
 }
+
+bool Intake::getExtended() {
+    return solenoid.Get();
+}

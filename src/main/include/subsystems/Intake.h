@@ -26,6 +26,8 @@ class Intake : public frc2::SubsystemBase {
 
   void setExtended(bool extended);
 
+  bool getExtended();
+
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */

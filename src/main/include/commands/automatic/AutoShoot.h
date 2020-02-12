@@ -36,4 +36,7 @@ public:
 private:
   Shooter *shooter;
   std::chrono::time_point<std::chrono::steady_clock> startTime;
+  int successes = 0;
+  int failures = 0;
+  bool acquired = false;
 };

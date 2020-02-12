@@ -77,6 +77,7 @@ class RobotContainer {
 
   /* --- Buttons --- */
   frc2::Button m_alignButton;
+  frc2::Button m_toggleIntakeButton;
 
   /* --- Choosers --- */
   Choosers choosers;

@@ -7,6 +7,7 @@
 
 #include "RobotContainer.h"
 #include "commands/automatic/AutoDrive.h"
+#include <frc2/command/InstantCommand.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/GenericHID.h>
 #include <iostream>
@@ -31,7 +32,8 @@ RobotContainer::RobotContainer() :
   m_autonomous2(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_movableAutonomous(&m_drivetrain, &m_shooter),
   /* --- Buttons --- */
-  m_alignButton([this]() { return m_input.xboxController.GetAButton();})
+  m_alignButton([this]() { return m_input.xboxController.GetBumper(JoystickHand::kRightHand); }),
+  m_toggleIntakeButton([this]() { return m_input.xboxController.GetBumper(JoystickHand::kLeftHand); })
 {
   std::cout << "Constructor\n";
   std::cout.flush();
@@ -46,8 +48,8 @@ RobotContainer::RobotContainer() :
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  // Configure your button bindings here
-  //m_alignButton.WhenPressed(m_alignTarget);
+  m_alignButton.WhenPressed(m_alignTarget);
+  m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
