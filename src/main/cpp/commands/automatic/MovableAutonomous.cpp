@@ -11,6 +11,7 @@
 #include "commands/automatic/AutoShoot.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h"
+#include <frc2/command/InstantCommand.h>
 
 units::degree_t calcDestAngle(units::degree_t startAngle) {
   // All distances in meters, but this uses double for the sake of compile time
@@ -22,17 +23,12 @@ units::degree_t calcDestAngle(units::degree_t startAngle) {
   return units::degree_t(-90 - ang);
 }
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 MovableAutonomous::MovableAutonomous(Drivetrain *drivetrain, Shooter *shooter) :
   target(std::make_unique<units::degree_t>(0.0)),
   drivetrain(drivetrain)
 {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
-  
   AddCommands(
+    frc2::InstantCommand{ [=] { drivetrain->SetPose(frc::Pose2d()); } },
     AlignTarget(drivetrain),
     AutoShoot(shooter),
     AlignAngle(target.get(), drivetrain).BeforeStarting([this] { *target = calcDestAngle(this->drivetrain->GetPose().Rotation().Degrees()); })

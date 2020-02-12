@@ -12,6 +12,7 @@
 #include "commands/automatic/AlignTarget.h"
 #include "subsystems/Drivetrain.h"
 #include <frc2/command/RamseteCommand.h>
+#include <frc2/command/InstantCommand.h>
 
 
 // TODO: Programmable delay
@@ -23,6 +24,7 @@ Autonomous::Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino,
   // AddCommands(FooCommand(), BarCommand());
 
   AddCommands(
+    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectory().States()[0].pose); } },
     //AlignTarget(drivetrain),
     //AutoShoot(s),
     getTrajectoryCommand(*drivetrain)
@@ -43,6 +45,7 @@ Autonomous2::Autonomous2(Drivetrain *drivetrain, Intake *intake, Arduino *arduin
   // AddCommands(FooCommand(), BarCommand());
 
   AddCommands(
+    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectory2().States()[0].pose); } },
     //AlignTarget(drivetrain),
     //AutoShoot(s),
     getTrajectoryCommand2(*drivetrain)

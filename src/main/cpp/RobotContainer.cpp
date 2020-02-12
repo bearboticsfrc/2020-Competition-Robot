@@ -58,13 +58,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     case AutonomousChoice::Disabled:
       return nullptr;
     case AutonomousChoice::Default:
-      m_drivetrain.SetPose(generateTrajectory().States()[0].pose);
       return &m_autonomous;
     case AutonomousChoice::Default2:
-      m_drivetrain.SetPose(generateTrajectory2().States()[0].pose);
       return &m_autonomous2;
     case AutonomousChoice::Movable:
-      m_drivetrain.SetPose(frc::Pose2d());
       return &m_movableAutonomous;
     default:
       std::cerr << "UNHANDLED OPTION FOR AUTONOMOUS\n";
