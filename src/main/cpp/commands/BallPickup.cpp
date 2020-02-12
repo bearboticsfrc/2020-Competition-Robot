@@ -41,10 +41,8 @@ std::pair<double, double> BallPickup::getTargetSpeeds() {
 
       frc::SmartDashboard::PutNumber("Area", data.width * data.height);
 
-      // TODO: Pick a proper number to divide this by
       double ballDistance = 100.0 / (data.width * data.height);
 
-      // TODO: Maybe adjust how sensitive this is
       return { ballDistance + angleError, ballDistance - angleError };
     } else {
       return { 0.0, 0.0 };

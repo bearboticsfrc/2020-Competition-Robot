@@ -18,6 +18,8 @@ enum class IntakeChoice {
 enum class AutonomousChoice {
     Disabled,
     Default,
+    Default2,
+    Movable,
 };
 
 class Choosers {

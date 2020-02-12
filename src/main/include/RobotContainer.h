@@ -19,6 +19,7 @@
 #include "commands/ShowColors.h"
 #include "commands/ManualIntake.h"
 #include "commands/Autonomous.h"
+#include "commands/MovableAutonomous.h"
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h" 
@@ -72,6 +73,8 @@ class RobotContainer {
   BallPickup m_ballPickup;
   ShowColors m_showColors;
   Autonomous m_autonomous;
+  Autonomous2 m_autonomous2;
+  MovableAutonomous m_movableAutonomous;
 
   /* --- Buttons --- */
   frc2::Button m_alignButton;

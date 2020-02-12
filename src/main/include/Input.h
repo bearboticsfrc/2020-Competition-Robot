@@ -15,6 +15,8 @@ class Input {
   double GetY() const;
   double GetZ() const;
 
+  void SetRumble(double rumble);
+
   frc::Joystick joystick = frc::Joystick(0);
   frc::XboxController xboxController = frc::XboxController(1);
 };

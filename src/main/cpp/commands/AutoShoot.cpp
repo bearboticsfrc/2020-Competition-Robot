@@ -10,6 +10,7 @@
 #include "Robot.h"
 #include <rev/CANSparkMax.h>
 #include "subsystems/Shooter.h"
+#include "subsystems/Limelight.h"
 
 AutoShoot::AutoShoot(Shooter *s) :
 shooter(s)
@@ -22,13 +23,12 @@ shooter(s)
 // Called when the command is initially scheduled.
 void AutoShoot::Initialize() {
   startTime = std::chrono::steady_clock::now();
+  shooter->setDistance(Limelight::getDistance());
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoShoot::Execute() {
-  shooter->setSpeed(1.0);
   shooter->shootOne();
-
 }
 // Called once the command ends or is interrupted.
 void AutoShoot::End(bool interrupted) {

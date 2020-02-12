@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include "Util.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "subsystems/Shooter.h"
 #include <rev/CANSparkMaxLowLevel.h>
 #include <rev/CANSparkMax.h>
@@ -21,12 +23,19 @@ Shooter::Shooter() :
     feedMotor(FEEDMOTOR_1_ID, MotorType::kBrushless),
     accelerator(ACCELERATOR_ID)
 {
+    initDashboardValue("Shooter P Gain", 0.0001);
+
+    // TODO: Determine FF
     motor1.SetSmartCurrentLimit(40);
+
     feedMotor.SetSmartCurrentLimit(40);
 }
 
 // This method will be called once per scheduler run
-void Shooter::Periodic() {}
+void Shooter::Periodic() {
+    frc::SmartDashboard::PutNumber("Shooter Speed", motor1.GetEncoder().GetVelocity());
+    motor1.GetPIDController().SetP(frc::SmartDashboard::GetNumber("Shooter P Gain", 0.0));
+}
 
 void Shooter::setSpeed(double speed) {
     motor1.Set(speed);

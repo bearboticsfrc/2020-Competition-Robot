@@ -13,6 +13,8 @@ Choosers::Choosers() {
 
     m_autonomousChooser.AddObject("Autonomous disabled", AutonomousChoice::Disabled);
     m_autonomousChooser.AddObject("Autonomous default", AutonomousChoice::Default);
+    m_autonomousChooser.AddObject("Autonomous default2", AutonomousChoice::Default2);
+    m_autonomousChooser.AddObject("Autonomous movable", AutonomousChoice::Movable);
 
     frc::SmartDashboard::PutData("DriveChooser", &m_driveChooser);
     frc::SmartDashboard::PutData("ShooterChooser", &m_shooterChooser);

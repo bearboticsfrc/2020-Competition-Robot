@@ -7,13 +7,15 @@
 
 #include "Input.h"
 
-const double DEADZONE = 0.10;
+using RumbleType = frc::GenericHID::RumbleType;
+
+const double DEADZONE = 0.05;
 
 template<class T> int signum(T value) {
-    return value > T{0} - value < T{0};
+    return (value > T{0}) - (value < T{0});
 }
 
-double applyDeadzone(double value, double deadzone) {
+double applyDeadzone(double value) {
     double sign = signum(value);
     double magn = std::abs(value);
 
@@ -25,14 +27,24 @@ double applyDeadzone(double value, double deadzone) {
     return newMag * sign;
 }
 
+double applyFilters(double value) {
+    double deadzoned = applyDeadzone(value);
+    return std::pow(deadzoned, 3.0);
+}
+
 double Input::GetX() const {
-    return applyDeadzone(joystick.GetX(), DEADZONE);
+    return applyFilters(joystick.GetX());
 }
 
 double Input::GetY() const {
-    return applyDeadzone(joystick.GetY(), DEADZONE);
+    return applyFilters(joystick.GetY());
 }
 
 double Input::GetZ() const {
-    return applyDeadzone(joystick.GetZ(), DEADZONE);
+    return applyFilters(joystick.GetZ());
+}
+
+void Input::SetRumble(double rumble) {
+    xboxController.SetRumble(RumbleType::kLeftRumble, rumble);
+    xboxController.SetRumble(RumbleType::kRightRumble, rumble);
 }

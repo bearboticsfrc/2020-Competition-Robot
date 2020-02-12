@@ -23,13 +23,33 @@ Autonomous::Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino,
   // AddCommands(FooCommand(), BarCommand());
 
   AddCommands(
-    AlignTarget(drivetrain),
-    AutoShoot(s),
-    getTrajectoryCommand(*drivetrain),
+    //AlignTarget(drivetrain),
+    //AutoShoot(s),
+    getTrajectoryCommand(*drivetrain)
     // TODO: Put this back in
     //BallPickup(drivetrain, intake, arduino),
     // TODO: Drive back
-    AlignTarget(drivetrain),
-    AutoShoot(s)
+    //AlignTarget(drivetrain),
+    //AutoShoot(s)
+  );
+}
+
+// TODO: Programmable delay
+// NOTE:  Consider using this command inline, rather than writing a subclass.
+// For more information, see:
+// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+Autonomous2::Autonomous2(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *s) {
+  // Add your commands here, e.g.
+  // AddCommands(FooCommand(), BarCommand());
+
+  AddCommands(
+    //AlignTarget(drivetrain),
+    //AutoShoot(s),
+    getTrajectoryCommand2(*drivetrain)
+    // TODO: Put this back in
+    //BallPickup(drivetrain, intake, arduino),
+    // TODO: Drive back
+    //AlignTarget(drivetrain),
+    //AutoShoot(s)
   );
 }

@@ -19,5 +19,7 @@ namespace frc2 {
 }
 
 frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain);
+frc2::RamseteCommand getTrajectoryCommand2(Drivetrain &drivetrain);
 
 frc::Trajectory generateTrajectory();
+frc::Trajectory generateTrajectory2();

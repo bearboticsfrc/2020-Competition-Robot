@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/AlignTarget.h"
+#include "commands/AlignAngle.h"
 #include "subsystems/Limelight.h"
 #include "subsystems/Drivetrain.h"
 
@@ -28,26 +29,11 @@ void AlignTarget::Execute() {
   if (Limelight::targetFound()) {
     fails = 0;
 
-    double x = Limelight::getX();
-    double lastTargetYaw = drivetrain->GetLastPose().Rotation().Degrees().to<double>() + x;
-    double currentYaw = drivetrain->GetPose().Rotation().Degrees().to<double>();
-    double angleError = lastTargetYaw - currentYaw;
-    double speed = angleError / 40.0;
+    auto lastTargetYaw = drivetrain->GetLastPose().Rotation().Degrees() + units::degree_t(Limelight::getX());
 
-    const double ANGLE_THRESHOLD = 1.0;
-    const double MAX_SPEED = 0.3;
-
-    if (std::abs(angleError) < ANGLE_THRESHOLD) {
+    if(doAlign(drivetrain, lastTargetYaw)) {
       successes += 1;
     }
-
-    if (speed > MAX_SPEED) {
-      speed = MAX_SPEED;
-    } else if (speed < -MAX_SPEED) {
-      speed = -MAX_SPEED;
-    }
-
-    drivetrain->SetAllSpeed(speed, -speed);
   } else {
     drivetrain->SetAllSpeed(0.0, 0.0);
     fails += 1;

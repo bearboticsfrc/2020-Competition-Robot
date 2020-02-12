@@ -27,7 +27,6 @@ T correctEndianness(T value) {
 	return *reinterpret_cast< T* >(data);
 }
 
-// TODO: Check endianness here too
 std::pair< std::vector<SensorFrame>, bool > Arduino::readData() {
 	std::vector<RxFrame> rawFrames = readRawData();
 
@@ -55,7 +54,6 @@ std::pair< std::vector<SensorFrame>, bool > Arduino::readData() {
 	};
 }
 
-// TODO: Check endianness
 // RoboRio is likely big endian and Arduinos are little endian
 std::vector<Arduino::RxFrame> Arduino::readRawData() {
 	uint8_t b[3] = { 'o', 'w', 'o' };

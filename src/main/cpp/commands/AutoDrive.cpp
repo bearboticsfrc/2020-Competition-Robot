@@ -20,6 +20,11 @@ frc::Trajectory generateTrajectory() {
   return trajectory;
 }
 
+frc::Trajectory generateTrajectory2() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Unnamed_0.wpilib.json");
+  return trajectory;
+}
+
 frc::DifferentialDriveKinematics getKinematics() {
   return frc::DifferentialDriveKinematics { 24_in };
 }
@@ -33,9 +38,9 @@ namespace constants {
   double MAX_ACCEL = 0.0; // TODO
 }
 
-frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain) {
+frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain, frc::Trajectory trajectory) {
   return frc2::RamseteCommand(
-    generateTrajectory(),
+    trajectory,
     [&drivetrain]() { return drivetrain.GetPose(); },
     frc::RamseteController(
       2.0,
@@ -45,4 +50,12 @@ frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain) {
     [&drivetrain](units::meters_per_second_t left, units::meters_per_second_t right) { drivetrain.SetSpeeds(left, right); },
     { &drivetrain }
   );
+}
+
+frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectory());
+}
+
+frc2::RamseteCommand getTrajectoryCommand2(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectory2());
 }

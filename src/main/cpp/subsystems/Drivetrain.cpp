@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Drivetrain.h"
+#include "Util.h"
 #include <rev/CANSparkMaxLowLevel.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/geometry/Transform2d.h>
@@ -15,9 +16,13 @@
 #include <vector>
 #include <cmath>
 
-
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
+
+const std::string LB_P_GAIN_NAME = "Left Back P Gain";
+const std::string LF_P_GAIN_NAME = "Left Front P Gain";
+const std::string RB_P_GAIN_NAME = "Right Back P Gain";
+const std::string RF_P_GAIN_NAME = "Right Front P Gain";
 
 Drivetrain::Drivetrain(PigeonIMU *gyro) :
     gyro(gyro),
@@ -28,6 +33,11 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     rightBack(DriveConsts::RIGHT_2_ID, MotorType::kBrushless),
     rightFront(DriveConsts::RIGHT_1_ID, MotorType::kBrushless)
 {
+    initDashboardValue(LB_P_GAIN_NAME, 0.0);
+    initDashboardValue(LF_P_GAIN_NAME, 0.0);
+    initDashboardValue(RB_P_GAIN_NAME, 0.0);
+    initDashboardValue(RF_P_GAIN_NAME, 0.0);
+
     leftBack.SetInverted(false);
     leftFront.SetInverted(false);
 
@@ -45,7 +55,6 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     rightBack.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     rightFront.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
-    // TODO: Determine P gains
     leftBack.GetPIDController().SetFF(1.0 / 5700.0);
     leftFront.GetPIDController().SetFF(1.0 / 5700.0);
     rightBack.GetPIDController().SetFF(1.0 / 5700.0);
@@ -55,7 +64,6 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     leftFront.SetSmartCurrentLimit(40);
     rightBack.SetSmartCurrentLimit(40);
     rightFront.SetSmartCurrentLimit(40);
-
 }
 
 // In wheel rotations per motor rotation
@@ -69,6 +77,21 @@ const auto WHEELBASE = units::meter_t(0.56515) /* 22.25 inches */;
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic() {
+    if (PID_TUNING) {
+        leftBack.GetPIDController().SetP(
+            frc::SmartDashboard::GetNumber(LB_P_GAIN_NAME, 0.0)
+        );
+        leftFront.GetPIDController().SetP(
+            frc::SmartDashboard::GetNumber(LF_P_GAIN_NAME, 0.0)
+        );
+        rightBack.GetPIDController().SetP(
+            frc::SmartDashboard::GetNumber(RB_P_GAIN_NAME, 0.0)
+        );
+        rightFront.GetPIDController().SetP(
+            frc::SmartDashboard::GetNumber(RF_P_GAIN_NAME, 0.0)
+        );
+    }
+
     double leftPos = leftFront.GetEncoder().GetPosition();
     double rightPos = rightFront.GetEncoder().GetPosition();
 
@@ -142,7 +165,6 @@ frc::Pose2d Drivetrain::GetPose() {
 frc::Pose2d Drivetrain::GetLastPose() {
     return previousPose;
 }
-
 
 void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
     leftFront.GetPIDController().SetReference(leftSpeed * 5700.0, rev::ControlType::kVelocity);

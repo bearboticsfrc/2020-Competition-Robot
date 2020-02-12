@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <units/units.h>
 
 class Limelight : public frc2::SubsystemBase {
  public:
@@ -18,6 +19,8 @@ class Limelight : public frc2::SubsystemBase {
   static double getX();
 
   static double getY();
+
+  static units::meter_t getDistance();
 
   static void setLights(bool enabled);
 
