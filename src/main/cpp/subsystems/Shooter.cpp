@@ -5,6 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+// Determine Shooter Max Speed -> Feedforward
+// Determine Accelerator Max Speed -> Feedforward
+// Tune Shooter PID
+// Tune Accelerator PID
+// Determine limelight distance calculations
+// Determine speeds/distance calculation
+
 #include "Util.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "subsystems/Shooter.h"
@@ -15,31 +22,60 @@
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using shooter_consts::MOTOR_1_ID;
-using shooter_consts::FEEDMOTOR_1_ID;
+using shooter_consts::MOTOR_2_ID;
+using shooter_consts::FEEDMOTOR_ID;
 using shooter_consts::ACCELERATOR_ID;
 
 Shooter::Shooter() :
     motor1(MOTOR_1_ID, MotorType::kBrushless),
-    feedMotor(FEEDMOTOR_1_ID, MotorType::kBrushless),
-    accelerator(ACCELERATOR_ID)
+    motor2(MOTOR_2_ID, MotorType::kBrushless),
+    accelerator(ACCELERATOR_ID, MotorType::kBrushed),
+    feedMotor(FEEDMOTOR_ID)
 {
     initDashboardValue("Shooter P Gain", 0.0001);
+    initDashboardValue("Accelerator P Gain", 0.0001);
 
-    // TODO: Determine FF
+    motor1.RestoreFactoryDefaults();
+    motor2.RestoreFactoryDefaults();
+
+    motor1.GetPIDController().SetFF(1.0 / 5770.0);
+    motor1.GetPIDController().SetP(0.00001);
+    motor2.GetPIDController().SetFF(1.0 / 5770.0);
+    motor2.GetPIDController().SetP(0.00001);
+
     motor1.SetSmartCurrentLimit(40);
+    motor2.SetSmartCurrentLimit(40);
+    accelerator.SetSmartCurrentLimit(40);
 
-    feedMotor.SetSmartCurrentLimit(40);
+    motor1.SetInverted(false);
+    motor2.SetInverted(true);
+
+    accelerator.SetInverted(false);
 }
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
     frc::SmartDashboard::PutNumber("Shooter Speed", motor1.GetEncoder().GetVelocity());
-    motor1.GetPIDController().SetP(frc::SmartDashboard::GetNumber("Shooter P Gain", 0.0));
+    frc::SmartDashboard::PutNumber("Accelerator Speed", accelerator.GetEncoder().GetVelocity());
+
+    double feedSpeed;
+    if (std::chrono::steady_clock::now() - startTime < std::chrono::milliseconds(1000)) {
+        feedSpeed = 1.0;
+    } else {
+        feedSpeed = 0.0;
+    }
+    feedMotor.Set(ControlMode::PercentOutput, feedSpeed);
 }
 
 void Shooter::setSpeed(double speed) {
-    motor1.Set(speed);
-    accelerator.Set(ControlMode::PercentOutput, speed);
+    motor1.GetPIDController().SetReference(speed * 5700.0, rev::ControlType::kVelocity);
+    motor2.GetPIDController().SetReference(speed * 5700.0, rev::ControlType::kVelocity);
+
+    if (speed < 0.01) {
+        accelerator.Set(0.0);
+    } else {
+        accelerator.Set(0.75);
+    }
 }
 
 void Shooter::setDistance(units::meter_t distance) {
@@ -48,6 +84,5 @@ void Shooter::setDistance(units::meter_t distance) {
 }
 
 void Shooter::shootOne() {
-    double position = feedMotor.GetEncoder().GetPosition();
-    feedMotor.GetPIDController().SetReference(position + 1.0, rev::ControlType::kPosition);
+    startTime = std::chrono::steady_clock::now();
 }

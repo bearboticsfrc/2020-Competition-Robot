@@ -20,10 +20,10 @@ namespace ctre {
 }
 
 namespace DriveConsts {
-  const int LEFT_2_ID = 3;
-  const int RIGHT_2_ID = 1;
-  const int LEFT_1_ID = 4;
-  const int RIGHT_1_ID = 2;
+  const int LEFT_2_ID = 1;
+  const int RIGHT_2_ID = 3;
+  const int LEFT_1_ID = 2;
+  const int RIGHT_1_ID = 4;
 }
 
 class Drivetrain : public frc2::SubsystemBase {

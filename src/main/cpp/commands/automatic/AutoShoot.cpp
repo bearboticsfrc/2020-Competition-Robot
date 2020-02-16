@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/automatic/AutoShoot.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/SubsystemBase.h>
 #include "Robot.h"
 #include <rev/CANSparkMax.h>
@@ -22,9 +23,14 @@ shooter(s)
 
 // Called when the command is initially scheduled.
 void AutoShoot::Initialize() {
-  Limelight::setLights(true);
+  frc::SmartDashboard::PutNumber("FoundY", 0.0);
 
-  startTime = std::chrono::steady_clock::now();
+  double speed = frc::SmartDashboard::GetNumber("ShootSpeed", 0.0);
+  shooter->setSpeed(speed);
+  Limelight::setLights(true);
+  acquired = false;
+  failures = 0;
+  successes = 0;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -37,13 +43,19 @@ void AutoShoot::Execute() {
       successes = 0;
       ++failures;
     }
-  } else if (!acquired) {
-    shooter->setDistance(Limelight::getDistance());
-    acquired = true;
-    Limelight::setLights(false);
-  }
+  } else {
+    // We have enough successes to acquire
+    if (!acquired) {
+      double x = Limelight::getY();
+      frc::SmartDashboard::PutNumber("FoundY", x);
+      double y = 0.000450892 * (x * x) - 0.0166284 * x + 1.00753;
+      shooter->setSpeed(y);
+      acquired = true;
+      startTime = std::chrono::steady_clock::now();
+    } 
 
-  shooter->shootOne();
+    shooter->shootOne();
+  }
 }
 // Called once the command ends or is interrupted.
 void AutoShoot::End(bool interrupted) {
@@ -55,7 +67,17 @@ void AutoShoot::End(bool interrupted) {
 bool AutoShoot::IsFinished() {
   auto diff = std::chrono::steady_clock::now() - startTime;
 
+  if (failures >= 20) {
+    std::cout << "Too many failures\n";
+    return true;
+  }
+
   // TODO: Determine how long we need to spend shooting or 
   // find a better system to shoot all of the power cells
-  return diff > std::chrono::seconds(5) || failures >= 5;
+  if (acquired && diff > std::chrono::seconds(3)) {
+    std::cout << "Ran for 3 seconds\n";
+    return true;
+  }
+
+  return false;
 }

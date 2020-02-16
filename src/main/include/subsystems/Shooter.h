@@ -10,12 +10,14 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 #include <ctre/Phoenix.h>
+#include <chrono>
 
 // TODO: Determine motor IDs
  namespace shooter_consts {
-  const int MOTOR_1_ID = 254;
-  const int FEEDMOTOR_1_ID = 253;
-  const int ACCELERATOR_ID = 252;
+  const int MOTOR_1_ID = 7;
+  const int MOTOR_2_ID = 8;
+  const int FEEDMOTOR_ID = 11;
+  const int ACCELERATOR_ID = 5;
 }
 
 class Shooter : public frc2::SubsystemBase {
@@ -38,7 +40,11 @@ class Shooter : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   rev::CANSparkMax motor1;
-  rev::CANSparkMax feedMotor;
+  rev::CANSparkMax motor2;
 
-  VictorSPX accelerator;
+  rev::CANSparkMax accelerator;
+
+  VictorSPX feedMotor;
+
+  std::chrono::time_point<std::chrono::steady_clock> startTime;
 };

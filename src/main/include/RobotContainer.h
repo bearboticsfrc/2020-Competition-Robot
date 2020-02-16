@@ -15,6 +15,7 @@
 #include "commands/manual/ManualShooter.h"
 #include "commands/manual/ManualIntake.h"
 #include "commands/automatic/AlignTarget.h"
+#include "commands/automatic/AutoShoot.h"
 #include "commands/automatic/BallPickup.h"
 #include "commands/automatic/Autonomous.h"
 #include "commands/automatic/MovableAutonomous.h"
@@ -58,16 +59,17 @@ class RobotContainer {
   /* --- Subsystems --- */
   Drivetrain m_drivetrain;
   Shooter m_shooter;
-  Intake m_intake;
+  //Intake m_intake;
   ColorSensor m_colorSensor;
   Arduino m_arduino;
   Singulator m_singulator;
-  ControlPanelManip m_controlPanelManip;
+  //ControlPanelManip m_controlPanelManip;
 
   /* --- Commands --- */
   DefaultDrive m_defaultDrive;
   ManualShooter m_manualShooter;
   ManualIntake m_manualIntake;
+  AutoShoot m_autoShoot;
   AlignTarget m_alignTarget;
   BallPickup m_ballPickup;
   ShowColors m_showColors;

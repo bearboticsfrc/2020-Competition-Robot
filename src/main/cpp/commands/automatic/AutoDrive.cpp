@@ -29,15 +29,6 @@ frc::DifferentialDriveKinematics getKinematics() {
   return frc::DifferentialDriveKinematics { 24_in };
 }
 
-namespace constants {
-  double KS = 0.0; // TODO
-  double KV = 0.0; // TODO
-  double KA = 0.0; // TODO
-
-  double MAX_SPEED = 0.0; // TODO
-  double MAX_ACCEL = 0.0; // TODO
-}
-
 frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain, frc::Trajectory trajectory) {
   return frc2::RamseteCommand(
     trajectory,

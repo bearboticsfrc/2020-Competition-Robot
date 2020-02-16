@@ -10,34 +10,36 @@
 #include <rev/CANSparkMax.h>
 #include "subsystems/Shooter.h"
 #include <frc2/command/SubsystemBase.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include "Util.h"
 
 ManualShooter::ManualShooter(Shooter *s, std::function<bool()> shouldShoot) :
   shooter(s),
   shouldShoot(shouldShoot)
 {
+  initDashboardValue("ShootSpeed", 0.1);
   AddRequirements(shooter);
   // Use addRequirements() here to declare subsystem dependencies.
 }
 
 // Called when the command is initially scheduled.
-void ManualShooter::Initialize() {}
+void ManualShooter::Initialize() {
+  shooter->setSpeed(frc::SmartDashboard::GetNumber("ShootSpeed", 0.0));
+}
 
 // Called repeatedly when this Command is scheduled to run
 void ManualShooter::Execute() {
   bool shoot = shouldShoot();
 
   if (shoot) {
-    shooter->setSpeed(1.0);
-  } else {
-    shooter->setSpeed(0.0);
+    shooter->shootOne();
   }
 }
 
-
-
-
 // Called once the command ends or is interrupted.
-void ManualShooter::End(bool interrupted) {}
+void ManualShooter::End(bool interrupted) {
+  shooter->setSpeed(0.0);
+}
 
 // Returns true when the command should end.
 bool ManualShooter::IsFinished() { return false; }

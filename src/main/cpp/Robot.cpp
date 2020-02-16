@@ -9,6 +9,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 #include <iostream>
+#include "subsystems/Limelight.h"
 
 void Robot::RobotInit() {
   std::cout << "Hello, world!\n";
@@ -54,6 +55,8 @@ void Robot::TeleopInit() {
   // continue until interrupted by another command, remove
   // this line or comment it out.
   m_teleopCommands = m_container.GetTeleopCommands();
+
+  Limelight::setLights(true);
 
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Cancel();
