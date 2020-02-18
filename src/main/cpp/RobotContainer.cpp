@@ -24,14 +24,14 @@ RobotContainer::RobotContainer() :
   /* --- Commands --- */
   m_defaultDrive(&m_drivetrain, &m_input),
   m_manualShooter(&m_shooter, [this]() { return m_input.xboxController.GetBButton(); }),
-  m_manualIntake(/*TODO: &m_intake*/nullptr, [this]() { return m_input.xboxController.GetAButton(); }),
+  m_manualIntake(&m_intake, [this]() { return m_input.xboxController.GetAButton(); }),
   m_alignTarget(&m_drivetrain),
-  m_ballPickup(&m_drivetrain, /*TODO: &m_intake*/nullptr, &m_arduino),
+  m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
-  m_autonomous(&m_drivetrain, /*TODO: &m_intake*/nullptr, &m_arduino, &m_shooter),
-  m_autonomous2(&m_drivetrain, /*TODO: &m_intake*/nullptr, &m_arduino, &m_shooter),
-  m_autoShoot(&m_shooter),
-  m_movableAutonomous(&m_drivetrain, &m_shooter),
+  m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
+  m_autonomous2(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
+  m_autoShoot(&m_shooter, &m_intake),
+  m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   /* --- Buttons --- */
   m_alignButton([this]() { return m_input.xboxController.GetBumper(JoystickHand::kRightHand); }),
   m_toggleIntakeButton([this]() { return m_input.xboxController.GetBumper(JoystickHand::kLeftHand); })
@@ -51,7 +51,7 @@ RobotContainer::RobotContainer() :
 
 void RobotContainer::ConfigureButtonBindings() {
   m_alignButton.WhenPressed(m_alignTarget);
-  //m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
+  m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

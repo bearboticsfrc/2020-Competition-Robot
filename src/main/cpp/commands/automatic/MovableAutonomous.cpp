@@ -23,14 +23,14 @@ units::degree_t calcDestAngle(units::degree_t startAngle) {
   return units::degree_t(-90 - ang);
 }
 
-MovableAutonomous::MovableAutonomous(Drivetrain *drivetrain, Shooter *shooter) :
+MovableAutonomous::MovableAutonomous(Drivetrain *drivetrain, Shooter *shooter, Intake *intake) :
   target(std::make_unique<units::degree_t>(0.0)),
   drivetrain(drivetrain)
 {
   AddCommands(
     frc2::InstantCommand{ [=] { drivetrain->SetPose(frc::Pose2d()); } },
     AlignTarget(drivetrain),
-    AutoShoot(shooter),
+    AutoShoot(shooter, intake),
     AlignAngle(target.get(), drivetrain).BeforeStarting([this] { *target = calcDestAngle(this->drivetrain->GetPose().Rotation().Degrees()); })
     // TODO: Drive forward
   );

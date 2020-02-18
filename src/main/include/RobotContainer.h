@@ -59,7 +59,7 @@ class RobotContainer {
   /* --- Subsystems --- */
   Drivetrain m_drivetrain;
   Shooter m_shooter;
-  //Intake m_intake;
+  Intake m_intake;
   ColorSensor m_colorSensor;
   Arduino m_arduino;
   Singulator m_singulator;

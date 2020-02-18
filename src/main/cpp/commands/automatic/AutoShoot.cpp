@@ -11,12 +11,13 @@
 #include "Robot.h"
 #include <rev/CANSparkMax.h>
 #include "subsystems/Shooter.h"
+#include "subsystems/Intake.h"
 #include "subsystems/Limelight.h"
 
-AutoShoot::AutoShoot(Shooter *s) :
-shooter(s)
-
- {
+AutoShoot::AutoShoot(Shooter *s, Intake *i) :
+  shooter(s),
+  intake(i)
+{
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(shooter);
 }
@@ -31,6 +32,9 @@ void AutoShoot::Initialize() {
   acquired = false;
   failures = 0;
   successes = 0;
+
+  oldIntakeState = intake->getExtended();
+  intake->setExtended(true);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -61,6 +65,8 @@ void AutoShoot::Execute() {
 void AutoShoot::End(bool interrupted) {
   shooter->setSpeed(0.0);
   Limelight::setLights(false);
+
+  intake->setExtended(oldIntakeState);
 }
 
 // Returns true when the command should end.

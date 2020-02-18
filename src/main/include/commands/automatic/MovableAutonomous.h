@@ -12,12 +12,13 @@
 
 class Drivetrain;
 class Shooter;
+class Intake;
 
 class MovableAutonomous
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  MovableAutonomous> {
 public:
-  MovableAutonomous(Drivetrain *drivetrain, Shooter *shooter);
+  MovableAutonomous(Drivetrain *drivetrain, Shooter *shooter, Intake *intake);
 
 private:
   std::unique_ptr<units::degree_t> target;

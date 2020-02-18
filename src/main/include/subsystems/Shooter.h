@@ -14,8 +14,7 @@
 
 // TODO: Determine motor IDs
  namespace shooter_consts {
-  const int MOTOR_1_ID = 7;
-  const int MOTOR_2_ID = 8;
+  const int MOTOR_ID = 8;
   const int FEEDMOTOR_ID = 11;
   const int ACCELERATOR_ID = 5;
 }
@@ -28,8 +27,6 @@ class Shooter : public frc2::SubsystemBase {
   void shootOne();
   void setFeed(double speed);
 
-  void setDistance(units::meter_t distance);
-
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -39,10 +36,9 @@ class Shooter : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  rev::CANSparkMax motor1;
-  rev::CANSparkMax motor2;
+  rev::CANSparkMax motor;
 
-  rev::CANSparkMax accelerator;
+  VictorSPX accelerator;
 
   VictorSPX feedMotor;
 
