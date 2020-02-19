@@ -11,18 +11,24 @@
 #include <rev/ControlType.h>
 
 using MotorType = rev::CANSparkMax::MotorType;
-using hopper_consts::MOTOR_1_ID;
+using hopper_consts::INTAKE_MOTOR_ID;
+using hopper_consts::AGITATE_MOTOR_ID;
 
 Hopper::Hopper() :
-    motor1(MOTOR_1_ID, MotorType::kBrushless)
+    intakeMotor(INTAKE_MOTOR_ID, MotorType::kBrushless),
+    agitateMotor(AGITATE_MOTOR_ID, MotorType::kBrushless)
 {
-    motor1.SetSmartCurrentLimit(20);
+    intakeMotor.SetSmartCurrentLimit(10);
+    agitateMotor.SetSmartCurrentLimit(10);
 }
 
 // This method will be called once per scheduler run
 void Hopper::Periodic() {}
 
-
 void Hopper::setIntake(bool intake) {
-    motor1.Set(intake);
+    intakeMotor.Set(intake);
+}
+
+void Hopper::setOuttake(bool outtake) {
+    agitateMotor.Set(outtake);
 }

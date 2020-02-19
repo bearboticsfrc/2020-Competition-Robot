@@ -21,6 +21,8 @@ RobotContainer::RobotContainer() :
   m_gyro(GYRO_ID),
   /* --- Subsystems --- */
   m_drivetrain(&m_gyro),
+  m_intake(&m_hopper),
+  m_shooter(&m_hopper),
   /* --- Commands --- */
   m_defaultDrive(&m_drivetrain, &m_input),
   m_manualShooter(&m_shooter, [this]() { return m_input.xboxController.GetBButton(); }),

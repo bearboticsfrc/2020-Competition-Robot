@@ -27,6 +27,7 @@
 #include "subsystems/ColorSensor.h"
 #include "subsystems/Singulator.h"
 #include "subsystems/Arduino.h"
+#include "subsystems/Hopper.h"
 #include "subsystems/ControlPanelManip.h"
 #include "Choosers.h"
 #include "Input.h"
@@ -57,6 +58,7 @@ class RobotContainer {
   PigeonIMU m_gyro;
 
   /* --- Subsystems --- */
+  Hopper m_hopper;
   Drivetrain m_drivetrain;
   Shooter m_shooter;
   Intake m_intake;

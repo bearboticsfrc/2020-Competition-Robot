@@ -6,24 +6,27 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Intake.h"
+#include "subsystems/Hopper.h"
 #include <rev/CANSparkMaxLowLevel.h>
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
-using intake_consts::MOTOR_1_ID;
+using intake_consts::MOTOR_ID;
 using intake_consts::SOLENOID_ID;
 
-Intake::Intake() :
-    motor1(MOTOR_1_ID, MotorType::kBrushless),
-    solenoid(SOLENOID_ID)
+Intake::Intake(Hopper *hopper) :
+    motor(MOTOR_ID, MotorType::kBrushless),
+    solenoid(SOLENOID_ID),
+    hopper(hopper)
 {
-    motor1.SetSmartCurrentLimit(40);
+    motor.SetSmartCurrentLimit(40);
 }
 
 // This method will be called once per scheduler run
 void Intake::Periodic() {}
 
 void Intake::setIntake(bool intake) {
-    motor1.Set(intake);
+    motor.Set(intake);
+    hopper->setIntake(intake);
 }
 
 void Intake::setExtended(bool extended) {

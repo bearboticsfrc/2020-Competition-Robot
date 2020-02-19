@@ -13,8 +13,9 @@
 // Determine speeds/distance calculation
 
 #include "Util.h"
-#include <frc/smartdashboard/SmartDashboard.h>
 #include "subsystems/Shooter.h"
+#include "subsystems/Hopper.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <rev/CANSparkMaxLowLevel.h>
 #include <rev/CANSparkMax.h>
 #include <rev/ControlType.h>
@@ -25,10 +26,11 @@ using shooter_consts::MOTOR_ID;
 using shooter_consts::FEEDMOTOR_ID;
 using shooter_consts::ACCELERATOR_ID;
 
-Shooter::Shooter() :
+Shooter::Shooter(Hopper *hopper) :
     motor(MOTOR_ID, MotorType::kBrushless),
     accelerator(ACCELERATOR_ID),
-    feedMotor(FEEDMOTOR_ID)
+    feedMotor(FEEDMOTOR_ID),
+    hopper(hopper)
 {
     initDashboardValue("Shooter P Gain", 0.0001);
     initDashboardValue("Accelerator P Gain", 0.0001);
@@ -49,8 +51,12 @@ Shooter::Shooter() :
 void Shooter::Periodic() {
     frc::SmartDashboard::PutNumber("Shooter Speed", motor.GetEncoder().GetVelocity());
 
+    bool feeding = std::chrono::steady_clock::now() - startTime < std::chrono::milliseconds(1000);
+
+    hopper->setOuttake(feeding);
+
     double feedSpeed;
-    if (std::chrono::steady_clock::now() - startTime < std::chrono::milliseconds(1000)) {
+    if (feeding) {
         feedSpeed = 1.0;
     } else {
         feedSpeed = 0.0;

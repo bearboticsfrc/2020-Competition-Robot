@@ -12,14 +12,16 @@
 
 // TODO: Determine motor IDs
  namespace hopper_consts {
-  const int MOTOR_1_ID = 254;
+  const int INTAKE_MOTOR_ID = 13;
+  const int AGITATE_MOTOR_ID = 14;
 }
 
 class Hopper : public frc2::SubsystemBase {
  public:
   Hopper();
 
-    void setIntake(bool intake);
+  void setIntake(bool intake);
+  void setOuttake(bool outtake);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -30,5 +32,6 @@ class Hopper : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  rev::CANSparkMax motor1;
+  rev::CANSparkMax intakeMotor;
+  rev::CANSparkMax agitateMotor;
 };

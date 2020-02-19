@@ -11,16 +11,17 @@
 #include <frc/Solenoid.h>
 #include <rev/CANSparkMax.h>
 
+class Hopper;
+
 // TODO: Determine motor IDs
 namespace intake_consts {
-  const int MOTOR_1_ID = 250;
-  const int MOTOR_2_ID = 249;
+  const int MOTOR_ID = 12;
   const int SOLENOID_ID = 1;
 }
 
 class Intake : public frc2::SubsystemBase {
  public:
-  Intake();
+  Intake(Hopper *hopper);
 
   void setIntake(bool intake);
 
@@ -31,7 +32,9 @@ class Intake : public frc2::SubsystemBase {
   void Periodic();
 
  private:
-  rev::CANSparkMax motor1;
+  rev::CANSparkMax motor;
 
   frc::Solenoid solenoid;
+
+  Hopper *hopper;
 };

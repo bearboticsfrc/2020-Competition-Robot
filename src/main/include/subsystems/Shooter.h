@@ -12,6 +12,8 @@
 #include <ctre/Phoenix.h>
 #include <chrono>
 
+class Hopper;
+
 // TODO: Determine motor IDs
  namespace shooter_consts {
   const int MOTOR_ID = 8;
@@ -21,7 +23,7 @@
 
 class Shooter : public frc2::SubsystemBase {
  public:
-  Shooter();
+  Shooter(Hopper *hopper);
 
   void setSpeed(double speed);
   void shootOne();
@@ -43,4 +45,6 @@ class Shooter : public frc2::SubsystemBase {
   VictorSPX feedMotor;
 
   std::chrono::time_point<std::chrono::steady_clock> startTime;
+
+  Hopper *hopper;
 };
