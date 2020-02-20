@@ -24,7 +24,7 @@ ManualShooter::ManualShooter(Shooter *s, std::function<bool()> shouldShoot) :
 
 // Called when the command is initially scheduled.
 void ManualShooter::Initialize() {
-  shooter->setSpeed(frc::SmartDashboard::GetNumber("ShootSpeed", 0.0));
+  shooter->setSpeed(0.0);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -33,6 +33,9 @@ void ManualShooter::Execute() {
 
   if (shoot) {
     shooter->shootOne();
+    shooter->setSpeed(1.0);
+  } else {
+    shooter->setSpeed(0.0);
   }
 }
 

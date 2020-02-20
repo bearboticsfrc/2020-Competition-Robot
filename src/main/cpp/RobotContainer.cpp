@@ -12,8 +12,6 @@
 #include <frc/GenericHID.h>
 #include <iostream>
 
-using JoystickHand = frc::GenericHID::JoystickHand;
-
 const int GYRO_ID = 10;
 
 RobotContainer::RobotContainer() :
@@ -25,8 +23,8 @@ RobotContainer::RobotContainer() :
   m_shooter(&m_hopper),
   /* --- Commands --- */
   m_defaultDrive(&m_drivetrain, &m_input),
-  m_manualShooter(&m_shooter, [this]() { return m_input.xboxController.GetBButton(); }),
-  m_manualIntake(&m_intake, [this]() { return m_input.xboxController.GetAButton(); }),
+  m_manualShooter(&m_shooter, m_input.ManualShootButton()),
+  m_manualIntake(&m_intake, m_input.RunIntakeButton()),
   m_alignTarget(&m_drivetrain),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
@@ -35,8 +33,8 @@ RobotContainer::RobotContainer() :
   m_autoShoot(&m_shooter, &m_intake),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   /* --- Buttons --- */
-  m_alignButton([this]() { return m_input.xboxController.GetBumper(JoystickHand::kRightHand); }),
-  m_toggleIntakeButton([this]() { return m_input.xboxController.GetBumper(JoystickHand::kLeftHand); })
+  m_alignButton(m_input.AlignTargetButton()),
+  m_toggleIntakeButton(m_input.ToggleIntakePositionButton())
 {
   std::cout << "Constructor\n";
   std::cout.flush();

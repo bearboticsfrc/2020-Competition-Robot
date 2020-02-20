@@ -20,6 +20,9 @@ Hopper::Hopper() :
 {
     intakeMotor.SetSmartCurrentLimit(10);
     agitateMotor.SetSmartCurrentLimit(10);
+
+    intakeMotor.SetInverted(false);
+    agitateMotor.SetInverted(true);
 }
 
 // This method will be called once per scheduler run

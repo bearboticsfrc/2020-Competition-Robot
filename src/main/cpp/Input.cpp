@@ -8,6 +8,7 @@
 #include "Input.h"
 
 using RumbleType = frc::GenericHID::RumbleType;
+using JoystickHand = frc::GenericHID::JoystickHand;
 
 const double DEADZONE = 0.05;
 
@@ -47,4 +48,18 @@ double Input::GetZ() const {
 void Input::SetRumble(double rumble) {
     xboxController.SetRumble(RumbleType::kLeftRumble, rumble);
     xboxController.SetRumble(RumbleType::kRightRumble, rumble);
+}
+
+ButtonGetter Input::AlignTargetButton() const {
+    return [this]() { return xboxController.GetBumper(JoystickHand::kRightHand); };
+}
+ButtonGetter Input::ManualShootButton() const {
+    return [this]() { return xboxController.GetTriggerAxis(JoystickHand::kRightHand) > 0.5; };
+}
+
+ButtonGetter Input::ToggleIntakePositionButton() const {
+    return [this]() { return xboxController.GetBumper(JoystickHand::kLeftHand); };
+}
+ButtonGetter Input::RunIntakeButton() const {
+    return [this]() { return xboxController.GetTriggerAxis(JoystickHand::kLeftHand) > 0.5; };
 }

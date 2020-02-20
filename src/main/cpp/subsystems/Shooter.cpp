@@ -44,7 +44,7 @@ Shooter::Shooter(Hopper *hopper) :
 
     motor.SetInverted(true);
 
-    accelerator.SetInverted(false);
+    accelerator.SetInverted(true);
 }
 
 // This method will be called once per scheduler run
@@ -67,7 +67,7 @@ void Shooter::Periodic() {
 void Shooter::setSpeed(double speed) {
     motor.GetPIDController().SetReference(speed * 5700.0, rev::ControlType::kVelocity);
 
-    if (speed < 0.01) {
+    if (speed < 0.20) {
         accelerator.Set(ControlMode::PercentOutput, 0.0);
     } else {
         accelerator.Set(ControlMode::PercentOutput, 0.75);

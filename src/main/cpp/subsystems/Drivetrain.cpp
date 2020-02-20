@@ -38,11 +38,11 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     initDashboardValue(RB_P_GAIN_NAME, 0.0);
     initDashboardValue(RF_P_GAIN_NAME, 0.0);
 
-    leftBack.SetInverted(true);
-    leftFront.SetInverted(true);
+    leftBack.SetInverted(false);
+    leftFront.SetInverted(false);
 
-    rightBack.SetInverted(false);
-    rightFront.SetInverted(false);
+    rightBack.SetInverted(true);
+    rightFront.SetInverted(true);
 
     leftFront.GetEncoder().SetPosition(0.0);
     rightFront.GetEncoder().SetPosition(0.0);

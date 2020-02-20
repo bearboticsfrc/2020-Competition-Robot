@@ -9,6 +9,8 @@
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
 
+using ButtonGetter = std::function<bool()>;
+
 class Input {
  public:
   double GetX() const;
@@ -17,6 +19,13 @@ class Input {
 
   void SetRumble(double rumble);
 
+  ButtonGetter AlignTargetButton() const;
+  ButtonGetter ManualShootButton() const;
+
+  ButtonGetter ToggleIntakePositionButton() const;
+  ButtonGetter RunIntakeButton() const;
+
+ private:
   frc::Joystick joystick = frc::Joystick(0);
   frc::XboxController xboxController = frc::XboxController(1);
 };
