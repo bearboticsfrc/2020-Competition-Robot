@@ -50,7 +50,7 @@ void Input::SetRumble(double rumble) {
     xboxController.SetRumble(RumbleType::kRightRumble, rumble);
 }
 
-ButtonGetter Input::AlignTargetButton() const {
+ButtonGetter Input::AutoShootButton() const {
     return [this]() { return xboxController.GetBumper(JoystickHand::kRightHand); };
 }
 ButtonGetter Input::ManualShootButton() const {
@@ -62,4 +62,10 @@ ButtonGetter Input::ToggleIntakePositionButton() const {
 }
 ButtonGetter Input::RunIntakeButton() const {
     return [this]() { return xboxController.GetTriggerAxis(JoystickHand::kLeftHand) > 0.5; };
+}
+ButtonGetter Input::RunUptakeButton() const {
+    return [this]() { return xboxController.GetXButton(); };
+}
+ButtonGetter Input::ReverseIntakeButton() const {
+    return [this]() { return xboxController.GetYButton(); };
 }

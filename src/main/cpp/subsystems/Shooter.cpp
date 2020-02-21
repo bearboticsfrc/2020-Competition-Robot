@@ -25,12 +25,15 @@ using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using shooter_consts::MOTOR_ID;
 using shooter_consts::FEEDMOTOR_ID;
 using shooter_consts::ACCELERATOR_ID;
+using std::chrono::steady_clock;
+using std::chrono::milliseconds;
 
 Shooter::Shooter(Hopper *hopper) :
     motor(MOTOR_ID, MotorType::kBrushless),
     accelerator(ACCELERATOR_ID),
     feedMotor(FEEDMOTOR_ID),
-    hopper(hopper)
+    hopper(hopper),
+    feedStartTime(steady_clock::now())
 {
     initDashboardValue("Shooter P Gain", 0.0001);
     initDashboardValue("Accelerator P Gain", 0.0001);
@@ -51,7 +54,16 @@ Shooter::Shooter(Hopper *hopper) :
 void Shooter::Periodic() {
     frc::SmartDashboard::PutNumber("Shooter Speed", motor.GetEncoder().GetVelocity());
 
-    bool feeding = std::chrono::steady_clock::now() - startTime < std::chrono::milliseconds(1000);
+    //bool feedTimeGood = steady_clock::now() - feedStartTime < milliseconds(3000);
+    bool feedTimeGood = true;
+    bool spinTimeGood = steady_clock::now() - spinStartTime > milliseconds(1000);
+
+    if (stopped) {
+        feedStartTime = steady_clock::now();
+        spinStartTime = steady_clock::now();
+    }
+
+    bool feeding = feedTimeGood && spinTimeGood && !stopped;
 
     hopper->setOuttake(feeding);
 
@@ -67,7 +79,9 @@ void Shooter::Periodic() {
 void Shooter::setSpeed(double speed) {
     motor.GetPIDController().SetReference(speed * 5700.0, rev::ControlType::kVelocity);
 
-    if (speed < 0.20) {
+    stopped = speed < 0.1;
+
+    if (speed < 0.1) {
         accelerator.Set(ControlMode::PercentOutput, 0.0);
     } else {
         accelerator.Set(ControlMode::PercentOutput, 0.75);
@@ -75,5 +89,5 @@ void Shooter::setSpeed(double speed) {
 }
 
 void Shooter::shootOne() {
-    startTime = std::chrono::steady_clock::now();
+    feedStartTime = steady_clock::now();
 }

@@ -8,9 +8,11 @@
 #include "commands/manual/ManualIntake.h"
 #include "subsystems/Intake.h"
 
-ManualIntake::ManualIntake(Intake *intake, std::function<bool()> shouldIntake) :
+ManualIntake::ManualIntake(Intake *intake, std::function<bool()> shouldIntake, std::function<bool()> shouldUptake, std::function<bool()> shouldReverse) :
   intake(intake),
-  shouldIntake(shouldIntake)
+  shouldIntake(shouldIntake),
+  shouldUptake(shouldUptake),
+  shouldReverse(shouldReverse)
 {
   AddRequirements(intake);
 }
@@ -23,7 +25,16 @@ void ManualIntake::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ManualIntake::Execute() {
   bool doIntake = shouldIntake();
-  intake->setIntake(doIntake);
+  bool doUptake = shouldUptake();
+  bool doReverse = shouldReverse();
+
+  if (doUptake) {
+    intake->setUptake(true);
+  } else if (doReverse) {
+    intake->setOuttake(true);
+  } else {
+    intake->setIntake(doIntake);
+  }
 }
 
 // Called once the command ends or is interrupted.

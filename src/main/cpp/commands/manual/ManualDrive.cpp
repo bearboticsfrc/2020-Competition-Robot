@@ -22,7 +22,7 @@ void DefaultDrive::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void DefaultDrive::Execute() {
   double forward = -input->GetY();
-  double turn = 0.2 * input->GetZ();
+  double turn = 0.5 * input->GetZ();
 
   double leftSpeed = forward + turn;
   double rightSpeed = forward - turn;

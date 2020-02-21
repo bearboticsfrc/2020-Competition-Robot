@@ -44,7 +44,10 @@ class Shooter : public frc2::SubsystemBase {
 
   VictorSPX feedMotor;
 
-  std::chrono::time_point<std::chrono::steady_clock> startTime;
+  std::chrono::time_point<std::chrono::steady_clock> feedStartTime;
+  std::chrono::time_point<std::chrono::steady_clock> spinStartTime;
 
   Hopper *hopper;
+
+  bool stopped = true;
 };

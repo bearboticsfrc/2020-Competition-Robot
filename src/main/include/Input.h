@@ -19,11 +19,13 @@ class Input {
 
   void SetRumble(double rumble);
 
-  ButtonGetter AlignTargetButton() const;
+  ButtonGetter AutoShootButton() const;
   ButtonGetter ManualShootButton() const;
 
   ButtonGetter ToggleIntakePositionButton() const;
   ButtonGetter RunIntakeButton() const;
+  ButtonGetter RunUptakeButton() const;
+  ButtonGetter ReverseIntakeButton() const;
 
  private:
   frc::Joystick joystick = frc::Joystick(0);

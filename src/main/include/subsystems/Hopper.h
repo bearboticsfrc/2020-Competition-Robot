@@ -34,4 +34,6 @@ class Hopper : public frc2::SubsystemBase {
 
   rev::CANSparkMax intakeMotor;
   rev::CANSparkMax agitateMotor;
+
+  bool outtakeOverride = false;
 };

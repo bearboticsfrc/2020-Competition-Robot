@@ -16,7 +16,7 @@ class Hopper;
 // TODO: Determine motor IDs
 namespace intake_consts {
   const int MOTOR_ID = 12;
-  const int SOLENOID_ID = 1;
+  const int SOLENOID_ID = 3;
 }
 
 class Intake : public frc2::SubsystemBase {
@@ -24,6 +24,10 @@ class Intake : public frc2::SubsystemBase {
   Intake(Hopper *hopper);
 
   void setIntake(bool intake);
+
+  void setOuttake(bool outtake);
+
+  void setUptake(bool uptake);
 
   void setExtended(bool extended);
 

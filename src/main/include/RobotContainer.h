@@ -80,8 +80,9 @@ class RobotContainer {
   MovableAutonomous m_movableAutonomous;
 
   /* --- Buttons --- */
-  frc2::Button m_alignButton;
+  frc2::Button m_autoShootButton;
   frc2::Button m_toggleIntakeButton;
+  frc2::Button m_reverseIntakeButton;
 
   /* --- Choosers --- */
   Choosers choosers;

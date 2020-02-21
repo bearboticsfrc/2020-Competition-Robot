@@ -18,8 +18,8 @@ Hopper::Hopper() :
     intakeMotor(INTAKE_MOTOR_ID, MotorType::kBrushless),
     agitateMotor(AGITATE_MOTOR_ID, MotorType::kBrushless)
 {
-    intakeMotor.SetSmartCurrentLimit(10);
-    agitateMotor.SetSmartCurrentLimit(10);
+    intakeMotor.SetSmartCurrentLimit(15);
+    agitateMotor.SetSmartCurrentLimit(15);
 
     intakeMotor.SetInverted(false);
     agitateMotor.SetInverted(true);
@@ -29,9 +29,14 @@ Hopper::Hopper() :
 void Hopper::Periodic() {}
 
 void Hopper::setIntake(bool intake) {
-    intakeMotor.Set(intake);
+    if (!outtakeOverride) {
+        intakeMotor.Set(intake * 0.75);
+    }
 }
 
 void Hopper::setOuttake(bool outtake) {
-    agitateMotor.Set(outtake);
+    outtakeOverride = outtake;
+
+    agitateMotor.Set(outtake * 0.75);
+    intakeMotor.Set(outtake * 0.75);
 }

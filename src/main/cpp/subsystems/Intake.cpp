@@ -29,6 +29,15 @@ void Intake::setIntake(bool intake) {
     hopper->setIntake(intake);
 }
 
+void Intake::setOuttake(bool outtake) {
+    motor.Set(-outtake);
+}
+
+void Intake::setUptake(bool uptake) {
+    motor.Set(-uptake);
+    hopper->setIntake(uptake);
+}
+
 void Intake::setExtended(bool extended) {
     solenoid.Set(extended);
 

@@ -22,7 +22,7 @@ class Intake;
 class ManualIntake
     : public frc2::CommandHelper<frc2::CommandBase, ManualIntake> {
 public:
-  ManualIntake(Intake *intake, std::function<bool()> shouldIntake);
+  ManualIntake(Intake *intake, std::function<bool()> shouldIntake, std::function<bool()> shouldUptake, std::function<bool()> shouldReverse);
 
   void Initialize() override;
 
@@ -35,4 +35,6 @@ public:
 private:
   Intake *intake;
   std::function<bool()> shouldIntake;
+  std::function<bool()> shouldUptake;
+  std::function<bool()> shouldReverse;
 };

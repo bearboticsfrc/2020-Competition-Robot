@@ -56,8 +56,6 @@ void Robot::TeleopInit() {
   // this line or comment it out.
   m_teleopCommands = m_container.GetTeleopCommands();
 
-  Limelight::setLights(true);
-
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
