@@ -54,16 +54,14 @@ Shooter::Shooter(Hopper *hopper) :
 void Shooter::Periodic() {
     frc::SmartDashboard::PutNumber("Shooter Speed", motor.GetEncoder().GetVelocity());
 
-    //bool feedTimeGood = steady_clock::now() - feedStartTime < milliseconds(3000);
-    bool feedTimeGood = true;
-    bool spinTimeGood = steady_clock::now() - spinStartTime > milliseconds(1000);
+    bool spinGood = std::abs(motor.GetEncoder().GetVelocity() - targetRPM) < 57.0;
 
     if (stopped) {
         feedStartTime = steady_clock::now();
         spinStartTime = steady_clock::now();
     }
 
-    bool feeding = feedTimeGood && spinTimeGood && !stopped;
+    bool feeding = spinGood && !stopped;
 
     hopper->setOuttake(feeding);
 
@@ -80,6 +78,8 @@ void Shooter::setSpeed(double speed) {
     motor.GetPIDController().SetReference(speed * 5700.0, rev::ControlType::kVelocity);
 
     stopped = speed < 0.1;
+    
+    targetRPM = speed * 5700.0;
 
     if (speed < 0.1) {
         accelerator.Set(ControlMode::PercentOutput, 0.0);

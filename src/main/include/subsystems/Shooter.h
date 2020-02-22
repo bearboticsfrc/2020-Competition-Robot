@@ -50,4 +50,5 @@ class Shooter : public frc2::SubsystemBase {
   Hopper *hopper;
 
   bool stopped = true;
+  double targetRPM = 0.0;
 };

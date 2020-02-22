@@ -21,6 +21,7 @@
 #include "commands/automatic/Autonomous.h"
 #include "commands/automatic/MovableAutonomous.h"
 #include "commands/automatic/AlignAndShoot.h"
+#include "commands/automatic/AlignShootDriveback.h"
 #include "commands/ShowColors.h"
 
 #include "subsystems/Drivetrain.h"
@@ -78,9 +79,8 @@ class RobotContainer {
   BallPickup m_ballPickup;
   ShowColors m_showColors;
   Autonomous m_autonomous;
-  AlignAndShoot m_autonomous2;
+  AlignShootDriveback m_autonomous2;
   MovableAutonomous m_movableAutonomous;
-  AlignAndShoot m_alignAndShoot;
 
   /* --- Buttons --- */
   frc2::Button m_alignAndShootButton;
@@ -90,7 +90,7 @@ class RobotContainer {
   /* --- Choosers --- */
   Choosers choosers;
 
-  cs::UsbCamera camera;
+  //cs::UsbCamera camera;
 
   void ConfigureButtonBindings();
 };

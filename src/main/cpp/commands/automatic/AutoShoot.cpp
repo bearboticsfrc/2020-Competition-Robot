@@ -32,6 +32,7 @@ void AutoShoot::Initialize() {
   acquired = false;
   failures = 0;
   successes = 0;
+  speedSuccesses = 0;
 
   oldIntakeState = intake->getExtended();
   intake->setExtended(true);
@@ -41,9 +42,11 @@ void AutoShoot::Initialize() {
 void AutoShoot::Execute() {
   if (successes <= 5) {
     if (Limelight::targetFound()) {
+      std::cout << "SUCCEED";
       ++successes;
       failures = 0;
     } else {
+      std::cout << "FAIL";
       successes = 0;
       ++failures;
     }

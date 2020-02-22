@@ -9,10 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <chrono>
-
-class Shooter;
-class Intake;
+#include "subsystems/Drivetrain.h"
 
 /**
  * An example command.
@@ -21,10 +18,12 @@ class Intake;
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class AutoShoot
-    : public frc2::CommandHelper<frc2::CommandBase, AutoShoot> {
-public:
-  AutoShoot(Shooter *shooter, Intake *intake);
+
+// mood
+class SortaDrive
+    : public frc2::CommandHelper<frc2::CommandBase, SortaDrive> {
+ public:
+  SortaDrive(Drivetrain *drivetrain);
 
   void Initialize() override;
 
@@ -35,13 +34,6 @@ public:
   bool IsFinished() override;
 
 private:
-  Shooter *shooter;
-  Intake *intake;
-  std::chrono::time_point<std::chrono::steady_clock> startTime;
-  int successes = 0;
-  int failures = 0;
-  bool acquired = false;
-  bool oldIntakeState;
-
-  int speedSuccesses = 0;
+  int counts = 0;
+  Drivetrain *drivetrain;
 };

@@ -32,12 +32,11 @@ RobotContainer::RobotContainer() :
   m_autonomous2(&m_drivetrain, &m_shooter, &m_intake),
   m_autoShoot(&m_shooter, &m_intake),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
-  m_alignAndShoot(&m_drivetrain, &m_shooter, &m_intake),
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
-  m_reverseIntakeButton(m_input.ReverseIntakeButton()),
-  camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
+  m_reverseIntakeButton(m_input.ReverseIntakeButton())
+  //camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
 {
   std::cout << "Constructor\n";
   std::cout.flush();
@@ -53,7 +52,7 @@ RobotContainer::RobotContainer() :
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  m_alignAndShootButton.WhenPressed(m_alignAndShoot);
+  m_alignAndShootButton.WhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake));
   m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
 }
 
