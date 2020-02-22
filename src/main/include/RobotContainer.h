@@ -10,6 +10,7 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <ctre/phoenix/sensors/PigeonIMU.h>
+#include <cameraserver/CameraServer.h>
 
 #include "commands/manual/ManualDrive.h"
 #include "commands/manual/ManualShooter.h"
@@ -19,6 +20,7 @@
 #include "commands/automatic/BallPickup.h"
 #include "commands/automatic/Autonomous.h"
 #include "commands/automatic/MovableAutonomous.h"
+#include "commands/automatic/AlignAndShoot.h"
 #include "commands/ShowColors.h"
 
 #include "subsystems/Drivetrain.h"
@@ -76,16 +78,19 @@ class RobotContainer {
   BallPickup m_ballPickup;
   ShowColors m_showColors;
   Autonomous m_autonomous;
-  Autonomous2 m_autonomous2;
+  AlignAndShoot m_autonomous2;
   MovableAutonomous m_movableAutonomous;
+  AlignAndShoot m_alignAndShoot;
 
   /* --- Buttons --- */
-  frc2::Button m_autoShootButton;
+  frc2::Button m_alignAndShootButton;
   frc2::Button m_toggleIntakeButton;
   frc2::Button m_reverseIntakeButton;
 
   /* --- Choosers --- */
   Choosers choosers;
+
+  cs::UsbCamera camera;
 
   void ConfigureButtonBindings();
 };
