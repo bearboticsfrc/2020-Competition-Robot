@@ -28,7 +28,6 @@
 #include "subsystems/Shooter.h" 
 #include "subsystems/Intake.h"
 #include "subsystems/ColorSensor.h"
-#include "subsystems/Singulator.h"
 #include "subsystems/Arduino.h"
 #include "subsystems/Hopper.h"
 #include "subsystems/ControlPanelManip.h"
@@ -67,7 +66,6 @@ class RobotContainer {
   Intake m_intake;
   ColorSensor m_colorSensor;
   Arduino m_arduino;
-  Singulator m_singulator;
   //ControlPanelManip m_controlPanelManip;
 
   /* --- Commands --- */

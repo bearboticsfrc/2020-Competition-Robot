@@ -14,6 +14,10 @@
 #include "subsystems/Intake.h"
 #include "subsystems/Limelight.h"
 
+double powerFromAngle(double y) {
+  return 0.000450892 * (y * y) - 0.0166284 * y + 1.00753;
+}
+
 AutoShoot::AutoShoot(Shooter *s, Intake *i) :
   shooter(s),
   intake(i)
@@ -51,10 +55,11 @@ void AutoShoot::Execute() {
   } else {
     // We have enough successes to acquire
     if (!acquired) {
-      double x = Limelight::getY();
-      frc::SmartDashboard::PutNumber("FoundY", x);
-      double y = 0.000450892 * (x * x) - 0.0166284 * x + 1.00753;
-      shooter->setSpeed(y);
+      // Adjust power
+      double foundY = Limelight::getY();
+      frc::SmartDashboard::PutNumber("FoundY", foundY);
+      shooter->setSpeed(powerFromAngle(foundY));
+
       acquired = true;
       startTime = std::chrono::steady_clock::now();
       shooter->shootAll();
