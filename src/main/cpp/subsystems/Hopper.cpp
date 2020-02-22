@@ -35,8 +35,10 @@ void Hopper::setIntake(bool intake) {
 }
 
 void Hopper::setOuttake(bool outtake) {
-    outtakeOverride = outtake;
+    if (outtakeOverride != outtake) {
+        agitateMotor.Set(outtake * 0.75);
+        intakeMotor.Set(outtake * 0.75);
+    }
 
-    agitateMotor.Set(outtake * 0.75);
-    intakeMotor.Set(outtake * 0.75);
+    outtakeOverride = outtake;
 }

@@ -11,6 +11,7 @@
 #include <frc2/command/CommandHelper.h>
 
 class Drivetrain;
+class Intake;
 
 /**
  * An example command.
@@ -22,7 +23,7 @@ class Drivetrain;
 class AlignTarget
     : public frc2::CommandHelper<frc2::CommandBase, AlignTarget> {
  public:
-  AlignTarget(Drivetrain *drivetrain);
+  AlignTarget(Drivetrain *drivetrain, Intake *intake);
 
   void Initialize() override;
 
@@ -36,4 +37,5 @@ private:
   int fails = 0;
 
   Drivetrain *drivetrain;
+  Intake *intake;
 };

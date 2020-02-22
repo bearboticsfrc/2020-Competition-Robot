@@ -8,6 +8,7 @@
 #include "commands/automatic/AlignAndShoot.h"
 #include "commands/automatic/AlignTarget.h"
 #include "commands/automatic/AutoShoot.h"
+#include <frc2/command/WaitCommand.h>
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
@@ -15,5 +16,5 @@
 AlignAndShoot::AlignAndShoot(Drivetrain *drivetrain, Shooter *shooter, Intake *intake) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  AddCommands(AlignTarget(drivetrain), AutoShoot(shooter, intake));
+  AddCommands(frc2::WaitCommand(std::chrono::seconds(1)), AlignTarget(drivetrain, intake), AutoShoot(shooter, intake));
 }

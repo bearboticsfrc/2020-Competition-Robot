@@ -41,7 +41,9 @@ Shooter::Shooter(Hopper *hopper) :
     motor.RestoreFactoryDefaults();
 
     motor.GetPIDController().SetFF(1.0 / 5770.0);
-    motor.GetPIDController().SetP(0.00001);
+    motor.GetPIDController().SetP(0.0002);
+    motor.GetPIDController().SetI(0.0);
+    motor.GetPIDController().SetD(0.0);
 
     motor.SetSmartCurrentLimit(40);
 
@@ -54,14 +56,30 @@ Shooter::Shooter(Hopper *hopper) :
 void Shooter::Periodic() {
     frc::SmartDashboard::PutNumber("Shooter Speed", motor.GetEncoder().GetVelocity());
 
-    bool spinGood = std::abs(motor.GetEncoder().GetVelocity() - targetRPM) < 57.0;
-
-    if (stopped) {
-        feedStartTime = steady_clock::now();
-        spinStartTime = steady_clock::now();
+    double speedError = motor.GetEncoder().GetVelocity() - targetRPM;
+    bool spinCorrect = std::abs(speedError) < 300.0;
+    frc::SmartDashboard::PutNumber("Shoot Speed Error", speedError);
+    if (spinCorrect) {
+        ++spinSuccesses;
+    } else {
+        spinSuccesses = 0;
     }
 
-    bool feeding = spinGood && !stopped;
+    bool spinGood = spinSuccesses >= 5;
+
+    if (stopped) {
+        queueFeed = false;
+    }
+
+    if (queueFeed && spinGood) {
+        //feedStartTime = steady_clock::now();
+        queueFeed = false;
+    }
+
+    auto timeDiff = steady_clock::now() - feedStartTime;
+
+    bool feedTimeGood = timeDiff > std::chrono::milliseconds(1000) && timeDiff < std::chrono::milliseconds(6000);
+    bool feeding = feedTimeGood && !stopped;
 
     hopper->setOuttake(feeding);
 
@@ -76,10 +94,10 @@ void Shooter::Periodic() {
 
 void Shooter::setSpeed(double speed) {
     motor.GetPIDController().SetReference(speed * 5700.0, rev::ControlType::kVelocity);
+    targetRPM = speed * 5700.0;
 
     stopped = speed < 0.1;
     
-    targetRPM = speed * 5700.0;
 
     if (speed < 0.1) {
         accelerator.Set(ControlMode::PercentOutput, 0.0);
@@ -88,6 +106,7 @@ void Shooter::setSpeed(double speed) {
     }
 }
 
-void Shooter::shootOne() {
+void Shooter::shootAll() {
     feedStartTime = steady_clock::now();
+    queueFeed = true;
 }

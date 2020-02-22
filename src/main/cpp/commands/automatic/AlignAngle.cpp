@@ -57,7 +57,7 @@ bool doAlign(Drivetrain *drivetrain, units::degree_t target) {
   auto rawAngleError = target - currentYaw;
   double angleError = mod(rawAngleError.to<double>() + 180.0, 360.0) - 180.0;
 
-  double speed = angleError / 40.0;
+  double speed = angleError / 60.0;
 
   const double ANGLE_THRESHOLD = 1.0;
   const double MAX_SPEED = 0.3;

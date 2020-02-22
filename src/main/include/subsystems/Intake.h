@@ -19,15 +19,18 @@ namespace intake_consts {
   const int SOLENOID_ID = 3;
 }
 
+enum class Mode {
+  Intake,
+  Outtake,
+  Uptake,
+  Stopped,
+};
+
 class Intake : public frc2::SubsystemBase {
  public:
   Intake(Hopper *hopper);
 
-  void setIntake(bool intake);
-
-  void setOuttake(bool outtake);
-
-  void setUptake(bool uptake);
+  void setMode(Mode mode);
 
   void setExtended(bool extended);
 
@@ -41,4 +44,6 @@ class Intake : public frc2::SubsystemBase {
   frc::Solenoid solenoid;
 
   Hopper *hopper;
+
+  Mode mode = Mode::Stopped;
 };

@@ -9,17 +9,21 @@
 #include "commands/automatic/AlignAngle.h"
 #include "subsystems/Limelight.h"
 #include "subsystems/Drivetrain.h"
+#include "subsystems/Intake.h"
 
-AlignTarget::AlignTarget(Drivetrain *drivetrain) :
-  drivetrain(drivetrain)
+AlignTarget::AlignTarget(Drivetrain *drivetrain, Intake *intake) :
+  drivetrain(drivetrain),
+  intake(intake)
 {
-  AddRequirements(drivetrain);
+  AddRequirements({drivetrain, intake});
   // Use addRequirements() here to declare subsystem dependencies.
 }
 
 // Called when the command is initially scheduled.
 void AlignTarget::Initialize() {
   Limelight::setLights(true);
+  intake->setExtended(true);
+
   successes = 0;
   fails = 0;
 }

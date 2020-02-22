@@ -29,7 +29,7 @@ MovableAutonomous::MovableAutonomous(Drivetrain *drivetrain, Shooter *shooter, I
 {
   AddCommands(
     frc2::InstantCommand{ [=] { drivetrain->SetPose(frc::Pose2d()); } },
-    AlignTarget(drivetrain),
+    AlignTarget(drivetrain, intake),
     AutoShoot(shooter, intake),
     AlignAngle(target.get(), drivetrain).BeforeStarting([this] { *target = calcDestAngle(this->drivetrain->GetPose().Rotation().Degrees()); })
     // TODO: Drive forward

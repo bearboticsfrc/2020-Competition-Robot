@@ -24,25 +24,35 @@ Intake::Intake(Hopper *hopper) :
 // This method will be called once per scheduler run
 void Intake::Periodic() {}
 
-void Intake::setIntake(bool intake) {
-    motor.Set(intake);
-    hopper->setIntake(intake);
-}
-
-void Intake::setOuttake(bool outtake) {
-    motor.Set(-outtake);
-}
-
-void Intake::setUptake(bool uptake) {
-    motor.Set(-uptake);
-    hopper->setIntake(uptake);
+void Intake::setMode(Mode mode) {
+    switch (mode) {
+        case Mode::Intake:
+            motor.Set(1.0);
+            hopper->setOuttake(false);
+            hopper->setIntake(true);
+            break;
+        case Mode::Outtake:
+            motor.Set(-1.0);
+            hopper->setOuttake(true);
+            break;
+        case Mode::Uptake:
+            motor.Set(-1.0);
+            hopper->setOuttake(false);
+            hopper->setIntake(true);
+            break;
+        case Mode::Stopped:
+            motor.Set(0.0);
+            hopper->setOuttake(false);
+            hopper->setIntake(false);
+            break;
+    }
 }
 
 void Intake::setExtended(bool extended) {
     solenoid.Set(extended);
 
     if (!extended) {
-        setIntake(false);
+        setMode(Mode::Stopped);
     }
 }
 

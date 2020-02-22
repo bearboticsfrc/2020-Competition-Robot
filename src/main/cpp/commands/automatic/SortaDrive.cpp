@@ -10,6 +10,7 @@
 SortaDrive::SortaDrive(Drivetrain *drivetrain) :
   drivetrain(drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(drivetrain);
 }
 
 // Called when the command is initially scheduled.

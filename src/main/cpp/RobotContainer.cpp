@@ -10,6 +10,7 @@
 #include <frc2/command/InstantCommand.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/GenericHID.h>
+#include <frc2/command/ParallelRaceGroup.h>
 #include <iostream>
 
 const int GYRO_ID = 10;
@@ -25,7 +26,7 @@ RobotContainer::RobotContainer() :
   m_defaultDrive(&m_drivetrain, &m_input),
   m_manualShooter(&m_shooter, m_input.ManualShootButton()),
   m_manualIntake(&m_intake, m_input.RunIntakeButton(), m_input.RunUptakeButton(), m_input.ReverseIntakeButton()),
-  m_alignTarget(&m_drivetrain),
+  m_alignTarget(&m_drivetrain, &m_intake),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
@@ -52,7 +53,7 @@ RobotContainer::RobotContainer() :
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  m_alignAndShootButton.WhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake));
+  m_alignAndShootButton.WhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake)/*.WithInterrupt([this] { return !m_input.AutoShootButton()(); })*/);
   m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
 }
 

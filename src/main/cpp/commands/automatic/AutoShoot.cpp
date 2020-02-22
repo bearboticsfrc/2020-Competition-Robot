@@ -19,15 +19,13 @@ AutoShoot::AutoShoot(Shooter *s, Intake *i) :
   intake(i)
 {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(shooter);
+  AddRequirements({shooter, intake});
 }
 
 // Called when the command is initially scheduled.
 void AutoShoot::Initialize() {
   frc::SmartDashboard::PutNumber("FoundY", 0.0);
 
-  double speed = frc::SmartDashboard::GetNumber("ShootSpeed", 0.0);
-  shooter->setSpeed(speed);
   Limelight::setLights(true);
   acquired = false;
   failures = 0;
@@ -59,9 +57,8 @@ void AutoShoot::Execute() {
       shooter->setSpeed(y);
       acquired = true;
       startTime = std::chrono::steady_clock::now();
+      shooter->shootAll();
     } 
-
-    shooter->shootOne();
   }
 }
 // Called once the command ends or is interrupted.
@@ -83,7 +80,7 @@ bool AutoShoot::IsFinished() {
 
   // TODO: Determine how long we need to spend shooting or 
   // find a better system to shoot all of the power cells
-  if (acquired && diff > std::chrono::seconds(3)) {
+  if (acquired && diff > std::chrono::seconds(4)) {
     std::cout << "Ran for 3 seconds\n";
     return true;
   }

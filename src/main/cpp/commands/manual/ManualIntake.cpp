@@ -28,13 +28,18 @@ void ManualIntake::Execute() {
   bool doUptake = shouldUptake();
   bool doReverse = shouldReverse();
 
+  Mode mode;
   if (doUptake) {
-    intake->setUptake(true);
+    mode = Mode::Uptake;
   } else if (doReverse) {
-    intake->setOuttake(true);
+    mode = Mode::Outtake;
+  } else if (doIntake) {
+    mode = Mode::Intake;
   } else {
-    intake->setIntake(doIntake);
+    mode = Mode::Stopped;
   }
+
+  intake->setMode(mode);
 }
 
 // Called once the command ends or is interrupted.

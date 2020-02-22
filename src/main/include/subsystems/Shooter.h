@@ -26,7 +26,7 @@ class Shooter : public frc2::SubsystemBase {
   Shooter(Hopper *hopper);
 
   void setSpeed(double speed);
-  void shootOne();
+  void shootAll();
   void setFeed(double speed);
 
   /**
@@ -45,10 +45,11 @@ class Shooter : public frc2::SubsystemBase {
   VictorSPX feedMotor;
 
   std::chrono::time_point<std::chrono::steady_clock> feedStartTime;
-  std::chrono::time_point<std::chrono::steady_clock> spinStartTime;
+  bool queueFeed = false;
 
   Hopper *hopper;
 
   bool stopped = true;
   double targetRPM = 0.0;
+  int spinSuccesses = 0;
 };

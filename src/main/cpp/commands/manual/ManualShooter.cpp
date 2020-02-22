@@ -32,7 +32,7 @@ void ManualShooter::Execute() {
   bool shoot = shouldShoot();
 
   if (shoot) {
-    shooter->shootOne();
+    shooter->shootAll();
     shooter->setSpeed(1.0);
   } else {
     shooter->setSpeed(0.0);
