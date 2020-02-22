@@ -26,6 +26,7 @@ void AlignTarget::Initialize() {
 
   successes = 0;
   fails = 0;
+  integral = 0.0;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -35,7 +36,7 @@ void AlignTarget::Execute() {
 
     auto lastTargetYaw = drivetrain->GetLastPose().Rotation().Degrees() + units::degree_t(Limelight::getX());
 
-    if(doAlign(drivetrain, lastTargetYaw)) {
+    if (doAlign(drivetrain, lastTargetYaw, &integral)) {
       successes += 1;
     }
   } else {

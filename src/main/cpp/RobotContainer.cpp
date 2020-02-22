@@ -50,7 +50,12 @@ RobotContainer::RobotContainer() :
   frc::SmartDashboard::PutData("Align Target", &m_alignTarget);
   frc::SmartDashboard::PutData("Ball Pickup", &m_ballPickup);
   frc::SmartDashboard::PutData("Auto shoot", &m_autoShoot);
+
+  m_drivetrain.SetDefaultCommand(m_defaultDrive);
+  m_intake.SetDefaultCommand(m_manualIntake);
+  m_shooter.SetDefaultCommand(m_manualShooter);
 }
+
 
 void RobotContainer::ConfigureButtonBindings() {
   m_alignAndShootButton.WhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake)/*.WithInterrupt([this] { return !m_input.AutoShootButton()(); })*/);

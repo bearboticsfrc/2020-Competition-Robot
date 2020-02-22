@@ -28,17 +28,19 @@ Hopper::Hopper() :
 // This method will be called once per scheduler run
 void Hopper::Periodic() {}
 
-void Hopper::setIntake(bool intake) {
-    if (!outtakeOverride) {
-        intakeMotor.Set(intake * 0.75);
+void Hopper::setMode(HopperMode mode) {
+    switch (mode) {
+        case HopperMode::Stopped:
+            intakeMotor.Set(0.0);
+            agitateMotor.Set(0.0);
+            break;
+        case HopperMode::Intaking:
+            intakeMotor.Set(0.75);
+            agitateMotor.Set(0.0);
+            break;
+        case HopperMode::Agitating:
+            intakeMotor.Set(0.75);
+            agitateMotor.Set(0.75);
+            break;
     }
-}
-
-void Hopper::setOuttake(bool outtake) {
-    if (outtakeOverride != outtake) {
-        agitateMotor.Set(outtake * 0.75);
-        intakeMotor.Set(outtake * 0.75);
-    }
-
-    outtakeOverride = outtake;
 }

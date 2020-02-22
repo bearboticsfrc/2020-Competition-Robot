@@ -23,7 +23,9 @@ AlignAngle::AlignAngle(units::degree_t *target, Drivetrain *drivetrain) :
 }
 
 // Called when the command is initially scheduled.
-void AlignAngle::Initialize() {}
+void AlignAngle::Initialize() {
+  integral = 0.0;
+}
 
 // Called repeatedly when this Command is scheduled to run
 void AlignAngle::Execute() {
@@ -34,7 +36,7 @@ void AlignAngle::Execute() {
     t = target;
   }
 
-  if (doAlign(drivetrain, t)) {
+  if (doAlign(drivetrain, t, &integral)) {
     successes += 1;
   }
 }
@@ -51,17 +53,19 @@ double mod(double f, double value) {
   return f - floor(f / value) * value;
 }
 
-bool doAlign(Drivetrain *drivetrain, units::degree_t target) {
+bool doAlign(Drivetrain *drivetrain, units::degree_t target, double *integral) {
   auto currentYaw = drivetrain->GetPose().Rotation().Degrees();
 
   auto rawAngleError = target - currentYaw;
   double angleError = mod(rawAngleError.to<double>() + 180.0, 360.0) - 180.0;
 
-  double speed = angleError / 60.0;
+  *integral += angleError / 10000.0;
+
+  double speed = angleError / 60.0 + *integral;
+
 
   const double ANGLE_THRESHOLD = 1.0;
   const double MAX_SPEED = 0.3;
-
 
   if (speed > MAX_SPEED) {
     speed = MAX_SPEED;

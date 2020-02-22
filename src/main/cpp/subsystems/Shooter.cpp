@@ -81,7 +81,10 @@ void Shooter::Periodic() {
     bool feedTimeGood = timeDiff > std::chrono::milliseconds(1000) && timeDiff < std::chrono::milliseconds(6000);
     bool feeding = feedTimeGood && !stopped;
 
-    hopper->setOuttake(feeding);
+    if (feeding) {
+        // TODO: Determine when to stop
+        hopper->setMode(HopperMode::Agitating);
+    }
 
     double feedSpeed;
     if (feeding) {

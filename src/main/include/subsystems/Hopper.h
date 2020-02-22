@@ -16,12 +16,17 @@
   const int AGITATE_MOTOR_ID = 14;
 }
 
+enum class HopperMode {
+  Stopped,
+  Agitating,
+  Intaking
+};
+
 class Hopper : public frc2::SubsystemBase {
  public:
   Hopper();
 
-  void setIntake(bool intake);
-  void setOuttake(bool outtake);
+  void setMode(HopperMode mode);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.

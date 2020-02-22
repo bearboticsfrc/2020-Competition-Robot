@@ -38,4 +38,6 @@ private:
 
   Drivetrain *drivetrain;
   Intake *intake;
+
+  double integral = 0.0;
 };

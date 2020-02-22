@@ -39,8 +39,9 @@ private:
   units::degree_t target;
   units::degree_t *target2 = nullptr;
   int successes = 0;
+  double integral = 0.0;
 };
 
 
 // Returns true if the robot is sufficiently aligned
-bool doAlign(Drivetrain *drivetrain, units::degree_t target);
+bool doAlign(Drivetrain *drivetrain, units::degree_t target, double *integral);

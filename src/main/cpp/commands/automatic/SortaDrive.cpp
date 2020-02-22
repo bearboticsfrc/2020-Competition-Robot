@@ -30,4 +30,4 @@ void SortaDrive::End(bool interrupted) {
 }
 
 // Returns true when the command should end.
-bool SortaDrive::IsFinished() { return counts >= (20 * 3); }
+bool SortaDrive::IsFinished() { return counts >= (20 * 4); }

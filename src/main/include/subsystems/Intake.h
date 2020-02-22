@@ -19,7 +19,7 @@ namespace intake_consts {
   const int SOLENOID_ID = 3;
 }
 
-enum class Mode {
+enum class IntakeMode {
   Intake,
   Outtake,
   Uptake,
@@ -30,7 +30,7 @@ class Intake : public frc2::SubsystemBase {
  public:
   Intake(Hopper *hopper);
 
-  void setMode(Mode mode);
+  void setMode(IntakeMode mode);
 
   void setExtended(bool extended);
 
@@ -45,5 +45,5 @@ class Intake : public frc2::SubsystemBase {
 
   Hopper *hopper;
 
-  Mode mode = Mode::Stopped;
+  IntakeMode mode = IntakeMode::Stopped;
 };

@@ -59,7 +59,6 @@ void AutoShoot::Execute() {
       double foundY = Limelight::getY();
       frc::SmartDashboard::PutNumber("FoundY", foundY);
       shooter->setSpeed(powerFromAngle(foundY));
-
       acquired = true;
       startTime = std::chrono::steady_clock::now();
       shooter->shootAll();

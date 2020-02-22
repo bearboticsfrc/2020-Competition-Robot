@@ -24,7 +24,7 @@ void BallPickup::Initialize() {
   leftSpeed = 0.0;
   rightSpeed = 0.0;
   intake->setExtended(true);
-  intake->setMode(Mode::Intake);
+  intake->setMode(IntakeMode::Intake);
 }
 
 std::pair<double, double> BallPickup::getTargetSpeeds() {
@@ -32,7 +32,7 @@ std::pair<double, double> BallPickup::getTargetSpeeds() {
   if (valid && all_data.size() > 0) {
     auto data = all_data[0];
     if (!(data.x == 0 && data.y == 0 && data.width == 0 && data.height == 0)) {
-      intake->setMode(Mode::Intake);
+      intake->setMode(IntakeMode::Intake);
 
       const double CENTER = 160.0;
 
@@ -73,7 +73,7 @@ void BallPickup::Execute() {
 
 // Called once the command ends or is interrupted.
 void BallPickup::End(bool interrupted) {
-  intake->setMode(Mode::Stopped);
+  intake->setMode(IntakeMode::Stopped);
   drivetrain->SetAllSpeed(0.0, 0.0);
 }
 
