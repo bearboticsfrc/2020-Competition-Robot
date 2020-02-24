@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "commands/automatic/AlignAngle.h"
 
 class Drivetrain;
 class Intake;
@@ -39,5 +40,5 @@ private:
   Drivetrain *drivetrain;
   Intake *intake;
 
-  double integral = 0.0;
+  Aligner aligner;
 };

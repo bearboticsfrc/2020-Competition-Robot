@@ -8,23 +8,48 @@
 #include "commands/automatic/AlignAngle.h"
 #include "subsystems/Drivetrain.h"
 
+double Aligner::getAngle() const {
+  double angle = drivetrain->GetPose().Rotation().Degrees().to<double>();
+  return std::fmod(std::fmod(angle, 360.0) + 360.0, 360.0);
+}
+
+void Aligner::setOutput(double output) {
+  drivetrain->SetSpeeds(output, -output);
+}
+
+void Aligner::update() {
+  setOutput(getAngle());
+}
+
+Aligner::Aligner(Drivetrain *drivetrain) :
+  frc2::PIDController(0.016666, 0.0002, 0.0),
+  drivetrain(drivetrain)
+{
+  EnableContinuousInput(0.0, 360.0);
+  SetTolerance(1.0);
+  Reset();
+}
+
 AlignAngle::AlignAngle(units::degree_t target, Drivetrain *drivetrain) :
   drivetrain(drivetrain),
-  target(target)
+  target(target),
+  aligner(drivetrain)
 {
   AddRequirements(drivetrain);
 }
 
 AlignAngle::AlignAngle(units::degree_t *target, Drivetrain *drivetrain) :
   drivetrain(drivetrain),
-  target2(target)
+  target2(target),
+  aligner(drivetrain)
 {
   AddRequirements(drivetrain);
 }
 
 // Called when the command is initially scheduled.
 void AlignAngle::Initialize() {
-  integral = 0.0;
+  aligner.Reset();
+  successes = 0;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -36,44 +61,20 @@ void AlignAngle::Execute() {
     t = target;
   }
 
-  if (doAlign(drivetrain, t, &integral)) {
+  aligner.SetSetpoint(t.to<double>());
+  aligner.update();
+
+  if (aligner.AtSetpoint()) {
     successes += 1;
   }
 }
 
 // Called once the command ends or is interrupted.
 void AlignAngle::End(bool interrupted) {
-  drivetrain->SetSpeed(0.0);
+  drivetrain->SetSpeeds(0.0, 0.0);
 }
 
 // Returns true when the command should end.
-bool AlignAngle::IsFinished() { return successes >= 5; }
-
-double mod(double f, double value) {
-  return f - floor(f / value) * value;
-}
-
-bool doAlign(Drivetrain *drivetrain, units::degree_t target, double *integral) {
-  auto currentYaw = drivetrain->GetPose().Rotation().Degrees();
-
-  auto rawAngleError = target - currentYaw;
-  double angleError = mod(rawAngleError.to<double>() + 180.0, 360.0) - 180.0;
-
-  *integral += angleError / 5000.0;
-
-  double speed = angleError / 60.0 + *integral;
-
-
-  const double ANGLE_THRESHOLD = 1.0;
-  const double MAX_SPEED = 0.3;
-
-  if (speed > MAX_SPEED) {
-    speed = MAX_SPEED;
-  } else if (speed < -MAX_SPEED) {
-    speed = -MAX_SPEED;
-  }
-
-  drivetrain->SetSpeeds(speed, -speed);
-
-  return std::abs(angleError) < ANGLE_THRESHOLD;
+bool AlignAngle::IsFinished() {
+  return successes >= 5;
 }

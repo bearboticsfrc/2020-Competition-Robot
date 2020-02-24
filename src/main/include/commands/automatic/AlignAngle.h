@@ -9,8 +9,20 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/controller/PIDController.h>
 
 class Drivetrain;
+
+class Aligner : public frc2::PIDController {
+ public:
+  Aligner(Drivetrain *drivetrain);
+  void update();
+
+ private:
+  Drivetrain *drivetrain;
+  double getAngle() const;
+  void setOutput(double output);
+};
 
 /**
  * An example command.
@@ -36,12 +48,15 @@ class AlignAngle
 
 private:
   Drivetrain *drivetrain;
+
   units::degree_t target;
   units::degree_t *target2 = nullptr;
+
   int successes = 0;
-  double integral = 0.0;
+
+  Aligner aligner;
 };
 
 
 // Returns true if the robot is sufficiently aligned
-bool doAlign(Drivetrain *drivetrain, units::degree_t target, double *integral);
+bool doAlign(Drivetrain *drivetrain, units::degree_t target, Aligner *aligner);
