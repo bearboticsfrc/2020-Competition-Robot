@@ -13,6 +13,7 @@
 #include "subsystems/Shooter.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Limelight.h"
+#include <variant>
 
 double powerFromAngle(double y) {
   return 0.000450892 * (y * y) - 0.0166284 * y + 1.00753;

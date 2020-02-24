@@ -8,7 +8,7 @@
 #include "commands/manual/ManualDrive.h"
 #include "Robot.h"
 
-DefaultDrive::DefaultDrive(Drivetrain *drive, Input *in) :
+ManualDrive::ManualDrive(Drivetrain *drive, Input *in) :
   drivetrain(drive),
   input(in)
 {
@@ -17,10 +17,10 @@ DefaultDrive::DefaultDrive(Drivetrain *drive, Input *in) :
 }
 
 // Called when the command is initially scheduled.
-void DefaultDrive::Initialize() {}
+void ManualDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void DefaultDrive::Execute() {
+void ManualDrive::Execute() {
   double forward = -input->GetY();
   double turn = 0.5 * input->GetZ();
 
@@ -31,7 +31,7 @@ void DefaultDrive::Execute() {
 }
 
 // Called once the command ends or is interrupted.
-void DefaultDrive::End(bool interrupted) {}
+void ManualDrive::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool DefaultDrive::IsFinished() { return false; }
+bool ManualDrive::IsFinished() { return false; }
