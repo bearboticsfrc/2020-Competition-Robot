@@ -19,19 +19,22 @@ RobotContainer::RobotContainer() :
   /* --- Sensors --- */
   m_gyro(GYRO_ID),
   /* --- Subsystems --- */
+  m_hopper(),
   m_drivetrain(&m_gyro),
-  m_intake(&m_hopper),
   m_shooter(&m_hopper),
+  m_intake(&m_hopper),
+  m_colorSensor(),
+  m_arduino(),
   /* --- Commands --- */
   m_manualDrive(&m_drivetrain, &m_input),
   m_manualShooter(&m_shooter, m_input.ManualShootButton()),
   m_manualIntake(&m_intake, m_input.RunIntakeButton(), m_input.RunUptakeButton(), m_input.ReverseIntakeButton()),
+  m_autoShoot(&m_shooter, &m_intake),
   m_alignTarget(&m_drivetrain, &m_intake),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_autonomous2(&m_drivetrain, &m_shooter, &m_intake),
-  m_autoShoot(&m_shooter, &m_intake),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),

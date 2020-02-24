@@ -22,12 +22,6 @@ double Limelight::getY() {
     return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty", 0.0);
 }
 
-units::meter_t Limelight::getDistance() {
-    double y = getY();
-    // TODO: Determine correspondance
-    return units::meter_t(0.0);
-}
-
 void Limelight::setLights(bool enabled) {
     double mode;
     if (enabled) {

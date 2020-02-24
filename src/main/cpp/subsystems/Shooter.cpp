@@ -32,8 +32,8 @@ Shooter::Shooter(Hopper *hopper) :
     motor(MOTOR_ID, MotorType::kBrushless),
     accelerator(ACCELERATOR_ID),
     feedMotor(FEEDMOTOR_ID),
-    hopper(hopper),
-    feedStartTime(steady_clock::now())
+    feedStartTime(steady_clock::now()),
+    hopper(hopper)
 {
     initDashboardValue("Shooter P Gain", 0.0001);
     initDashboardValue("Accelerator P Gain", 0.0001);
