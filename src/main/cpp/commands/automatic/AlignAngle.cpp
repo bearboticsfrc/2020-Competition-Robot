@@ -59,7 +59,7 @@ bool doAlign(Drivetrain *drivetrain, units::degree_t target, double *integral) {
   auto rawAngleError = target - currentYaw;
   double angleError = mod(rawAngleError.to<double>() + 180.0, 360.0) - 180.0;
 
-  *integral += angleError / 10000.0;
+  *integral += angleError / 5000.0;
 
   double speed = angleError / 60.0 + *integral;
 
