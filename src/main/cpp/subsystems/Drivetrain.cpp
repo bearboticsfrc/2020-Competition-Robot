@@ -155,7 +155,7 @@ void Drivetrain::updatePose(units::meter_t leftChange, units::meter_t rightChang
 }
 
 void Drivetrain::SetSpeed(double speed) {
-    SetAllSpeed(speed, speed);
+    SetSpeeds(speed, speed);
 }
 
 frc::Pose2d Drivetrain::GetPose() {
@@ -166,7 +166,7 @@ frc::Pose2d Drivetrain::GetLastPose() {
     return previousPose;
 }
 
-void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
+void Drivetrain::SetSpeeds(double leftSpeed, double rightSpeed) {
     leftFront.GetPIDController().SetReference(leftSpeed * 5700.0, rev::ControlType::kVelocity);
     rightFront.GetPIDController().SetReference(rightSpeed * 5700.0, rev::ControlType::kVelocity);
 }

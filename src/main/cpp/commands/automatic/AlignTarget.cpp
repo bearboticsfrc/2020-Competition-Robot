@@ -40,7 +40,7 @@ void AlignTarget::Execute() {
       successes += 1;
     }
   } else {
-    drivetrain->SetAllSpeed(0.0, 0.0);
+    drivetrain->SetSpeeds(0.0, 0.0);
     fails += 1;
     successes = 0;
   }
@@ -49,7 +49,7 @@ void AlignTarget::Execute() {
 // Called once the command ends or is interrupted.
 void AlignTarget::End(bool interrupted) {
   Limelight::setLights(false);
-  drivetrain->SetAllSpeed(0.0, 0.0);
+  drivetrain->SetSpeeds(0.0, 0.0);
 }
 
 // Returns true when the command should end.

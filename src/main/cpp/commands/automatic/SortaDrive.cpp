@@ -21,12 +21,12 @@ void SortaDrive::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void SortaDrive::Execute() {
   ++counts;
-  drivetrain->SetAllSpeed(-0.1, -0.1);
+  drivetrain->SetSpeeds(-0.1, -0.1);
 }
 
 // Called once the command ends or is interrupted.
 void SortaDrive::End(bool interrupted) {
-  drivetrain->SetAllSpeed(0.0, 0.0);
+  drivetrain->SetSpeeds(0.0, 0.0);
 }
 
 // Returns true when the command should end.

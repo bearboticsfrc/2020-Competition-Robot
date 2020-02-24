@@ -68,13 +68,13 @@ void BallPickup::Execute() {
   leftSpeed += leftChange;
   rightSpeed += rightChange;
 
-  drivetrain->SetAllSpeed(leftSpeed, rightSpeed);
+  drivetrain->SetSpeeds(leftSpeed, rightSpeed);
 }
 
 // Called once the command ends or is interrupted.
 void BallPickup::End(bool interrupted) {
   intake->setMode(IntakeMode::Stopped);
-  drivetrain->SetAllSpeed(0.0, 0.0);
+  drivetrain->SetSpeeds(0.0, 0.0);
 }
 
 // Returns true when the command should end.

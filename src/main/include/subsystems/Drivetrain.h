@@ -36,9 +36,7 @@ class Drivetrain : public frc2::SubsystemBase {
   void Periodic();
 
   void SetSpeed(double speed);
-
-  void SetAllSpeed(double leftSpeed, double rightSpeed);
-
+  void SetSpeeds(double leftSpeed, double rightSpeed);
   void SetSpeeds(units::meters_per_second_t leftSpeed, units::meters_per_second_t rightSpeed);
 
   frc::Pose2d GetPose();

@@ -27,7 +27,6 @@ class Shooter : public frc2::SubsystemBase {
 
   void setSpeed(double speed);
   void shootAll();
-  void setFeed(double speed);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.

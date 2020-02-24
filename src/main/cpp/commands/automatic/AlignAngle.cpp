@@ -73,7 +73,7 @@ bool doAlign(Drivetrain *drivetrain, units::degree_t target, double *integral) {
     speed = -MAX_SPEED;
   }
 
-  drivetrain->SetAllSpeed(speed, -speed);
+  drivetrain->SetSpeeds(speed, -speed);
 
   return std::abs(angleError) < ANGLE_THRESHOLD;
 }

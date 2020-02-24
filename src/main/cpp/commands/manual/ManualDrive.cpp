@@ -27,7 +27,7 @@ void DefaultDrive::Execute() {
   double leftSpeed = forward + turn;
   double rightSpeed = forward - turn;
 
-  drivetrain->SetAllSpeed(leftSpeed, rightSpeed);
+  drivetrain->SetSpeeds(leftSpeed, rightSpeed);
 }
 
 // Called once the command ends or is interrupted.
