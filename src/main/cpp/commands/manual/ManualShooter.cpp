@@ -23,26 +23,19 @@ ManualShooter::ManualShooter(Shooter *s, std::function<bool()> shouldShoot) :
 }
 
 // Called when the command is initially scheduled.
-void ManualShooter::Initialize() {
-  shooter->setSpeed(0.0);
-}
+void ManualShooter::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void ManualShooter::Execute() {
   bool shoot = shouldShoot();
 
   if (shoot) {
-    shooter->shootAll();
-    shooter->setSpeed(1.0);
-  } else {
-    shooter->setSpeed(0.0);
+    shooter->shoot(1.0);
   }
 }
 
 // Called once the command ends or is interrupted.
-void ManualShooter::End(bool interrupted) {
-  shooter->setSpeed(0.0);
-}
+void ManualShooter::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ManualShooter::IsFinished() { return false; }

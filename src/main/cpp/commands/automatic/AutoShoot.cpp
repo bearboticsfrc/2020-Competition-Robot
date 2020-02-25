@@ -56,19 +56,19 @@ void AutoShoot::Execute() {
   } else {
     // We have enough successes to acquire
     if (!acquired) {
-      // Adjust power
-      double foundY = Limelight::getY();
-      frc::SmartDashboard::PutNumber("FoundY", foundY);
-      shooter->setSpeed(powerFromAngle(foundY));
       acquired = true;
       startTime = std::chrono::steady_clock::now();
-      shooter->shootAll();
+
+      // Adjust power
+      double foundY = Limelight::getY();
+      shooter->shoot(powerFromAngle(foundY));
+
+      frc::SmartDashboard::PutNumber("FoundY", foundY);
     } 
   }
 }
 // Called once the command ends or is interrupted.
 void AutoShoot::End(bool interrupted) {
-  shooter->setSpeed(0.0);
   Limelight::setLights(false);
 
   intake->setExtended(oldIntakeState);

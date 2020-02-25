@@ -98,11 +98,9 @@ void ColorSensor::Periodic() {
 
     // outputs color into shuffleboard
 
-    frc::SmartDashboard::PutNumber("Red", detectedColor.red);
+    /*frc::SmartDashboard::PutNumber("Red", detectedColor.red);
     frc::SmartDashboard::PutNumber("Green", detectedColor.green);
     frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
-    frc::SmartDashboard::PutNumber("Confidence", confidence);
+    frc::SmartDashboard::PutNumber("Confidence", confidence);*/
     frc::SmartDashboard::PutString("Detected Color", color_to_string(wheelColor));
-
-    
 }

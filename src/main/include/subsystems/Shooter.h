@@ -30,9 +30,10 @@ struct StoppedState {
 };
 struct SpinningState {
   SpinningState() = delete;
-  SpinningState(Shooter *shooter);
+  SpinningState(Shooter *shooter, double targetRpm);
 
   int spinSuccesses = 0;
+  double targetRpm = 0.0;
 };
 struct ShootingState {
   ShootingState() = delete;
@@ -47,8 +48,7 @@ class Shooter : public frc2::SubsystemBase {
  public:
   Shooter(Hopper *hopper);
 
-  void setSpeed(double speed);
-  void shootAll();
+  void shoot(double speed);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -68,9 +68,5 @@ class Shooter : public frc2::SubsystemBase {
   // must be run when shooting
   Hopper *hopper;
 
-  bool feedQueued = false;
-
   ShooterState state;
-
-  double targetRPM = 0.0;
 };

@@ -53,20 +53,25 @@ Shooter::Shooter(Hopper *hopper) :
 }
 
 StoppedState::StoppedState(Shooter *shooter) {
-    shooter->targetRPM = 0.0;
+    std::cout << "Transitioning to stopped state\n";
     shooter->motor.Set(0.0);
     shooter->accelerator.Set(ControlMode::PercentOutput, 0.0);
     shooter->feedMotor.Set(ControlMode::PercentOutput, 0.0);
     shooter->hopper->setMode(HopperMode::Stopped);
 }
 
-SpinningState::SpinningState(Shooter *shooter) {
-
+SpinningState::SpinningState(Shooter *shooter, double targetRpm) :
+    targetRpm(targetRpm)
+{
+    std::cout << "Transitioning to spinning state\n";
+    shooter->motor.GetPIDController().SetReference(targetRpm, rev::ControlType::kVelocity);
+    shooter->accelerator.Set(ControlMode::PercentOutput, 0.75);
 }
 
 ShootingState::ShootingState(Shooter *shooter) :
     startTime(steady_clock::now())
 {
+    std::cout << "Transitioning to shooting state\n";
     shooter->hopper->setMode(HopperMode::Agitating);
     shooter->feedMotor.Set(ControlMode::PercentOutput, true);
 }
@@ -80,14 +85,10 @@ void Shooter::Periodic() {
 
     state = std::visit(overloaded {
         [this](StoppedState s) {
-            if (targetRPM != 0.0) {
-                return ShooterState(SpinningState(this));
-            }
-
             return ShooterState(s);
         },
         [this](SpinningState s) {
-            double speedError = motor.GetEncoder().GetVelocity() - targetRPM;
+            double speedError = motor.GetEncoder().GetVelocity() - s.targetRpm;
             frc::SmartDashboard::PutNumber("Shoot Speed Error", speedError);
 
             if (std::abs(speedError) < 300.0) {
@@ -113,17 +114,8 @@ void Shooter::Periodic() {
     }, state);
 }
 
-void Shooter::setSpeed(double speed) {
-    motor.GetPIDController().SetReference(speed * 5700.0, rev::ControlType::kVelocity);
-    targetRPM = speed * 5700.0;
-
-    if (speed < 0.1) {
-        accelerator.Set(ControlMode::PercentOutput, 0.0);
-    } else {
-        accelerator.Set(ControlMode::PercentOutput, 0.75);
+void Shooter::shoot(double speed) {
+    if (std::holds_alternative<StoppedState>(state)) {
+        state = ShooterState(SpinningState(this, speed * 5700.0));
     }
-}
-
-void Shooter::shootAll() {
-    feedQueued = true;
 }

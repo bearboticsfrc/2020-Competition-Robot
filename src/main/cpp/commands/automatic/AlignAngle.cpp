@@ -18,15 +18,15 @@ void Aligner::setOutput(double output) {
 }
 
 void Aligner::update() {
-  setOutput(getAngle());
+  setOutput(Calculate(getAngle()));
 }
 
 Aligner::Aligner(Drivetrain *drivetrain) :
-  frc2::PIDController(0.016666, 0.0002, 0.0),
+  frc2::PIDController(0.01, 0.0, 0.0),
   drivetrain(drivetrain)
 {
   EnableContinuousInput(0.0, 360.0);
-  SetTolerance(1.0);
+  SetTolerance(0.5);
   Reset();
 }
 

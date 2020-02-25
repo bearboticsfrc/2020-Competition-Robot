@@ -59,5 +59,15 @@ void AlignTarget::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool AlignTarget::IsFinished() {
-  return successes >= 5 || fails >= 10;
+  if (successes >= 5) {
+    std::cout << "Align target succeeded\n";
+    return true;
+  }
+
+  if (fails >= 10) {
+    std::cout << "Align target failed\n";
+    return true;
+  }
+
+  return false;
 }
