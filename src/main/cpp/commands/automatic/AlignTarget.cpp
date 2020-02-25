@@ -36,10 +36,11 @@ void AlignTarget::Execute() {
 
     auto lastTargetYaw = drivetrain->GetLastPose().Rotation().Degrees() + units::degree_t(Limelight::getX());
 
-    aligner.SetSetpoint(lastTargetYaw.to<double>());
-    aligner.update();
+    double drivetrainAngle = drivetrain->GetPose().Rotation().Degrees().to<double>();
+    aligner.update(lastTargetYaw.to<double>());
 
-    if (aligner.AtSetpoint()) {
+    if (std::abs(lastTargetYaw.to<double>() - drivetrainAngle) < 1.0) {
+      std::cout << "Position error: " << aligner.GetPositionError() << "\n";
       successes += 1;
     }
   } else {
@@ -59,12 +60,12 @@ void AlignTarget::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool AlignTarget::IsFinished() {
-  if (successes >= 5) {
+  if (successes >= 10) {
     std::cout << "Align target succeeded\n";
     return true;
   }
 
-  if (fails >= 10) {
+  if (fails >= 20) {
     std::cout << "Align target failed\n";
     return true;
   }

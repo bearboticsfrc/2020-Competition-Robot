@@ -56,9 +56,9 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     rightFront.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
     leftFront.GetPIDController().SetFF(1.0 / 5700.0);
-    leftFront.GetPIDController().SetP(0.0002);
+    leftFront.GetPIDController().SetP(0.0001);
     rightFront.GetPIDController().SetFF(1.0 / 5700.0);
-    rightFront.GetPIDController().SetP(0.0002);
+    rightFront.GetPIDController().SetP(0.0001);
 
     leftBack.SetSmartCurrentLimit(40);
     leftFront.SetSmartCurrentLimit(40);
@@ -131,7 +131,7 @@ void Drivetrain::Periodic() {
 
 void Drivetrain::SetPose(frc::Pose2d newPose) {
     gyro->SetYaw(newPose.Rotation().Degrees().to<double>());
-    pose = newPose;
+    previousPose = pose = newPose;
 }
 
 void Drivetrain::updatePose(units::meter_t leftChange, units::meter_t rightChange) {

@@ -8,25 +8,37 @@
 #include "commands/automatic/AlignAngle.h"
 #include "subsystems/Drivetrain.h"
 
+double constrainAngle(double input) {
+  return std::fmod(std::fmod(input, 360.0) + 360.0, 360.0);
+}
+
 double Aligner::getAngle() const {
   double angle = drivetrain->GetPose().Rotation().Degrees().to<double>();
-  return std::fmod(std::fmod(angle, 360.0) + 360.0, 360.0);
+  return constrainAngle(angle);
 }
 
 void Aligner::setOutput(double output) {
   drivetrain->SetSpeeds(output, -output);
 }
 
-void Aligner::update() {
-  setOutput(Calculate(getAngle()));
+void Aligner::update(double target) {
+  double output = Calculate(getAngle(), constrainAngle(target));
+
+  if (output > 0.2) {
+    output = 0.2;
+  } else if (output < -0.2) {
+    output = -0.2;
+  }
+
+  setOutput(output);
 }
 
 Aligner::Aligner(Drivetrain *drivetrain) :
-  frc2::PIDController(0.01, 0.0, 0.0),
+  frc2::PIDController(0.015, 0.0, 0.0),
   drivetrain(drivetrain)
 {
   EnableContinuousInput(0.0, 360.0);
-  SetTolerance(0.5);
+  SetTolerance(1.0);
   Reset();
 }
 
@@ -60,12 +72,19 @@ void AlignAngle::Execute() {
   } else {
     t = target;
   }
+  t = units::degree_t(constrainAngle(t.to<double>()));
+  double drivetrainAngle = drivetrain->GetPose().Rotation().Degrees().to<double>();
 
-  aligner.SetSetpoint(t.to<double>());
-  aligner.update();
+  double diff = t.to<double>() - drivetrainAngle;
+  diff += 180.0;
+  diff = diff - floor(diff / 360.0) * 360.0;
+  diff -= 180.0;
 
-  if (aligner.AtSetpoint()) {
+  if (std::abs(diff) < 5.0) {
+    drivetrain->SetSpeeds(0.0, 0.0);
     successes += 1;
+  } else {
+    drivetrain->SetSpeeds(-0.1, 0.1);
   }
 }
 

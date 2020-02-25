@@ -16,7 +16,7 @@ class Drivetrain;
 class Aligner : public frc2::PIDController {
  public:
   Aligner(Drivetrain *drivetrain);
-  void update();
+  void update(double target);
 
  private:
   Drivetrain *drivetrain;
