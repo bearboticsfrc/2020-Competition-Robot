@@ -13,20 +13,20 @@
 
 AlignTarget::AlignTarget(Drivetrain *drivetrain, Intake *intake) :
   drivetrain(drivetrain),
-  intake(intake)
+  intake(intake),
+  aligner(drivetrain)
 {
   AddRequirements({drivetrain, intake});
-  // Use addRequirements() here to declare subsystem dependencies.
 }
 
 // Called when the command is initially scheduled.
 void AlignTarget::Initialize() {
   Limelight::setLights(true);
   intake->setExtended(true);
+  aligner.Reset();
 
   successes = 0;
   fails = 0;
-  integral = 0.0;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -36,11 +36,17 @@ void AlignTarget::Execute() {
 
     auto lastTargetYaw = drivetrain->GetLastPose().Rotation().Degrees() + units::degree_t(Limelight::getX());
 
-    if (doAlign(drivetrain, lastTargetYaw, &integral)) {
+    double drivetrainAngle = drivetrain->GetPose().Rotation().Degrees().to<double>();
+    aligner.update(lastTargetYaw.to<double>());
+
+    if (std::abs(lastTargetYaw.to<double>() - drivetrainAngle) < 1.0) {
+      std::cout << "Position error: " << aligner.GetPositionError() << "\n";
       successes += 1;
     }
   } else {
-    drivetrain->SetAllSpeed(0.0, 0.0);
+    aligner.Reset();
+    drivetrain->SetSpeeds(0.0, 0.0);
+
     fails += 1;
     successes = 0;
   }
@@ -49,10 +55,20 @@ void AlignTarget::Execute() {
 // Called once the command ends or is interrupted.
 void AlignTarget::End(bool interrupted) {
   Limelight::setLights(false);
-  drivetrain->SetAllSpeed(0.0, 0.0);
+  drivetrain->SetSpeeds(0.0, 0.0);
 }
 
 // Returns true when the command should end.
 bool AlignTarget::IsFinished() {
-  return successes >= 5 || fails >= 5;
+  if (successes >= 10) {
+    std::cout << "Align target succeeded\n";
+    return true;
+  }
+
+  if (fails >= 20) {
+    std::cout << "Align target failed\n";
+    return true;
+  }
+
+  return false;
 }

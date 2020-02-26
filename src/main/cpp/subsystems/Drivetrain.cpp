@@ -55,10 +55,10 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     rightBack.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     rightFront.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
-    leftBack.GetPIDController().SetFF(1.0 / 5700.0);
     leftFront.GetPIDController().SetFF(1.0 / 5700.0);
-    rightBack.GetPIDController().SetFF(1.0 / 5700.0);
+    leftFront.GetPIDController().SetP(0.0001);
     rightFront.GetPIDController().SetFF(1.0 / 5700.0);
+    rightFront.GetPIDController().SetP(0.0001);
 
     leftBack.SetSmartCurrentLimit(40);
     leftFront.SetSmartCurrentLimit(40);
@@ -103,18 +103,18 @@ void Drivetrain::Periodic() {
     //frc::SmartDashboard::PutNumber("Left Motor Current back", leftBack.GetOutputCurrent());
     //frc::SmartDashboard::PutNumber("Right Motor Current back", rightBack.GetOutputCurrent());
 
-    frc::SmartDashboard::PutNumber("Left Motor Velocity", leftFront.GetEncoder().GetVelocity());
+    /*frc::SmartDashboard::PutNumber("Left Motor Velocity", leftFront.GetEncoder().GetVelocity());
     frc::SmartDashboard::PutNumber("Right Motor Velocity", rightFront.GetEncoder().GetVelocity());
 
     frc::SmartDashboard::PutNumber("X", pose.Translation().X().to<double>());
     frc::SmartDashboard::PutNumber("Y", pose.Translation().Y().to<double>());
-    frc::SmartDashboard::PutNumber("Angle", pose.Rotation().Radians().to<double>());
+    frc::SmartDashboard::PutNumber("Angle", pose.Rotation().Radians().to<double>());*/
     
     auto l = units::meter_t(leftPos * METERS_PER_REV);
     auto r = units::meter_t(rightPos * METERS_PER_REV);
 
-    frc::SmartDashboard::PutNumber("Left Motor Meters", l.to<double>());
-    frc::SmartDashboard::PutNumber("Right Motor Meters", r.to<double>());
+    /*frc::SmartDashboard::PutNumber("Left Motor Meters", l.to<double>());
+    frc::SmartDashboard::PutNumber("Right Motor Meters", r.to<double>());*/
 
     double ypr[3];
     gyro->GetYawPitchRoll(ypr);
@@ -129,9 +129,17 @@ void Drivetrain::Periodic() {
     updatePose(leftChange, rightChange);
 }
 
+units::meter_t Drivetrain::GetAverageEncoder() {
+    double total = 
+        (leftFront.GetEncoder().GetPosition() +
+         rightFront.GetEncoder().GetPosition()) / 2.0;
+
+    return units::meter_t(total * METERS_PER_REV);
+}
+
 void Drivetrain::SetPose(frc::Pose2d newPose) {
     gyro->SetYaw(newPose.Rotation().Degrees().to<double>());
-    pose = newPose;
+    previousPose = pose = newPose;
 }
 
 void Drivetrain::updatePose(units::meter_t leftChange, units::meter_t rightChange) {
@@ -155,7 +163,7 @@ void Drivetrain::updatePose(units::meter_t leftChange, units::meter_t rightChang
 }
 
 void Drivetrain::SetSpeed(double speed) {
-    SetAllSpeed(speed, speed);
+    SetSpeeds(speed, speed);
 }
 
 frc::Pose2d Drivetrain::GetPose() {
@@ -166,7 +174,19 @@ frc::Pose2d Drivetrain::GetLastPose() {
     return previousPose;
 }
 
-void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
+double deadzoneCompensate(double raw) {
+    const double DEADZONE = 0.05;
+
+    if (raw > 0.001) {
+        return (raw + DEADZONE) / (1.0 + DEADZONE);
+    } else if (raw < -0.001) {
+        return (raw - DEADZONE) / (1.0 + DEADZONE);
+    } else {
+        return 0.0;
+    }
+}
+
+void Drivetrain::SetSpeeds(double leftSpeed, double rightSpeed) {
     leftFront.GetPIDController().SetReference(leftSpeed * 5700.0, rev::ControlType::kVelocity);
     rightFront.GetPIDController().SetReference(rightSpeed * 5700.0, rev::ControlType::kVelocity);
 }
@@ -174,8 +194,6 @@ void Drivetrain::SetAllSpeed(double leftSpeed, double rightSpeed) {
 void Drivetrain::SetSpeeds(units::meters_per_second_t lSpeed, units::meters_per_second_t rSpeed) {
     auto l = lSpeed.to<double>() / METERS_PER_REV * 60.0;
     auto r = rSpeed.to<double>() / METERS_PER_REV * 60.0;
-
-    //frc::SmartDashboard::PutNumber("Target speed average", (l + r) / 2.0);
 
     leftFront.GetPIDController().SetReference(l, rev::ControlType::kVelocity);
     rightFront.GetPIDController().SetReference(r, rev::ControlType::kVelocity);

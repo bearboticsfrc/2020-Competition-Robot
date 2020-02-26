@@ -41,6 +41,8 @@ class BallPickup
 
   std::pair<double, double> getTargetSpeeds();
 
+  int failures = 0;
+
   double leftSpeed = 0.0;
   double rightSpeed = 0.0;
 };

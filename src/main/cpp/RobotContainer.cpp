@@ -19,25 +19,28 @@ RobotContainer::RobotContainer() :
   /* --- Sensors --- */
   m_gyro(GYRO_ID),
   /* --- Subsystems --- */
+  m_hopper(),
   m_drivetrain(&m_gyro),
-  m_intake(&m_hopper),
   m_shooter(&m_hopper),
+  m_intake(&m_hopper),
+  m_colorSensor(),
+  m_arduino(),
   /* --- Commands --- */
-  m_defaultDrive(&m_drivetrain, &m_input),
+  m_manualDrive(&m_drivetrain, &m_input),
   m_manualShooter(&m_shooter, m_input.ManualShootButton()),
   m_manualIntake(&m_intake, m_input.RunIntakeButton(), m_input.RunUptakeButton(), m_input.ReverseIntakeButton()),
+  m_autoShoot(&m_shooter, &m_intake),
   m_alignTarget(&m_drivetrain, &m_intake),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
-  m_autonomous2(&m_drivetrain, &m_shooter, &m_intake),
-  m_autoShoot(&m_shooter, &m_intake),
+  m_autonomous2(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
-  m_reverseIntakeButton(m_input.ReverseIntakeButton())
-  //camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
+  m_reverseIntakeButton(m_input.ReverseIntakeButton()),
+  camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
 {
   std::cout << "Constructor\n";
   std::cout.flush();
@@ -50,10 +53,6 @@ RobotContainer::RobotContainer() :
   frc::SmartDashboard::PutData("Align Target", &m_alignTarget);
   frc::SmartDashboard::PutData("Ball Pickup", &m_ballPickup);
   frc::SmartDashboard::PutData("Auto shoot", &m_autoShoot);
-
-  m_drivetrain.SetDefaultCommand(m_defaultDrive);
-  m_intake.SetDefaultCommand(m_manualIntake);
-  m_shooter.SetDefaultCommand(m_manualShooter);
 }
 
 
@@ -87,7 +86,8 @@ std::vector<frc2::Command*> RobotContainer::GetTeleopCommands() {
       break;
     case DriveChoice::Manual: 
       std::cout << "Adding default drive command\n";
-      commands.push_back(&m_defaultDrive);
+      commands.push_back(&m_manualDrive);
+      m_drivetrain.SetDefaultCommand(m_manualDrive);
       break;
     default:
       std::cerr << "UNHANDLED OPTION\n";
@@ -100,6 +100,7 @@ std::vector<frc2::Command*> RobotContainer::GetTeleopCommands() {
     case ShooterChoice::Manual:
       std::cout << "Adding manual shooter command\n";
       commands.push_back(&m_manualShooter);
+      m_shooter.SetDefaultCommand(m_manualShooter);
       break;
     default:
       std::cerr << "UNHANDLED OPTION FOR SHOOTER\n";
@@ -110,6 +111,7 @@ std::vector<frc2::Command*> RobotContainer::GetTeleopCommands() {
       break;
     case IntakeChoice::Manual:
       commands.push_back(&m_manualIntake);
+      m_intake.SetDefaultCommand(m_manualIntake);
       break;
     default:
       std::cerr << "UNHANDLED OPTION FOR INTAKE\n";

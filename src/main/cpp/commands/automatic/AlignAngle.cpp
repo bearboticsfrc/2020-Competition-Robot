@@ -8,72 +8,119 @@
 #include "commands/automatic/AlignAngle.h"
 #include "subsystems/Drivetrain.h"
 
+double constrainAngle(double input) {
+  return std::fmod(std::fmod(input, 360.0) + 360.0, 360.0);
+}
+
+double Aligner::getAngle() const {
+  double angle = drivetrain->GetPose().Rotation().Degrees().to<double>();
+  return constrainAngle(angle);
+}
+
+void Aligner::setOutput(double output) {
+  if (std::abs(output) < 0.001) {
+    drivetrain->SetSpeeds(0.0, 0.0);
+  } else if (0.0 < output && output < 0.02) {
+    drivetrain->SetSpeeds(0.02, -0.02);
+  } else if (-0.02 < output && output < 0.0) {
+    drivetrain->SetSpeeds(-0.02, 0.02);
+  } else {
+    drivetrain->SetSpeeds(output, output);
+  }
+}
+
+void Aligner::update(double target) {
+  double output = Calculate(getAngle(), constrainAngle(target));
+
+  if (output > 0.2) {
+    output = 0.2;
+  } else if (output < -0.2) {
+    output = -0.2;
+  }
+
+  setOutput(output);
+}
+
+Aligner::Aligner(Drivetrain *drivetrain) :
+  frc2::PIDController(0.015, 0.001, 0.0),
+  drivetrain(drivetrain)
+{
+  EnableContinuousInput(0.0, 360.0);
+  SetTolerance(1.0);
+  Reset();
+}
+
 AlignAngle::AlignAngle(units::degree_t target, Drivetrain *drivetrain) :
   drivetrain(drivetrain),
-  target(target)
+  target(target),
+  aligner(drivetrain)
 {
   AddRequirements(drivetrain);
 }
 
 AlignAngle::AlignAngle(units::degree_t *target, Drivetrain *drivetrain) :
   drivetrain(drivetrain),
-  target2(target)
+  target2(target),
+  aligner(drivetrain)
 {
   AddRequirements(drivetrain);
 }
 
 // Called when the command is initially scheduled.
 void AlignAngle::Initialize() {
-  integral = 0.0;
+  aligner.Reset();
+  successes = 0;
+}
+
+units::degree_t AlignAngle::GetTarget() const {
+  double temp;
+  if (target2 != nullptr) {
+    temp = target2->to<double>();
+  } else {
+    temp = target.to<double>();
+  }
+
+  return units::degree_t(constrainAngle(temp));
+}
+
+double AlignAngle::GetAngleError() const {
+  units::degree_t drivetrainAngle = drivetrain->GetPose().Rotation().Degrees();
+
+  double diff = (GetTarget() - drivetrainAngle).to<double>();
+
+  // Correct differences so they're in the range -180, 180
+  diff -= floor((diff + 180.0) / 360.0) * 360.0;
+  
+  return diff;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AlignAngle::Execute() {
-  units::degree_t t;
-  if (target2 != nullptr) {
-    t = *target2;
-  } else {
-    t = target;
-  }
+  double diff = GetAngleError();
 
-  if (doAlign(drivetrain, t, &integral)) {
+  const double TURN_SPEED = 0.1;
+  const double MAX_ERROR = 1.0;
+
+  if (diff > MAX_ERROR * 2) {
+    drivetrain->SetSpeeds(-TURN_SPEED, TURN_SPEED);
+  } else if (diff > MAX_ERROR) {
+    drivetrain->SetSpeeds(-0.07, 0.07);
+  } else if (diff < -MAX_ERROR * 2) {
+    drivetrain->SetSpeeds(TURN_SPEED, -TURN_SPEED);
+  } else if (diff < -MAX_ERROR) {
+    drivetrain->SetSpeeds(0.07, -0.07);
+  } else {
+    drivetrain->SetSpeeds(0.0, 0.0);
     successes += 1;
   }
 }
 
 // Called once the command ends or is interrupted.
 void AlignAngle::End(bool interrupted) {
-  drivetrain->SetSpeed(0.0);
+  drivetrain->SetSpeeds(0.0, 0.0);
 }
 
 // Returns true when the command should end.
-bool AlignAngle::IsFinished() { return successes >= 5; }
-
-double mod(double f, double value) {
-  return f - floor(f / value) * value;
-}
-
-bool doAlign(Drivetrain *drivetrain, units::degree_t target, double *integral) {
-  auto currentYaw = drivetrain->GetPose().Rotation().Degrees();
-
-  auto rawAngleError = target - currentYaw;
-  double angleError = mod(rawAngleError.to<double>() + 180.0, 360.0) - 180.0;
-
-  *integral += angleError / 5000.0;
-
-  double speed = angleError / 60.0 + *integral;
-
-
-  const double ANGLE_THRESHOLD = 1.0;
-  const double MAX_SPEED = 0.3;
-
-  if (speed > MAX_SPEED) {
-    speed = MAX_SPEED;
-  } else if (speed < -MAX_SPEED) {
-    speed = -MAX_SPEED;
-  }
-
-  drivetrain->SetAllSpeed(speed, -speed);
-
-  return std::abs(angleError) < ANGLE_THRESHOLD;
+bool AlignAngle::IsFinished() {
+  return successes >= 5;
 }

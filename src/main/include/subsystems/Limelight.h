@@ -20,8 +20,6 @@ class Limelight : public frc2::SubsystemBase {
 
   static double getY();
 
-  static units::meter_t getDistance();
-
   static void setLights(bool enabled);
 
   /**

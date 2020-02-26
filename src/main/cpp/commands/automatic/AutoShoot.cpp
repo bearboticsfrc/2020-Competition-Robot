@@ -13,6 +13,7 @@
 #include "subsystems/Shooter.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Limelight.h"
+#include <variant>
 
 double powerFromAngle(double y) {
   return 0.000450892 * (y * y) - 0.0166284 * y + 1.00753;
@@ -55,19 +56,19 @@ void AutoShoot::Execute() {
   } else {
     // We have enough successes to acquire
     if (!acquired) {
-      // Adjust power
-      double foundY = Limelight::getY();
-      frc::SmartDashboard::PutNumber("FoundY", foundY);
-      shooter->setSpeed(powerFromAngle(foundY));
       acquired = true;
       startTime = std::chrono::steady_clock::now();
-      shooter->shootAll();
+
+      // Adjust power
+      double foundY = Limelight::getY();
+      shooter->shoot(powerFromAngle(foundY));
+
+      frc::SmartDashboard::PutNumber("FoundY", foundY);
     } 
   }
 }
 // Called once the command ends or is interrupted.
 void AutoShoot::End(bool interrupted) {
-  shooter->setSpeed(0.0);
   Limelight::setLights(false);
 
   intake->setExtended(oldIntakeState);
@@ -75,8 +76,6 @@ void AutoShoot::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool AutoShoot::IsFinished() {
-  auto diff = std::chrono::steady_clock::now() - startTime;
-
   if (failures >= 20) {
     std::cout << "Too many failures\n";
     return true;
@@ -84,8 +83,7 @@ bool AutoShoot::IsFinished() {
 
   // TODO: Determine how long we need to spend shooting or 
   // find a better system to shoot all of the power cells
-  if (acquired && diff > std::chrono::seconds(4)) {
-    std::cout << "Ran for 3 seconds\n";
+  if (acquired && shooter->IsStopped()) {
     return true;
   }
 

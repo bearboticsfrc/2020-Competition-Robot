@@ -24,10 +24,10 @@ namespace frc {
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class DefaultDrive
-    : public frc2::CommandHelper<frc2::CommandBase, DefaultDrive> {
+class ManualDrive
+    : public frc2::CommandHelper<frc2::CommandBase, ManualDrive> {
  public:
-  DefaultDrive(Drivetrain *drivetrain, Input *joystick);
+  ManualDrive(Drivetrain *drivetrain, Input *joystick);
 
   void Initialize() override;
 

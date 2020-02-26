@@ -11,6 +11,7 @@
 #include <rev/CANSparkMax.h>
 #include <ctre/Phoenix.h>
 #include <chrono>
+#include <variant>
 
 class Hopper;
 
@@ -21,35 +22,53 @@ class Hopper;
   const int ACCELERATOR_ID = 5;
 }
 
+class Shooter;
+
+struct StoppedState {
+  StoppedState() = delete;
+  StoppedState(Shooter *shooter);
+};
+struct SpinningState {
+  SpinningState() = delete;
+  SpinningState(Shooter *shooter, double targetRpm);
+
+  int spinSuccesses = 0;
+  double targetRpm = 0.0;
+};
+struct ShootingState {
+  ShootingState() = delete;
+  ShootingState(Shooter *shooter);
+
+  std::chrono::time_point<std::chrono::steady_clock> startTime;
+};
+
+using ShooterState = std::variant<StoppedState, SpinningState, ShootingState>;
+
 class Shooter : public frc2::SubsystemBase {
  public:
   Shooter(Hopper *hopper);
 
-  void setSpeed(double speed);
-  void shootAll();
-  void setFeed(double speed);
+  void shoot(double speed);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic();
 
+  bool IsStopped() const;
+
  private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
+  friend class StoppedState;
+  friend class SpinningState;
+  friend class ShootingState;
 
   rev::CANSparkMax motor;
-
   VictorSPX accelerator;
-
   VictorSPX feedMotor;
 
-  std::chrono::time_point<std::chrono::steady_clock> feedStartTime;
-  bool queueFeed = false;
-
+  // The hopper is controlled because the agitator
+  // must be run when shooting
   Hopper *hopper;
 
-  bool stopped = true;
-  double targetRPM = 0.0;
-  int spinSuccesses = 0;
+  ShooterState state;
 };

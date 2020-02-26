@@ -15,12 +15,12 @@
 
 units::degree_t calcDestAngle(units::degree_t startAngle) {
   // All distances in meters, but this uses double for the sake of compile time
-  double x = -3.048 * tan(static_cast<units::radian_t>(startAngle).to<double>());
+  double x = 3.048 * tan(static_cast<units::radian_t>(startAngle).to<double>());
   double h = 0.8663;
   double d = 0.9466;
 
   double ang = atan2(h, d + x) * 360.0 / (2.0 * M_PI);
-  return units::degree_t(-90 - ang);
+  return units::degree_t(90 + ang);
 }
 
 MovableAutonomous::MovableAutonomous(Drivetrain *drivetrain, Shooter *shooter, Intake *intake) :

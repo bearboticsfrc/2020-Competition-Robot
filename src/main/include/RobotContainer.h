@@ -69,7 +69,7 @@ class RobotContainer {
   //ControlPanelManip m_controlPanelManip;
 
   /* --- Commands --- */
-  DefaultDrive m_defaultDrive;
+  ManualDrive m_manualDrive;
   ManualShooter m_manualShooter;
   ManualIntake m_manualIntake;
   AutoShoot m_autoShoot;
@@ -77,7 +77,7 @@ class RobotContainer {
   BallPickup m_ballPickup;
   ShowColors m_showColors;
   Autonomous m_autonomous;
-  AlignShootDriveback m_autonomous2;
+  Autonomous2 m_autonomous2;
   MovableAutonomous m_movableAutonomous;
 
   /* --- Buttons --- */
@@ -88,7 +88,7 @@ class RobotContainer {
   /* --- Choosers --- */
   Choosers choosers;
 
-  //cs::UsbCamera camera;
+  cs::UsbCamera camera;
 
   void ConfigureButtonBindings();
 };

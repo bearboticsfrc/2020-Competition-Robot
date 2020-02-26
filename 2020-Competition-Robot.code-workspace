@@ -49,7 +49,18 @@
 			"stdexcept": "cpp",
 			"streambuf": "cpp",
 			"typeinfo": "cpp",
-			"bit": "cpp"
+			"bit": "cpp",
+			"complex": "cpp",
+			"condition_variable": "cpp",
+			"cstring": "cpp",
+			"functional": "cpp",
+			"map": "cpp",
+			"set": "cpp",
+			"mutex": "cpp",
+			"thread": "cpp",
+			"cinttypes": "cpp",
+			"variant": "cpp",
+			"*.inc": "cpp"
 		}
 	}
 }
