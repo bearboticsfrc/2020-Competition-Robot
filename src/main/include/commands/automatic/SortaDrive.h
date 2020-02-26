@@ -23,7 +23,7 @@
 class SortaDrive
     : public frc2::CommandHelper<frc2::CommandBase, SortaDrive> {
  public:
-  SortaDrive(Drivetrain *drivetrain);
+  SortaDrive(Drivetrain *drivetrain, double seconds);
 
   void Initialize() override;
 
@@ -34,6 +34,7 @@ class SortaDrive
   bool IsFinished() override;
 
 private:
+  int max_counts;
   int counts = 0;
   Drivetrain *drivetrain;
 };

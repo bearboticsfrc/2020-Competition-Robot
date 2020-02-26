@@ -52,6 +52,10 @@ private:
   units::degree_t target;
   units::degree_t *target2 = nullptr;
 
+  units::degree_t GetTarget() const;
+
+  double GetAngleError() const;
+
   int successes = 0;
 
   Aligner aligner;

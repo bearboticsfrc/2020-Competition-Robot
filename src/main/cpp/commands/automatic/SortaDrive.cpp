@@ -7,8 +7,10 @@
 
 #include "commands/automatic/SortaDrive.h"
 
-SortaDrive::SortaDrive(Drivetrain *drivetrain) :
-  drivetrain(drivetrain) {
+SortaDrive::SortaDrive(Drivetrain *drivetrain, double seconds) :
+  max_counts(seconds * 50.0),
+  drivetrain(drivetrain)
+{
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(drivetrain);
 }
@@ -30,4 +32,4 @@ void SortaDrive::End(bool interrupted) {
 }
 
 // Returns true when the command should end.
-bool SortaDrive::IsFinished() { return counts >= (20 * 4); }
+bool SortaDrive::IsFinished() { return counts >= max_counts; }

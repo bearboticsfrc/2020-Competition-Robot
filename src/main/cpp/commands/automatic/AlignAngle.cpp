@@ -64,27 +64,41 @@ void AlignAngle::Initialize() {
   successes = 0;
 }
 
+units::degree_t AlignAngle::GetTarget() const {
+  double temp;
+  if (target2 != nullptr) {
+    temp = target2->to<double>();
+  } else {
+    temp = target.to<double>();
+  }
+
+  return units::degree_t(constrainAngle(temp));
+}
+
+double AlignAngle::GetAngleError() const {
+  units::degree_t drivetrainAngle = drivetrain->GetPose().Rotation().Degrees();
+
+  double diff = (GetTarget() - drivetrainAngle).to<double>();
+
+  // Correct differences so they're in the range -180, 180
+  diff -= floor((diff + 180.0) / 360.0) * 360.0;
+  
+  return diff;
+}
+
 // Called repeatedly when this Command is scheduled to run
 void AlignAngle::Execute() {
-  units::degree_t t;
-  if (target2 != nullptr) {
-    t = *target2;
+  double diff = GetAngleError();
+
+  const double TURN_SPEED = 0.1;
+  const double MAX_ERROR = 5.0;
+  if (diff > MAX_ERROR) {
+    drivetrain->SetSpeeds(TURN_SPEED, -TURN_SPEED);
+  } else if (diff < -MAX_ERROR) {
+    drivetrain->SetSpeeds(-TURN_SPEED, TURN_SPEED);
   } else {
-    t = target;
-  }
-  t = units::degree_t(constrainAngle(t.to<double>()));
-  double drivetrainAngle = drivetrain->GetPose().Rotation().Degrees().to<double>();
-
-  double diff = t.to<double>() - drivetrainAngle;
-  diff += 180.0;
-  diff = diff - floor(diff / 360.0) * 360.0;
-  diff -= 180.0;
-
-  if (std::abs(diff) < 5.0) {
     drivetrain->SetSpeeds(0.0, 0.0);
     successes += 1;
-  } else {
-    drivetrain->SetSpeeds(-0.1, 0.1);
   }
 }
 
