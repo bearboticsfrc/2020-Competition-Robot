@@ -93,9 +93,9 @@ void AlignAngle::Execute() {
   const double TURN_SPEED = 0.1;
   const double MAX_ERROR = 5.0;
   if (diff > MAX_ERROR) {
-    drivetrain->SetSpeeds(TURN_SPEED, -TURN_SPEED);
-  } else if (diff < -MAX_ERROR) {
     drivetrain->SetSpeeds(-TURN_SPEED, TURN_SPEED);
+  } else if (diff < -MAX_ERROR) {
+    drivetrain->SetSpeeds(TURN_SPEED, -TURN_SPEED);
   } else {
     drivetrain->SetSpeeds(0.0, 0.0);
     successes += 1;

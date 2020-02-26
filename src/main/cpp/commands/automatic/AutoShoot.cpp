@@ -76,8 +76,6 @@ void AutoShoot::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool AutoShoot::IsFinished() {
-  auto diff = std::chrono::steady_clock::now() - startTime;
-
   if (failures >= 20) {
     std::cout << "Too many failures\n";
     return true;
@@ -85,8 +83,7 @@ bool AutoShoot::IsFinished() {
 
   // TODO: Determine how long we need to spend shooting or 
   // find a better system to shoot all of the power cells
-  if (acquired && diff > std::chrono::seconds(4)) {
-    std::cout << "Ran for 3 seconds\n";
+  if (acquired && shooter->IsStopped()) {
     return true;
   }
 

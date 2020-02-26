@@ -91,7 +91,7 @@ void Shooter::Periodic() {
             double speedError = motor.GetEncoder().GetVelocity() - s.targetRpm;
             frc::SmartDashboard::PutNumber("Shoot Speed Error", speedError);
 
-            if (std::abs(speedError) < 100.0) {
+            if (std::abs(speedError) < 150.0) {
                 ++s.spinSuccesses;
             } else {
                 s.spinSuccesses = 0;
@@ -118,4 +118,8 @@ void Shooter::shoot(double speed) {
     if (std::holds_alternative<StoppedState>(state)) {
         state = ShooterState(SpinningState(this, speed * 5330.0));
     }
+}
+
+bool Shooter::IsStopped() const {
+    return std::holds_alternative<StoppedState>(state);
 }

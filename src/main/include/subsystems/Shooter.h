@@ -55,6 +55,8 @@ class Shooter : public frc2::SubsystemBase {
    */
   void Periodic();
 
+  bool IsStopped() const;
+
  private:
   friend class StoppedState;
   friend class SpinningState;

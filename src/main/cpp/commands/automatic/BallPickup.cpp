@@ -21,46 +21,52 @@ BallPickup::BallPickup(Drivetrain *drivetrain, Intake *intake, Arduino *arduino)
 
 // Called when the command is initially scheduled.
 void BallPickup::Initialize() {
+  failures = 0;
   leftSpeed = 0.0;
   rightSpeed = 0.0;
   intake->setExtended(true);
   intake->setMode(IntakeMode::Intake);
 }
 
+std::pair<double, double> getTargetSpeeds(SensorFrame data) {
+  const double CENTER = 160.0;
+  const double ANGLE_GAIN = 0.002;
+  const double AREA_GAIN = 100.0;
+
+  double area = data.width * data.height;
+  double angleError = data.x - CENTER;
+
+  double turnSpeed = angleError * ANGLE_GAIN;
+  double forwardSpeed = area / AREA_GAIN;
+
+  return { forwardSpeed + turnSpeed, forwardSpeed - turnSpeed };
+}
+
 std::pair<double, double> BallPickup::getTargetSpeeds() {
   auto [all_data, valid] = arduino->readData();
+
   if (valid && all_data.size() > 0) {
     auto data = all_data[0];
     if (!(data.x == 0 && data.y == 0 && data.width == 0 && data.height == 0)) {
-      intake->setMode(IntakeMode::Intake);
-
-      const double CENTER = 160.0;
-
-      double angleError = data.x - CENTER;
-      angleError /= 500.0;
-
-      frc::SmartDashboard::PutNumber("Area", data.width * data.height);
-
-      double ballDistance = 100.0 / (data.width * data.height);
-
-      return { ballDistance + angleError, ballDistance - angleError };
-    } else {
-      return { 0.0, 0.0 };
+      failures = 0;
+      return ::getTargetSpeeds(data);
     }
   } else {
     std::cout << "BALL TRACKING INFORMATION NOT VALID\n";
-    return { 0.0, 0.0 };
   }
+
+  ++failures;
+  return { 0.0, 0.0 };
 }
 
 // Called repeatedly when this Command is scheduled to run
 void BallPickup::Execute() {
+  const double MAX_CHANGE = 0.01;
+
   auto [leftTargetSpeed, rightTargetSpeed] = getTargetSpeeds();
 
   double leftDiff = leftTargetSpeed - leftSpeed;
   double rightDiff = rightTargetSpeed - rightSpeed;
-
-  const double MAX_CHANGE = 0.01;
 
   double leftChange = std::clamp(leftDiff, -MAX_CHANGE, MAX_CHANGE);
   double rightChange = std::clamp(rightDiff, -MAX_CHANGE, MAX_CHANGE);
@@ -79,7 +85,12 @@ void BallPickup::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool BallPickup::IsFinished() {
-  // TODO: End it properly
+  if (failures >= 20) {
+    std::cout << "Too many failures in ball pickup command\n";
+    return true;
+  }
+
+  // TODO: Figure out a success condition (maybe)
   return false;
 }
 
