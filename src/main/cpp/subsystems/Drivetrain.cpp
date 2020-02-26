@@ -116,9 +116,9 @@ void Drivetrain::Periodic() {
     /*frc::SmartDashboard::PutNumber("Left Motor Meters", l.to<double>());
     frc::SmartDashboard::PutNumber("Right Motor Meters", r.to<double>());*/
 
-    /*double ypr[3];
+    double ypr[3];
     gyro->GetYawPitchRoll(ypr);
-    frc::SmartDashboard::PutNumber("Gyro Angle", ypr[0]);*/
+    frc::SmartDashboard::PutNumber("Gyro Angle", ypr[0]);
 
     auto leftChange = l - lastLeft;
     auto rightChange = r - lastRight;
@@ -127,6 +127,14 @@ void Drivetrain::Periodic() {
     lastRight = r;
 
     updatePose(leftChange, rightChange);
+}
+
+units::meter_t Drivetrain::GetAverageEncoder() {
+    double total = 
+        (leftFront.GetEncoder().GetPosition() +
+         rightFront.GetEncoder().GetPosition()) / 2.0;
+
+    return units::meter_t(total * METERS_PER_REV);
 }
 
 void Drivetrain::SetPose(frc::Pose2d newPose) {

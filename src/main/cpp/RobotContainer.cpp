@@ -34,7 +34,7 @@ RobotContainer::RobotContainer() :
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
-  m_autonomous2(&m_drivetrain, &m_shooter, &m_intake),
+  m_autonomous2(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),

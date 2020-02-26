@@ -18,7 +18,15 @@ double Aligner::getAngle() const {
 }
 
 void Aligner::setOutput(double output) {
-  drivetrain->SetSpeeds(output, -output);
+  if (std::abs(output) < 0.001) {
+    drivetrain->SetSpeeds(0.0, 0.0);
+  } else if (0.0 < output && output < 0.02) {
+    drivetrain->SetSpeeds(0.02, -0.02);
+  } else if (-0.02 < output && output < 0.0) {
+    drivetrain->SetSpeeds(-0.02, 0.02);
+  } else {
+    drivetrain->SetSpeeds(output, output);
+  }
 }
 
 void Aligner::update(double target) {
@@ -34,7 +42,7 @@ void Aligner::update(double target) {
 }
 
 Aligner::Aligner(Drivetrain *drivetrain) :
-  frc2::PIDController(0.015, 0.0, 0.0),
+  frc2::PIDController(0.015, 0.001, 0.0),
   drivetrain(drivetrain)
 {
   EnableContinuousInput(0.0, 360.0);
@@ -91,11 +99,16 @@ void AlignAngle::Execute() {
   double diff = GetAngleError();
 
   const double TURN_SPEED = 0.1;
-  const double MAX_ERROR = 5.0;
-  if (diff > MAX_ERROR) {
+  const double MAX_ERROR = 1.0;
+
+  if (diff > MAX_ERROR * 2) {
     drivetrain->SetSpeeds(-TURN_SPEED, TURN_SPEED);
-  } else if (diff < -MAX_ERROR) {
+  } else if (diff > MAX_ERROR) {
+    drivetrain->SetSpeeds(-0.07, 0.07);
+  } else if (diff < -MAX_ERROR * 2) {
     drivetrain->SetSpeeds(TURN_SPEED, -TURN_SPEED);
+  } else if (diff < -MAX_ERROR) {
+    drivetrain->SetSpeeds(0.07, -0.07);
   } else {
     drivetrain->SetSpeeds(0.0, 0.0);
     successes += 1;

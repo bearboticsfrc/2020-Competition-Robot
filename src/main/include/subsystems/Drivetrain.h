@@ -39,6 +39,8 @@ class Drivetrain : public frc2::SubsystemBase {
   void SetSpeeds(double leftSpeed, double rightSpeed);
   void SetSpeeds(units::meters_per_second_t leftSpeed, units::meters_per_second_t rightSpeed);
 
+  units::meter_t GetAverageEncoder() ;
+
   frc::Pose2d GetPose();
 
   frc::Pose2d GetLastPose();

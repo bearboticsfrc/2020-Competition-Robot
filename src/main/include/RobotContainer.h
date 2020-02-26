@@ -77,7 +77,7 @@ class RobotContainer {
   BallPickup m_ballPickup;
   ShowColors m_showColors;
   Autonomous m_autonomous;
-  AlignShootDriveback m_autonomous2;
+  Autonomous2 m_autonomous2;
   MovableAutonomous m_movableAutonomous;
 
   /* --- Buttons --- */

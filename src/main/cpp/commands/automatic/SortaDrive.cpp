@@ -8,6 +8,16 @@
 #include "commands/automatic/SortaDrive.h"
 
 SortaDrive::SortaDrive(Drivetrain *drivetrain, double seconds) :
+  backwards(true),
+  max_counts(seconds * 50.0),
+  drivetrain(drivetrain)
+{
+  // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(drivetrain);
+}
+
+SortaDrive::SortaDrive(Drivetrain *drivetrain, double seconds, bool backwards) :
+  backwards(backwards),
   max_counts(seconds * 50.0),
   drivetrain(drivetrain)
 {
@@ -23,7 +33,11 @@ void SortaDrive::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void SortaDrive::Execute() {
   ++counts;
-  drivetrain->SetSpeeds(-0.1, -0.1);
+  if (backwards) {
+    drivetrain->SetSpeeds(-0.1, -0.1);
+  } else {
+    drivetrain->SetSpeeds(0.1, 0.1);
+  }
 }
 
 // Called once the command ends or is interrupted.

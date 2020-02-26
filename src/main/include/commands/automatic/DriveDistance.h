@@ -9,7 +9,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/Drivetrain.h"
+
+class Drivetrain;
 
 /**
  * An example command.
@@ -18,13 +19,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-
-// mood
-class SortaDrive
-    : public frc2::CommandHelper<frc2::CommandBase, SortaDrive> {
+class DriveDistance
+    : public frc2::CommandHelper<frc2::CommandBase, DriveDistance> {
  public:
-  SortaDrive(Drivetrain *drivetrain, double seconds);
-  SortaDrive(Drivetrain *drivetrain, double seconds, bool backwards);
+  DriveDistance(Drivetrain *drivetrain, units::meter_t distance);
 
   void Initialize() override;
 
@@ -34,9 +32,12 @@ class SortaDrive
 
   bool IsFinished() override;
 
-private:
-  bool backwards = false;
-  int max_counts;
-  int counts = 0;
+ private:
+  int waiter = 0;
+
   Drivetrain *drivetrain;
+  units::meter_t distance;
+
+  units::degree_t angle;
+  units::meter_t startPosition;
 };
