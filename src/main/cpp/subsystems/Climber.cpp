@@ -9,17 +9,18 @@
 #include <rev/CANSparkMaxLowLevel.h>
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
-using climber_consts::MOTOR_1_ID;
-using climber_consts::MOTOR_2_ID;
+using climber_consts::EXTEND_ID;
+using climber_consts::WINCH_ID;
 
 
 
 Climber::Climber() :
-    motor1(MOTOR_1_ID, MotorType::kBrushless),
-    motor2(MOTOR_2_ID, MotorType::kBrushless)
+    extendMotor(EXTEND_ID),
+    winchMotor1(WINCH_ID)
 {
-    motor1.SetSmartCurrentLimit(40);
-    motor2.SetSmartCurrentLimit(40);
+    extendMotor.SetNeutralMode(NeutralMode::Brake);
+    winchMotor1.SetNeutralMode(NeutralMode::Brake);
+
 }
 
 // This method will be called once per scheduler run
@@ -27,12 +28,16 @@ void Climber::Periodic() {}
 
 // on off
 void Climber::setClimb(bool climb) {
-    motor1.Set(climb);
-    motor2.Set(climb);
+    /*motor1.Set(climb);
+    motor2.Set(climb);*/
+    winchMotor1.Set(ControlMode::PercentOutput, climb);
 }
-
+void Climber::Extend(double speed) {
+    extendMotor.Set(ControlMode::PercentOutput, speed);
+}
 // set speed
 void Climber::setSpeed(double speed) {
-    motor1.Set(speed);
-    motor2.Set(speed);
+    /*motor1.Set(speed);
+    motor2.Set(speed);*/
+    winchMotor1.Set(ControlMode::PercentOutput, speed);
 }

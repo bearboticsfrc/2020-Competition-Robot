@@ -9,11 +9,12 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <ctre/Phoenix.h> 
 
 // TODO: Determine motor IDs
  namespace climber_consts {
-  const int MOTOR_1_ID = 5;
-  const int MOTOR_2_ID = 6;
+  const int EXTEND_ID = 250;
+  const int WINCH_ID = 251;
 }
 
 //TODO: What is the rotation direction
@@ -23,18 +24,21 @@ class Climber : public frc2::SubsystemBase {
 
     void setClimb(bool climb);
     void setSpeed(double speed);
+    void Extend(double speed); 
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
-  void Periodic();
+    void Periodic();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-
+  /*
   rev::CANSparkMax motor1;
   rev::CANSparkMax motor2;
-
+  */
+  VictorSPX extendMotor;
+  VictorSPX winchMotor1;
 
 };
