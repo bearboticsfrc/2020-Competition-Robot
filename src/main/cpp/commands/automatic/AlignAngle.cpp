@@ -100,15 +100,17 @@ double AlignAngle::GetAngleError() const {
 void AlignAngle::Execute() {
   double diff = GetAngleError();
 
-  const double TURN_SPEED = 0.1;
+  const double TURN_SPEED = 0.5;
   const double MAX_ERROR = 1.0;
 
-  if (diff > MAX_ERROR * 2) {
-    drivetrain->SetSpeeds(-TURN_SPEED, TURN_SPEED);
+  if (diff > MAX_ERROR * 5) {
+    double s = 0.07 + ((diff - MAX_ERROR * 5) * (TURN_SPEED - 0.07) / 90.0);
+    drivetrain->SetSpeeds(-s, s);
   } else if (diff > MAX_ERROR) {
     drivetrain->SetSpeeds(-0.07, 0.07);
-  } else if (diff < -MAX_ERROR * 2) {
-    drivetrain->SetSpeeds(TURN_SPEED, -TURN_SPEED);
+  } else if (diff < -MAX_ERROR * 5) {
+    double s = 0.07 + ((MAX_ERROR * 5 - diff) * (TURN_SPEED - 0.07) / 90.0);
+    drivetrain->SetSpeeds(s, -s);
   } else if (diff < -MAX_ERROR) {
     drivetrain->SetSpeeds(0.07, -0.07);
   } else {

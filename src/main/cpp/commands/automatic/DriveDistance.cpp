@@ -27,15 +27,16 @@ double DriveDistance::ForwardSpeed() {
   auto fromStart = std::abs((drivetrain->GetAverageEncoder() - startPosition).to<double>());
   auto fromEnd = std::abs(fromStart - std::abs(distance.to<double>()));
 
-  const double MAIN_SPEED = 0.5;
+  const double MAIN_SPEED = 0.6;
   const double RAMP_DISTANCE = 1.0;
+  const double MIN_SPEED = 0.2;
 
   if (fromStart < RAMP_DISTANCE && fromEnd < RAMP_DISTANCE) {
-    return 0.1;
+    return MIN_SPEED;
   } else if (fromStart < RAMP_DISTANCE) {
-    return 0.1 + (MAIN_SPEED - 0.1) * fromStart / RAMP_DISTANCE;
+    return MIN_SPEED + (MAIN_SPEED - MIN_SPEED) * fromStart / RAMP_DISTANCE;
   } else if (fromEnd < RAMP_DISTANCE) {
-    return MAIN_SPEED - (MAIN_SPEED - 0.1) * (RAMP_DISTANCE - fromEnd) / RAMP_DISTANCE;
+    return MAIN_SPEED - (MAIN_SPEED - MIN_SPEED) * (RAMP_DISTANCE - fromEnd) / RAMP_DISTANCE;
   } else {
     return MAIN_SPEED;
   }

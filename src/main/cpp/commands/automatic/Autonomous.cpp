@@ -16,6 +16,7 @@
 #include <frc2/command/RamseteCommand.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/ParallelRaceGroup.h>
+#include <frc2/command/WaitCommand.h>
 #include <frc/geometry/Pose2d.h>
 
 
@@ -62,33 +63,29 @@ FriendlyTrench::FriendlyTrench(Drivetrain *drivetrain, Intake *intake, Arduino *
     AlignAngle(units::degree_t(181.0), drivetrain),
     frc2::InstantCommand{ [=] { intake->setMode(IntakeMode::Intake); } },
     DriveDistance(drivetrain, units::foot_t(13.0)),
+    AlignAngle(units::degree_t(186.0), drivetrain),
     frc2::InstantCommand{ [=] { intake->setMode(IntakeMode::Stopped); } },
     DriveDistance(drivetrain, units::foot_t(-7.0)),
-    AlignAngle(units::degree_t(90.0), drivetrain),
-    AlignAngle(units::degree_t(20.0), drivetrain),
+    AlignAngle(units::degree_t(0.0), drivetrain),
     AlignAndShoot(drivetrain, s, intake)
   );
 }
 
 EnemyTrench::EnemyTrench(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *shooter) {
   AddCommands(
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(frc::Pose2d()); } },
-    frc2::InstantCommand{ [=] { intake->setMode(IntakeMode::Intake); } },
-
+    frc2::InstantCommand{ [=] { 
+      drivetrain->SetPose(frc::Pose2d());
+      intake->setExtended(true);
+      intake->setMode(IntakeMode::Intake);
+    } },
+    frc2::WaitCommand(units::second_t(1)),
     // Drive into trench run
-    DriveDistance(drivetrain, units::foot_t(10.0)),
+    DriveDistance(drivetrain, units::foot_t(9.75)),
     DriveDistance(drivetrain, units::foot_t(-1.0)),
     AlignAngle(units::degree_t(-30.0), drivetrain),
     DriveDistance(drivetrain, units::foot_t(2.0)),
-    DriveDistance(drivetrain, units::foot_t(-2.0)),
-    AlignAngle(units::degree_t(0.0), drivetrain),
+    DriveDistance(drivetrain, units::foot_t(-8.0)),
     frc2::InstantCommand{ [=] { intake->setMode(IntakeMode::Stopped); } },
-    // Back out of trench run
-    DriveDistance(drivetrain, units::foot_t(-10.0)),
-    // Turn to the left and drive to power port
-    AlignAngle(units::degree_t(90.0), drivetrain),
-    DriveDistance(drivetrain, units::foot_t(10.0)),
-    // Turn towards power port and shoot
     AlignAngle(units::degree_t(135.0), drivetrain),
     AlignAndShoot(drivetrain, shooter, intake)
   );
