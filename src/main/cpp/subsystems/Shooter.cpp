@@ -60,8 +60,9 @@ StoppedState::StoppedState(Shooter *shooter) {
     shooter->hopper->setMode(HopperMode::Stopped);
 }
 
-SpinningState::SpinningState(Shooter *shooter, double targetRpm) :
-    targetRpm(targetRpm)
+SpinningState::SpinningState(Shooter *shooter, double targetRpm, std::function<bool()> runCheck) :
+    targetRpm(targetRpm),
+    runCheck(runCheck)
 {
     std::cout << "Transitioning to spinning state\n";
     shooter->motor.GetPIDController().SetReference(targetRpm, rev::ControlType::kVelocity);
@@ -97,13 +98,15 @@ void Shooter::Periodic() {
                 s.spinSuccesses = 0;
             }
 
-            if (s.spinSuccesses >= 5) {
+            if (s.spinSuccesses >= 5 && s.runCheck()) {
                 return ShooterState(ShootingState(this));
             }
 
             return ShooterState(s);
         },
         [this](ShootingState s) {
+            // TODO: Determine how long we need to spend shooting or 
+            // find a better system to shoot all of the power cells
             auto elapsed = steady_clock::now() - s.startTime;
             if (elapsed > milliseconds(5000)) {
                 return ShooterState(StoppedState(this));
@@ -114,9 +117,9 @@ void Shooter::Periodic() {
     }, state);
 }
 
-void Shooter::shoot(double speed) {
-    if (std::holds_alternative<StoppedState>(state)) {
-        state = ShooterState(SpinningState(this, speed * 5330.0));
+void Shooter::shoot(double speed, std::function<bool()> runCheck) {
+    if (!std::holds_alternative<ShootingState>(state)) {
+        state = ShooterState(SpinningState(this, speed * 5330.0, runCheck));
     }
 }
 

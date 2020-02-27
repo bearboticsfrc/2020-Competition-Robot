@@ -40,4 +40,6 @@ class DriveDistance
 
   units::degree_t angle;
   units::meter_t startPosition;
+
+  double ForwardSpeed();
 };

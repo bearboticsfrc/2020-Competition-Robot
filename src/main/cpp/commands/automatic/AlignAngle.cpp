@@ -18,14 +18,16 @@ double Aligner::getAngle() const {
 }
 
 void Aligner::setOutput(double output) {
+  const double MIN_OUT = 0.03;
+
   if (std::abs(output) < 0.001) {
     drivetrain->SetSpeeds(0.0, 0.0);
-  } else if (0.0 < output && output < 0.02) {
-    drivetrain->SetSpeeds(0.02, -0.02);
-  } else if (-0.02 < output && output < 0.0) {
-    drivetrain->SetSpeeds(-0.02, 0.02);
+  } else if (0.0 < output && output < MIN_OUT) {
+    drivetrain->SetSpeeds(MIN_OUT, -MIN_OUT);
+  } else if (-MIN_OUT < output && output < 0.0) {
+    drivetrain->SetSpeeds(-MIN_OUT, MIN_OUT);
   } else {
-    drivetrain->SetSpeeds(output, output);
+    drivetrain->SetSpeeds(output, -output);
   }
 }
 

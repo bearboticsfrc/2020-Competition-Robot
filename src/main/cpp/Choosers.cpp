@@ -2,19 +2,22 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 Choosers::Choosers() {
-    m_driveChooser.AddOption("Drive disabled", DriveChoice::Disabled);
-    m_driveChooser.AddOption("Drive manual", DriveChoice::Manual);
+    m_driveChooser.AddOption("Disabled", DriveChoice::Disabled);
+    m_driveChooser.AddOption("Manual", DriveChoice::Manual);
 
-    m_shooterChooser.AddOption("Shooter disabled", ShooterChoice::Disabled);
-    m_shooterChooser.AddOption("Shooter manual", ShooterChoice::Manual);
+    m_shooterChooser.AddOption("Disabled", ShooterChoice::Disabled);
+    m_shooterChooser.AddOption("Manual", ShooterChoice::Manual);
 
-    m_intakeChooser.AddOption("Intake disabled", IntakeChoice::Disabled);
-    m_intakeChooser.AddOption("Intake manual", IntakeChoice::Manual);
+    m_intakeChooser.AddOption("Disabled", IntakeChoice::Disabled);
+    m_intakeChooser.AddOption("Manual", IntakeChoice::Manual);
 
-    m_autonomousChooser.AddOption("Autonomous disabled", AutonomousChoice::Disabled);
-    m_autonomousChooser.AddOption("Autonomous default", AutonomousChoice::Default);
-    m_autonomousChooser.AddOption("Autonomous default2", AutonomousChoice::Default2);
-    m_autonomousChooser.AddOption("Autonomous movable", AutonomousChoice::Movable);
+    m_autonomousChooser.AddOption("Disabled", AutonomousChoice::Disabled);
+    m_autonomousChooser.AddOption("Default", AutonomousChoice::Default);
+    m_autonomousChooser.AddOption("Movable", AutonomousChoice::Movable);
+    m_autonomousChooser.AddOption("Friendly Trench", AutonomousChoice::FriendlyTrench);
+    m_autonomousChooser.AddOption("Enemy Trench", AutonomousChoice::EnemyTrench);
+    m_autonomousChooser.AddOption("Simple Forwards", AutonomousChoice::SimpleForward);
+    m_autonomousChooser.AddOption("Simple Backward", AutonomousChoice::SimpleBackward);
 
     frc::SmartDashboard::PutData("DriveChooser", &m_driveChooser);
     frc::SmartDashboard::PutData("ShooterChooser", &m_shooterChooser);

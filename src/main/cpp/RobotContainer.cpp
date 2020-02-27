@@ -34,8 +34,11 @@ RobotContainer::RobotContainer() :
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
-  m_autonomous2(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
+  m_friendlyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
+  m_enemyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
+  m_simpleForward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, true),
+  m_simpleBackward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, false),
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
@@ -68,10 +71,16 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return nullptr;
     case AutonomousChoice::Default:
       return &m_autonomous;
-    case AutonomousChoice::Default2:
-      return &m_autonomous2;
     case AutonomousChoice::Movable:
       return &m_movableAutonomous;
+    case AutonomousChoice::FriendlyTrench:
+      return &m_friendlyTrench;
+    case AutonomousChoice::EnemyTrench:
+      return &m_enemyTrench;
+    case AutonomousChoice::SimpleForward:
+      return &m_simpleForward;
+    case AutonomousChoice::SimpleBackward:
+      return &m_simpleBackward;
     default:
       std::cerr << "UNHANDLED OPTION FOR AUTONOMOUS\n";
       return nullptr;

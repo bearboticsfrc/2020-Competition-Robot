@@ -41,7 +41,7 @@ Autonomous::Autonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino,
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-Autonomous2::Autonomous2(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *s) {
+FriendlyTrench::FriendlyTrench(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *s) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
 
@@ -63,9 +63,47 @@ Autonomous2::Autonomous2(Drivetrain *drivetrain, Intake *intake, Arduino *arduin
     frc2::InstantCommand{ [=] { intake->setMode(IntakeMode::Intake); } },
     DriveDistance(drivetrain, units::foot_t(13.0)),
     frc2::InstantCommand{ [=] { intake->setMode(IntakeMode::Stopped); } },
-    DriveDistance(drivetrain, units::foot_t(-5.0)),
+    DriveDistance(drivetrain, units::foot_t(-7.0)),
     AlignAngle(units::degree_t(90.0), drivetrain),
     AlignAngle(units::degree_t(20.0), drivetrain),
     AlignAndShoot(drivetrain, s, intake)
+  );
+}
+
+EnemyTrench::EnemyTrench(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *shooter) {
+  AddCommands(
+    frc2::InstantCommand{ [=] { drivetrain->SetPose(frc::Pose2d()); } },
+    frc2::InstantCommand{ [=] { intake->setMode(IntakeMode::Intake); } },
+
+    // Drive into trench run
+    DriveDistance(drivetrain, units::foot_t(10.0)),
+    DriveDistance(drivetrain, units::foot_t(-1.0)),
+    AlignAngle(units::degree_t(-30.0), drivetrain),
+    DriveDistance(drivetrain, units::foot_t(2.0)),
+    DriveDistance(drivetrain, units::foot_t(-2.0)),
+    AlignAngle(units::degree_t(0.0), drivetrain),
+    frc2::InstantCommand{ [=] { intake->setMode(IntakeMode::Stopped); } },
+    // Back out of trench run
+    DriveDistance(drivetrain, units::foot_t(-10.0)),
+    // Turn to the left and drive to power port
+    AlignAngle(units::degree_t(90.0), drivetrain),
+    DriveDistance(drivetrain, units::foot_t(10.0)),
+    // Turn towards power port and shoot
+    AlignAngle(units::degree_t(135.0), drivetrain),
+    AlignAndShoot(drivetrain, shooter, intake)
+  );
+}
+
+SimpleAutonomous::SimpleAutonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *shooter, bool forward) {
+  units::foot_t distance;
+  if (forward) {
+    distance = units::foot_t(3.0);
+  } else {
+    distance = units::foot_t(-3.0);
+  }
+
+  AddCommands(
+    AlignAndShoot(drivetrain, shooter, intake),
+    DriveDistance(drivetrain, distance)
   );
 }

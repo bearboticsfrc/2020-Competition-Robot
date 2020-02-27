@@ -8,6 +8,7 @@
 #include "commands/automatic/AlignAndShoot.h"
 #include "commands/automatic/AlignTarget.h"
 #include "commands/automatic/AutoShoot.h"
+#include "subsystems/Shooter.h"
 #include <frc2/command/WaitCommand.h>
 #include <frc2/command/ConditionalCommand.h>
 #include <frc2/command/InstantCommand.h>
@@ -25,6 +26,7 @@ AlignAndShoot::AlignAndShoot(Drivetrain *drivetrain, Shooter *shooter, Intake *i
       std::unique_ptr<frc2::Command>(new frc2::WaitCommand(std::chrono::seconds(1))),
       [=] { return intake->getExtended(); }
     ),
+    frc2::InstantCommand([=] { shooter->shoot(1.0, [] { return false; }); }),
     AlignTarget(drivetrain, intake),
     AutoShoot(shooter, intake)
     );

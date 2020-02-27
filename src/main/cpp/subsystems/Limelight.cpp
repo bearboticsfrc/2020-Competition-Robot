@@ -15,7 +15,7 @@ bool Limelight::targetFound() {
 }
 
 double Limelight::getX() {
-    return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0) - 0.3;
+    return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
 }
 
 double Limelight::getY() {

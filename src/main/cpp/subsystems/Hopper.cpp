@@ -39,7 +39,7 @@ void Hopper::setMode(HopperMode mode) {
             agitateMotor.Set(0.0);
             break;
         case HopperMode::Agitating:
-            intakeMotor.Set(0.75);
+            intakeMotor.Set(0.25);
             agitateMotor.Set(0.75);
             break;
     }

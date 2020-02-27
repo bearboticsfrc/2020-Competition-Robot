@@ -25,11 +25,29 @@ public:
 private:
 };
 
-class Autonomous2
+class FriendlyTrench
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                 FriendlyTrench> {
+public:
+  FriendlyTrench(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *s);
+
+private:
+};
+
+class EnemyTrench 
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                 EnemyTrench> {
+public:
+  EnemyTrench(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *s);
+
+private:
+};
+
+class SimpleAutonomous 
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  Autonomous> {
 public:
-  Autonomous2(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *s);
+  SimpleAutonomous(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *s, bool forwards);
 
 private:
 };

@@ -77,8 +77,11 @@ class RobotContainer {
   BallPickup m_ballPickup;
   ShowColors m_showColors;
   Autonomous m_autonomous;
-  Autonomous2 m_autonomous2;
   MovableAutonomous m_movableAutonomous;
+  FriendlyTrench m_friendlyTrench;
+  EnemyTrench m_enemyTrench;
+  SimpleAutonomous m_simpleForward;
+  SimpleAutonomous m_simpleBackward;
 
   /* --- Buttons --- */
   frc2::Button m_alignAndShootButton;

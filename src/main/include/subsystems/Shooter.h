@@ -30,10 +30,11 @@ struct StoppedState {
 };
 struct SpinningState {
   SpinningState() = delete;
-  SpinningState(Shooter *shooter, double targetRpm);
+  SpinningState(Shooter *shooter, double targetRpm, std::function<bool()> runCheck);
 
   int spinSuccesses = 0;
   double targetRpm = 0.0;
+  std::function<bool()> runCheck;
 };
 struct ShootingState {
   ShootingState() = delete;
@@ -48,7 +49,10 @@ class Shooter : public frc2::SubsystemBase {
  public:
   Shooter(Hopper *hopper);
 
-  void shoot(double speed);
+  // Begins the shooting process with the given speed.
+  // If you provide a runCheck function, then it will wait
+  // at the Spinning state until the function returns true.
+  void shoot(double speed, std::function<bool()> runCheck = [] { return true; });
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.

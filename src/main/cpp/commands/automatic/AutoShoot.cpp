@@ -15,8 +15,32 @@
 #include "subsystems/Limelight.h"
 #include <variant>
 
-double powerFromAngle(double y) {
+// 21.2   91%
+// 16.8   90%
+// 12.7   89%
+// 11.3   87%
+//  9.3   85%
+//  7.0   85%
+//  5.5   87%
+//  4.7   89%
+//  2.3   90%
+//  2.3   94.5%
+//  0.5   97%
+// -0.2   99%
+
+/*double powerFromAngle(double y) {
   return 0.000450892 * (y * y) - 0.0166284 * y + 1.00753;
+}*/
+
+double powerFromAngle(double y) {
+  return 
+    1.865e-7 * std::pow(y, 6) +
+    -0.00000941972639267 * std::pow(y, 5) +
+     0.000154104299104 * std::pow(y, 4) +
+    -0.000812733158646 * std::pow(y, 3) +
+     0.000707164302267 * std::pow(y, 2) +
+    -0.0174193883624 * y +
+     0.983779942723;
 }
 
 AutoShoot::AutoShoot(Shooter *s, Intake *i) :
@@ -63,6 +87,8 @@ void AutoShoot::Execute() {
       double foundY = Limelight::getY();
       shooter->shoot(powerFromAngle(foundY));
 
+      //shooter->shoot(frc::SmartDashboard::GetNumber("ShootSpeed", 1.0));
+
       frc::SmartDashboard::PutNumber("FoundY", foundY);
     } 
   }
@@ -81,8 +107,6 @@ bool AutoShoot::IsFinished() {
     return true;
   }
 
-  // TODO: Determine how long we need to spend shooting or 
-  // find a better system to shoot all of the power cells
   if (acquired && shooter->IsStopped()) {
     return true;
   }

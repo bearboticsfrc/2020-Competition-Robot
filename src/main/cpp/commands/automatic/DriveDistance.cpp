@@ -23,6 +23,24 @@ void DriveDistance::Initialize() {
   waiter = 0;
 }
 
+double DriveDistance::ForwardSpeed() {
+  auto fromStart = std::abs((drivetrain->GetAverageEncoder() - startPosition).to<double>());
+  auto fromEnd = std::abs(fromStart - std::abs(distance.to<double>()));
+
+  const double MAIN_SPEED = 0.5;
+  const double RAMP_DISTANCE = 1.0;
+
+  if (fromStart < RAMP_DISTANCE && fromEnd < RAMP_DISTANCE) {
+    return 0.1;
+  } else if (fromStart < RAMP_DISTANCE) {
+    return 0.1 + (MAIN_SPEED - 0.1) * fromStart / RAMP_DISTANCE;
+  } else if (fromEnd < RAMP_DISTANCE) {
+    return MAIN_SPEED - (MAIN_SPEED - 0.1) * (RAMP_DISTANCE - fromEnd) / RAMP_DISTANCE;
+  } else {
+    return MAIN_SPEED;
+  }
+}
+
 // Called repeatedly when this Command is scheduled to run
 void DriveDistance::Execute() {
   units::degree_t current = drivetrain->GetPose().Rotation().Degrees();
@@ -30,7 +48,7 @@ void DriveDistance::Execute() {
   double diff = (angle - current).to<double>();
   diff -= floor((diff + 180.0) / 360.0) * 360.0;
 
-  const double FORWARD_SPEED = 0.20;
+  const double FORWARD_SPEED = ForwardSpeed();
   const double ANGLE_GAIN = 0.01;
 
   double angleSpeed = diff * ANGLE_GAIN;
@@ -53,5 +71,5 @@ void DriveDistance::End(bool interrupted) {
 bool DriveDistance::IsFinished() {
   auto driven = drivetrain->GetAverageEncoder() - startPosition;
 
-  return waiter > 5 && std::abs((drivetrain->GetAverageEncoder() - startPosition).to<double>()) > std::abs(distance.to<double>());
+  return waiter > 5 && std::abs(driven.to<double>()) > std::abs(distance.to<double>());
 }
