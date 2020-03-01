@@ -11,6 +11,9 @@ Choosers::Choosers() {
     m_intakeChooser.AddOption("Disabled", IntakeChoice::Disabled);
     m_intakeChooser.AddOption("Manual", IntakeChoice::Manual);
 
+    m_climbChooser.AddOption("Disabled", ClimbChoice::Disabled);
+    m_climbChooser.AddOption("Manual", ClimbChoice::Manual);
+
     m_autonomousChooser.AddOption("Disabled", AutonomousChoice::Disabled);
     m_autonomousChooser.AddOption("Default", AutonomousChoice::Default);
     m_autonomousChooser.AddOption("Movable", AutonomousChoice::Movable);
@@ -35,6 +38,10 @@ ShooterChoice Choosers::shooterChoice() {
 
 IntakeChoice Choosers::intakeChoice() {
     return m_intakeChooser.GetSelected();
+}
+
+ClimbChoice Choosers::climbChoice() {
+    return m_climbChooser.GetSelected();
 }
 
 AutonomousChoice Choosers::autonomousChoice(){

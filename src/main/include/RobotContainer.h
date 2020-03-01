@@ -15,6 +15,7 @@
 #include "commands/manual/ManualDrive.h"
 #include "commands/manual/ManualShooter.h"
 #include "commands/manual/ManualIntake.h"
+#include "commands/manual/ManualClimb.h"
 #include "commands/automatic/AlignTarget.h"
 #include "commands/automatic/AutoShoot.h"
 #include "commands/automatic/BallPickup.h"
@@ -24,6 +25,7 @@
 #include "commands/automatic/AlignShootDriveback.h"
 #include "commands/ShowColors.h"
 
+#include "subsystems/Climber.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h" 
 #include "subsystems/Intake.h"
@@ -60,6 +62,7 @@ class RobotContainer {
   PigeonIMU m_gyro;
 
   /* --- Subsystems --- */
+  Climber m_climber;
   Hopper m_hopper;
   Drivetrain m_drivetrain;
   Shooter m_shooter;
@@ -72,6 +75,7 @@ class RobotContainer {
   ManualDrive m_manualDrive;
   ManualShooter m_manualShooter;
   ManualIntake m_manualIntake;
+  ManualClimb m_manualClimb;
   AutoShoot m_autoShoot;
   AlignTarget m_alignTarget;
   BallPickup m_ballPickup;

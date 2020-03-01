@@ -19,6 +19,8 @@ class Input {
 
   void SetRumble(double rumble);
 
+  double GetClimbSpeed() const;
+
   ButtonGetter AutoShootButton() const;
   ButtonGetter ManualShootButton() const;
 

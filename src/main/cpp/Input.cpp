@@ -50,6 +50,13 @@ void Input::SetRumble(double rumble) {
     xboxController.SetRumble(RumbleType::kRightRumble, rumble);
 }
 
+double Input::GetClimbSpeed() const {
+    // Up is 0 (360)
+    // Down is 180
+
+    return std::cos(xboxController.GetPOV() / 180.0 * M_PI);
+}
+
 ButtonGetter Input::AutoShootButton() const {
     return [this]() { return xboxController.GetBumper(JoystickHand::kRightHand); };
 }

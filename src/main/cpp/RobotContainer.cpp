@@ -19,6 +19,7 @@ RobotContainer::RobotContainer() :
   /* --- Sensors --- */
   m_gyro(GYRO_ID),
   /* --- Subsystems --- */
+  m_climber(),
   m_hopper(),
   m_drivetrain(&m_gyro),
   m_shooter(&m_hopper),
@@ -29,6 +30,7 @@ RobotContainer::RobotContainer() :
   m_manualDrive(&m_drivetrain, &m_input),
   m_manualShooter(&m_shooter, m_input.ManualShootButton()),
   m_manualIntake(&m_intake, m_input.RunIntakeButton(), m_input.RunUptakeButton(), m_input.ReverseIntakeButton()),
+  m_manualClimb(&m_climber, &m_input),
   m_autoShoot(&m_shooter, &m_intake),
   m_alignTarget(&m_drivetrain, &m_intake),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
@@ -124,6 +126,17 @@ std::vector<frc2::Command*> RobotContainer::GetTeleopCommands() {
       break;
     default:
       std::cerr << "UNHANDLED OPTION FOR INTAKE\n";
+  }
+
+  switch (choosers.climbChoice()) {
+    case ClimbChoice::Disabled:
+      break;
+    case ClimbChoice::Manual:
+      commands.push_back(&m_manualClimb);
+      m_climber.SetDefaultCommand(m_manualClimb);
+      break;
+    default:
+      std::cerr << "UNHANDLED OPTION FOR CLIMBER\n";
   }
 
   // TODO: Check for subsystem requirement conflicts between the commands

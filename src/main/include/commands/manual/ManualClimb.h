@@ -10,6 +10,9 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
+class Climber;
+class Input;
+
 /**
  * An example command.
  *
@@ -20,7 +23,7 @@
 class ManualClimb
     : public frc2::CommandHelper<frc2::CommandBase, ManualClimb> {
  public:
-  ManualClimb();
+  ManualClimb(Climber *climber, Input *input);
 
   void Initialize() override;
 
@@ -29,4 +32,8 @@ class ManualClimb
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+ private:
+  Climber *climber;
+  Input *input;
 };

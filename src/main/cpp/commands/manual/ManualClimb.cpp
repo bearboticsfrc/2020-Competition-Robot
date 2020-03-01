@@ -6,8 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/manual/ManualClimb.h"
+#include "subsystems/Climber.h"
+#include "Input.h"
 
-ManualClimb::ManualClimb() {
+ManualClimb::ManualClimb(Climber *climber, Input *input) :
+  climber(climber),
+  input(input)
+{
   // Use addRequirements() here to declare subsystem dependencies.
 }
 
@@ -15,10 +20,14 @@ ManualClimb::ManualClimb() {
 void ManualClimb::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void ManualClimb::Execute() {}
+void ManualClimb::Execute() {
+  climber->SetSpeed(input->GetClimbSpeed());
+}
 
 // Called once the command ends or is interrupted.
-void ManualClimb::End(bool interrupted) {}
+void ManualClimb::End(bool interrupted) {
+  climber->SetSpeed(0.0);
+}
 
 // Returns true when the command should end.
 bool ManualClimb::IsFinished() { return false; }
