@@ -6,9 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Climber.h"
-#include <rev/CANSparkMaxLowLevel.h>
 
-using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using climber_consts::EXTEND_ID;
 using climber_consts::WINCH_ID;
 

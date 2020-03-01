@@ -10,7 +10,7 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <ctre/phoenix/sensors/PigeonIMU.h>
-#include <cameraserver/CameraServer.h>
+//#include <cameraserver/CameraServer.h>
 
 #include "commands/manual/ManualDrive.h"
 #include "commands/manual/ManualShooter.h"
@@ -91,7 +91,7 @@ class RobotContainer {
   /* --- Choosers --- */
   Choosers choosers;
 
-  cs::UsbCamera camera;
+  //cs::UsbCamera camera;
 
   void ConfigureButtonBindings();
 };

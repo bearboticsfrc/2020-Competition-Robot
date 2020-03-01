@@ -8,7 +8,6 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <rev/CANSparkMax.h>
 #include <ctre/Phoenix.h> 
 
 // TODO: Determine motor IDs
@@ -22,7 +21,7 @@ class Climber : public frc2::SubsystemBase {
  public:
   Climber();
 
-    void setClimb(bool climb);
+  void setClimb(bool climb);
     void setSpeed(double speed);
     void Extend(double speed); 
 

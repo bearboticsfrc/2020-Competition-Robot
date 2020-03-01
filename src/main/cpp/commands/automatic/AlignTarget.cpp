@@ -39,7 +39,7 @@ void AlignTarget::Execute() {
     double drivetrainAngle = drivetrain->GetPose().Rotation().Degrees().to<double>();
     aligner.update(lastTargetYaw.to<double>());
 
-    if (std::abs(lastTargetYaw.to<double>() - drivetrainAngle) < 1.0) {
+    if (std::abs(lastTargetYaw.to<double>() - drivetrainAngle) < 2.0) {
       std::cout << "Position error: " << aligner.GetPositionError() << "\n";
       successes += 1;
     }
