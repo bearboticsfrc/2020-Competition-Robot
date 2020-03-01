@@ -11,34 +11,30 @@
 #include <rev/CANSparkMax.h>
 #include <ctre/Phoenix.h> 
 
-// TODO: Determine motor IDs
- namespace climber_consts {
-  const int EXTEND_ID = 250;
-  const int WINCH_ID = 251;
-}
 
 //TODO: What is the rotation direction
 class Climber : public frc2::SubsystemBase {
  public:
   Climber();
 
-    void setClimb(bool climb);
-    void setSpeed(double speed);
-    void Extend(double speed); 
+  void SetExtended(bool extended);
 
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
-    void Periodic();
+  void Periodic();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  /*
-  rev::CANSparkMax motor1;
-  rev::CANSparkMax motor2;
-  */
-  VictorSPX extendMotor;
-  VictorSPX winchMotor1;
 
+  VictorSPX armMotor;
+  VictorSPX winchMotor;
+
+  // Positive values mean the arm is moving upwards/extending
+  // Negative values mean the arm is moving downwards/retracting
+  void SetArmSpeed(double speed);
+
+  // Positive values mean the winch is unwinding/extending
+  // Negative values mean the winch is winding/retracting
+  void SetWinchSpeed(double speed);
+
+  bool extended = false;
 };

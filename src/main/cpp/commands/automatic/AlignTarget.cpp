@@ -27,6 +27,7 @@ void AlignTarget::Initialize() {
 
   successes = 0;
   fails = 0;
+  startTime = std::chrono::steady_clock::now();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -67,6 +68,11 @@ bool AlignTarget::IsFinished() {
 
   if (fails >= 20) {
     std::cout << "Align target failed\n";
+    return true;
+  }
+
+  if (std::chrono::steady_clock::now() - startTime >= std::chrono::seconds(1)) {
+    std::cout << "Align target timeout\n";
     return true;
   }
 

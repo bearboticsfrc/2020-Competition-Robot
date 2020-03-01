@@ -9,35 +9,38 @@
 #include <rev/CANSparkMaxLowLevel.h>
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
-using climber_consts::EXTEND_ID;
-using climber_consts::WINCH_ID;
 
-
+// TODO: Determine motor IDs
+const int ARM_ID = 250;
+const int WINCH_ID = 251;
 
 Climber::Climber() :
-    extendMotor(EXTEND_ID),
-    winchMotor1(WINCH_ID)
+    armMotor(ARM_ID),
+    winchMotor(WINCH_ID)
 {
-    extendMotor.SetNeutralMode(NeutralMode::Brake);
-    winchMotor1.SetNeutralMode(NeutralMode::Brake);
+    armMotor.SetNeutralMode(NeutralMode::Brake);
+    winchMotor.SetNeutralMode(NeutralMode::Brake);
 
+    // TODO: Determine these
+    armMotor.SetInverted(false);
+    winchMotor.SetInverted(false);
+
+    // TODO: Reset encoders, maybe?
 }
 
 // This method will be called once per scheduler run
-void Climber::Periodic() {}
+void Climber::Periodic() {
+    
+}
 
-// on off
-void Climber::setClimb(bool climb) {
-    /*motor1.Set(climb);
-    motor2.Set(climb);*/
-    winchMotor1.Set(ControlMode::PercentOutput, climb);
+void Climber::SetExtended(bool ext) {
+    extended = ext;
 }
-void Climber::Extend(double speed) {
-    extendMotor.Set(ControlMode::PercentOutput, speed);
+
+void Climber::SetArmSpeed(double speed) {
+    armMotor.Set(ControlMode::PercentOutput, speed);
 }
-// set speed
-void Climber::setSpeed(double speed) {
-    /*motor1.Set(speed);
-    motor2.Set(speed);*/
-    winchMotor1.Set(ControlMode::PercentOutput, speed);
+
+void Climber::SetWinchSpeed(double speed) {
+    winchMotor.Set(ControlMode::PercentOutput, speed);
 }

@@ -7,25 +7,20 @@
 
 #pragma once
 
-#include <chrono>
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "commands/automatic/AlignAngle.h"
-
-class Drivetrain;
-class Intake;
 
 /**
  * An example command.
  *
- * <p>Note that this extendshttps://prod.liveshare.vsengsaas.visualstudio.com/join?7D329AFCA8E55FE215E76321BF1B04C7BAE2 CommandHelper, rather extending CommandBase
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class AlignTarget
-    : public frc2::CommandHelper<frc2::CommandBase, AlignTarget> {
+class ManualClimb
+    : public frc2::CommandHelper<frc2::CommandBase, ManualClimb> {
  public:
-  AlignTarget(Drivetrain *drivetrain, Intake *intake);
+  ManualClimb();
 
   void Initialize() override;
 
@@ -34,14 +29,4 @@ class AlignTarget
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-private:
-  int successes = 0;
-  int fails = 0;
-
-  std::chrono::time_point<std::chrono::steady_clock> startTime;
-
-  Drivetrain *drivetrain;
-  Intake *intake;
-
-  Aligner aligner;
 };
