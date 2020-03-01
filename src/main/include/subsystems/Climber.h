@@ -8,7 +8,6 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <rev/CANSparkMax.h>
 #include <ctre/Phoenix.h> 
 
 
@@ -17,7 +16,8 @@ class Climber : public frc2::SubsystemBase {
  public:
   Climber();
 
-  void SetExtended(bool extended);
+  // 1.0 means extending, -1.0 means retracting
+  void SetSpeed(double speed);
 
   void Periodic();
 

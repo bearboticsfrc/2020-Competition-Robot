@@ -45,7 +45,7 @@ Shooter::Shooter(Hopper *hopper) :
     motor.GetPIDController().SetI(0.0);
     motor.GetPIDController().SetD(0.0);
 
-    motor.SetSmartCurrentLimit(40);
+    motor.SetSmartCurrentLimit(50);
 
     motor.SetInverted(true);
 

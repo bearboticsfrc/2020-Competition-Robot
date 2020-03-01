@@ -6,9 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Climber.h"
-#include <rev/CANSparkMaxLowLevel.h>
-
-using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 
 // TODO: Determine motor IDs
 const int ARM_ID = 250;
@@ -33,8 +30,9 @@ void Climber::Periodic() {
     
 }
 
-void Climber::SetExtended(bool ext) {
-    extended = ext;
+void Climber::SetSpeed(double speed) {
+    SetArmSpeed(speed);
+    SetWinchSpeed(speed);
 }
 
 void Climber::SetArmSpeed(double speed) {

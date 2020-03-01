@@ -8,7 +8,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <rev/CANSparkMax.h>
+#include "rev/CANSparkMax.h"
 #include <frc/geometry/Pose2d.h>
 
 namespace ctre {

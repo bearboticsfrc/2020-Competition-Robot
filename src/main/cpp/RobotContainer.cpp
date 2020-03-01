@@ -42,8 +42,8 @@ RobotContainer::RobotContainer() :
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
-  m_reverseIntakeButton(m_input.ReverseIntakeButton()),
-  camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
+  m_reverseIntakeButton(m_input.ReverseIntakeButton())
+  //camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
 {
   std::cout << "Constructor\n";
   std::cout.flush();

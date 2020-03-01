@@ -60,10 +60,10 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     rightFront.GetPIDController().SetFF(1.0 / 5700.0);
     rightFront.GetPIDController().SetP(0.0001);
 
-    leftBack.SetSmartCurrentLimit(40);
-    leftFront.SetSmartCurrentLimit(40);
-    rightBack.SetSmartCurrentLimit(40);
-    rightFront.SetSmartCurrentLimit(40);
+    leftBack.SetSmartCurrentLimit(50);
+    leftFront.SetSmartCurrentLimit(50);
+    rightBack.SetSmartCurrentLimit(50);
+    rightFront.SetSmartCurrentLimit(50);
 }
 
 // In wheel rotations per motor rotation
