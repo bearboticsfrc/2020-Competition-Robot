@@ -50,14 +50,22 @@ void Input::SetRumble(double rumble) {
     xboxController.SetRumble(RumbleType::kRightRumble, rumble);
 }
 
-double Input::GetClimbSpeed() const {
+double Input::GetWinchSpeed() const {
     // Up is 0 (360)
     // Down is 180
-    
-    if (xboxController.GetPOV() == -1) {
-        return 0.0;
+
+    if (xboxController.GetPOV() == 270) {
+        return -1.0;
     } else {
-        return 1.0 * std::cos(xboxController.GetPOV() / 180.0 * M_PI);
+        return 0.0;
+    }
+}
+
+double Input::GetArmSpeed() const {
+    switch (xboxController.GetPOV()) {
+        case 0: return 1.0;
+        case 180: return -1.0;
+        default: return 0.0;
     }
 }
 

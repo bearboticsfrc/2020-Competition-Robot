@@ -22,7 +22,8 @@ void ManualClimb::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void ManualClimb::Execute() {
-  climber->SetSpeed(input->GetClimbSpeed());
+  climber->SetArmSpeed(input->GetArmSpeed());
+  climber->SetWinchSpeed(input->GetWinchSpeed());
 }
 
 // Called once the command ends or is interrupted.

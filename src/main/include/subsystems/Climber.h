@@ -22,13 +22,6 @@ class Climber : public frc2::SubsystemBase {
 
   void Periodic();
 
- private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
-
-  rev::CANSparkMax armMotor;
-  VictorSPX winchMotor;
-
   // Positive values mean the arm is moving upwards/extending
   // Negative values mean the arm is moving downwards/retracting
   void SetArmSpeed(double speed);
@@ -36,6 +29,13 @@ class Climber : public frc2::SubsystemBase {
   // Positive values mean the winch is unwinding/extending
   // Negative values mean the winch is winding/retracting
   void SetWinchSpeed(double speed);
+
+ private:
+  // Components (e.g. motor controllers and sensors) should generally be
+  // declared private and exposed only through public methods.
+
+  rev::CANSparkMax armMotor;
+  VictorSPX winchMotor;
 
   bool extended = false;
 };
