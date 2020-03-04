@@ -6,39 +6,50 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Climber.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 // TODO: Determine motor IDs
-const int ARM_ID = 250;
-const int WINCH_ID = 251;
+const int ARM_ID = 17;
+const int WINCH_ID = 16;
 
 Climber::Climber() :
-    armMotor(ARM_ID),
+    armMotor(ARM_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
     winchMotor(WINCH_ID)
 {
-    armMotor.SetNeutralMode(NeutralMode::Brake);
+    armMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 0.0);
+    armMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     winchMotor.SetNeutralMode(NeutralMode::Brake);
 
     // TODO: Determine these
-    armMotor.SetInverted(false);
-    winchMotor.SetInverted(false);
+    armMotor.SetInverted(true);
+    winchMotor.SetInverted(true);
 
     // TODO: Reset encoders, maybe?
+    armMotor.GetEncoder().SetPosition(0.0);
 }
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {
-    
+    frc::SmartDashboard::PutNumber("Arm Position", armMotor.GetEncoder().GetPosition());
 }
 
 void Climber::SetSpeed(double speed) {
-    SetArmSpeed(speed);
+    //SetArmSpeed(speed);
     SetWinchSpeed(speed);
 }
 
 void Climber::SetArmSpeed(double speed) {
-    armMotor.Set(ControlMode::PercentOutput, speed);
+    armMotor.Set(speed * 0.1);
 }
 
 void Climber::SetWinchSpeed(double speed) {
+    if (speed > 0.0) {
+        speed = 0.0;
+    }
+
+    if (armMotor.GetEncoder().GetPosition() > 0.05) {
+        speed = 0.0;
+    }
+
     winchMotor.Set(ControlMode::PercentOutput, speed);
 }

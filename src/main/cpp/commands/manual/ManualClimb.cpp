@@ -14,6 +14,7 @@ ManualClimb::ManualClimb(Climber *climber, Input *input) :
   input(input)
 {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(climber);
 }
 
 // Called when the command is initially scheduled.

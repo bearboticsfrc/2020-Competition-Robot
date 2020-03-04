@@ -26,6 +26,7 @@ Choosers::Choosers() {
     frc::SmartDashboard::PutData("ShooterChooser", &m_shooterChooser);
     frc::SmartDashboard::PutData("IntakeChooser", &m_intakeChooser);
     frc::SmartDashboard::PutData("AutoChooser", &m_autonomousChooser);
+    frc::SmartDashboard::PutData("ClimbChooser", &m_climbChooser);
 }
 
 DriveChoice Choosers::driveChoice() {

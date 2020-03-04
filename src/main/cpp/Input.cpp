@@ -53,8 +53,12 @@ void Input::SetRumble(double rumble) {
 double Input::GetClimbSpeed() const {
     // Up is 0 (360)
     // Down is 180
-
-    return std::cos(xboxController.GetPOV() / 180.0 * M_PI);
+    
+    if (xboxController.GetPOV() == -1) {
+        return 0.0;
+    } else {
+        return 1.0 * std::cos(xboxController.GetPOV() / 180.0 * M_PI);
+    }
 }
 
 ButtonGetter Input::AutoShootButton() const {

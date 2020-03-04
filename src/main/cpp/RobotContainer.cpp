@@ -64,6 +64,7 @@ RobotContainer::RobotContainer() :
 void RobotContainer::ConfigureButtonBindings() {
   m_alignAndShootButton.ToggleWhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake)/*.WithInterrupt([this] { return !m_input.AutoShootButton()(); })*/);
   m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
+  
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

@@ -8,7 +8,8 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <ctre/Phoenix.h> 
+#include <ctre/Phoenix.h>
+#include <rev/CANSparkMax.h>
 
 
 //TODO: What is the rotation direction
@@ -25,7 +26,7 @@ class Climber : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  VictorSPX armMotor;
+  rev::CANSparkMax armMotor;
   VictorSPX winchMotor;
 
   // Positive values mean the arm is moving upwards/extending
