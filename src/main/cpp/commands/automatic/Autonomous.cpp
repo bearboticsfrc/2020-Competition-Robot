@@ -18,6 +18,7 @@
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/WaitCommand.h>
 #include <frc/geometry/Pose2d.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 
 // TODO: Programmable delay
@@ -100,6 +101,7 @@ SimpleAutonomous::SimpleAutonomous(Drivetrain *drivetrain, Intake *intake, Ardui
   }
 
   AddCommands(
+    frc2::WaitCommand(units::second_t(frc::SmartDashboard::GetNumber("Auto Delay", 0.0))),
     AlignAndShoot(drivetrain, shooter, intake),
     DriveDistance(drivetrain, distance)
   );

@@ -71,7 +71,7 @@ bool AlignTarget::IsFinished() {
     return true;
   }
 
-  if (std::chrono::steady_clock::now() - startTime >= std::chrono::seconds(1)) {
+  if (std::chrono::steady_clock::now() - startTime >= std::chrono::seconds(3)) {
     std::cout << "Align target timeout\n";
     return true;
   }
