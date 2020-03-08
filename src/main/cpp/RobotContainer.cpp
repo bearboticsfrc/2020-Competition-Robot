@@ -93,52 +93,52 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 std::vector<frc2::Command*> RobotContainer::GetTeleopCommands() {
   std::vector<frc2::Command*> commands;
 
-  switch (choosers.driveChoice()) {
+  /*switch (choosers.driveChoice()) {
     case DriveChoice::Disabled:
       break;
-    case DriveChoice::Manual: 
+    case DriveChoice::Manual: */
       std::cout << "Adding default drive command\n";
       commands.push_back(&m_manualDrive);
       m_drivetrain.SetDefaultCommand(m_manualDrive);
-      break;
+    /*  break;
     default:
       std::cerr << "UNHANDLED OPTION\n";
       break;
-  }
+  }*/
 
-  switch (choosers.shooterChoice()) {
+  /*switch (choosers.shooterChoice()) {
     case ShooterChoice::Disabled:
       break;
-    case ShooterChoice::Manual:
+    case ShooterChoice::Manual:*/
       std::cout << "Adding manual shooter command\n";
       commands.push_back(&m_manualShooter);
       m_shooter.SetDefaultCommand(m_manualShooter);
-      break;
+    /*  break;
     default:
       std::cerr << "UNHANDLED OPTION FOR SHOOTER\n";
-  }
+  }*/
 
-  switch (choosers.intakeChoice()) {
+  /*switch (choosers.intakeChoice()) {
     case IntakeChoice::Disabled:
       break;
-    case IntakeChoice::Manual:
+    case IntakeChoice::Manual:*/
       commands.push_back(&m_manualIntake);
       m_intake.SetDefaultCommand(m_manualIntake);
-      break;
+  /*    break;
     default:
       std::cerr << "UNHANDLED OPTION FOR INTAKE\n";
-  }
+  }*/
 
-  switch (choosers.climbChoice()) {
+  /*switch (choosers.climbChoice()) {
     case ClimbChoice::Disabled:
       break;
-    case ClimbChoice::Manual:
+    case ClimbChoice::Manual:*/
       commands.push_back(&m_manualClimb);
       m_climber.SetDefaultCommand(m_manualClimb);
-      break;
+  /*    break;
     default:
       std::cerr << "UNHANDLED OPTION FOR CLIMBER\n";
-  }
+  }*/
 
   // TODO: Check for subsystem requirement conflicts between the commands
   return commands;

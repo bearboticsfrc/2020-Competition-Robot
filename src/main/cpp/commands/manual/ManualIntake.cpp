@@ -19,7 +19,7 @@ ManualIntake::ManualIntake(Intake *intake, std::function<bool()> shouldIntake, s
 
 // Called when the command is initially scheduled.
 void ManualIntake::Initialize() {
-  intake->setExtended(true);
+  
 }
 
 // Called repeatedly when this Command is scheduled to run

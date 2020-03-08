@@ -61,7 +61,6 @@ void AutoShoot::Initialize() {
   successes = 0;
   speedSuccesses = 0;
 
-  oldIntakeState = intake->getExtended();
   intake->setExtended(true);
 }
 
@@ -80,12 +79,17 @@ void AutoShoot::Execute() {
   } else {
     // We have enough successes to acquire
     if (!acquired) {
+
       acquired = true;
       startTime = std::chrono::steady_clock::now();
 
       // Adjust power
       double foundY = Limelight::getY();
-      shooter->shoot(powerFromAngle(foundY));
+      double power = powerFromAngle(foundY) + 0.01;
+      intake->setExtended(false);
+      shooter->shoot(power);
+
+      
 
       //shooter->shoot(frc::SmartDashboard::GetNumber("ShootSpeed", 1.0));
 
@@ -96,8 +100,6 @@ void AutoShoot::Execute() {
 // Called once the command ends or is interrupted.
 void AutoShoot::End(bool interrupted) {
   Limelight::setLights(false);
-
-  intake->setExtended(oldIntakeState);
 }
 
 // Returns true when the command should end.

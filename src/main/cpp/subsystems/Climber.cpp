@@ -34,20 +34,22 @@ void Climber::Periodic() {
 }
 
 void Climber::SetSpeed(double speed) {
-    //SetArmSpeed(speed);
+   //SetArmSpeed(speed);
     SetWinchSpeed(speed);
 }
 
 void Climber::SetArmSpeed(double speed) {
-    armMotor.Set(speed * 0.1);
+    if (speed < 0) {
+        armMotor.Set(speed * 0.3);
+    }
+    else {
+        armMotor.Set(speed * 0.2);
+    }
+    
 }
 
 void Climber::SetWinchSpeed(double speed) {
     if (speed > 0.0) {
-        speed = 0.0;
-    }
-
-    if (armMotor.GetEncoder().GetPosition() > 0.05) {
         speed = 0.0;
     }
 

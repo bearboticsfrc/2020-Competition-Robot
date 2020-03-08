@@ -42,7 +42,6 @@ private:
   int successes = 0;
   int failures = 0;
   bool acquired = false;
-  bool oldIntakeState;
 
   int speedSuccesses = 0;
 };

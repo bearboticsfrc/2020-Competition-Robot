@@ -14,11 +14,11 @@ Choosers::Choosers() {
     m_climbChooser.AddOption("Disabled", ClimbChoice::Disabled);
     m_climbChooser.AddOption("Manual", ClimbChoice::Manual);
 
+    m_autonomousChooser.AddOption("Enemy Trench", AutonomousChoice::EnemyTrench);
     m_autonomousChooser.AddOption("Disabled", AutonomousChoice::Disabled);
     m_autonomousChooser.AddOption("Default", AutonomousChoice::Default);
     m_autonomousChooser.AddOption("Movable", AutonomousChoice::Movable);
     m_autonomousChooser.AddOption("Friendly Trench", AutonomousChoice::FriendlyTrench);
-    m_autonomousChooser.AddOption("Enemy Trench", AutonomousChoice::EnemyTrench);
     m_autonomousChooser.AddOption("Simple Forwards", AutonomousChoice::SimpleForward);
     m_autonomousChooser.AddOption("Simple Backward", AutonomousChoice::SimpleBackward);
 

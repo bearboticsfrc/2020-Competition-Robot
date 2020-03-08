@@ -35,12 +35,13 @@ void AlignTarget::Execute() {
   if (Limelight::targetFound()) {
     fails = 0;
 
-    auto lastTargetYaw = drivetrain->GetLastPose().Rotation().Degrees() + units::degree_t(Limelight::getX());
+    //auto lastTargetYaw = drivetrain->GetLastPose().Rotation().Degrees() + units::degree_t(Limelight::getX());
 
-    double drivetrainAngle = drivetrain->GetPose().Rotation().Degrees().to<double>();
-    aligner.update(lastTargetYaw.to<double>());
+    //double drivetrainAngle = drivetrain->GetPose().Rotation().Degrees().to<double>();
+    //aligner.update(lastTargetYaw.to<double>());
+    aligner.update(Limelight::getX());
 
-    if (std::abs(lastTargetYaw.to<double>() - drivetrainAngle) < 2.0) {
+    if (std::abs(/*lastTargetYaw.to<double>() - drivetrainAngle*/Limelight::getX()) < 2.0) {
       std::cout << "Position error: " << aligner.GetPositionError() << "\n";
       successes += 1;
     }
@@ -71,7 +72,7 @@ bool AlignTarget::IsFinished() {
     return true;
   }
 
-  if (std::chrono::steady_clock::now() - startTime >= std::chrono::seconds(3)) {
+  if (std::chrono::steady_clock::now() - startTime >= std::chrono::seconds(3.0)) {
     std::cout << "Align target timeout\n";
     return true;
   }
