@@ -85,7 +85,8 @@ void AutoShoot::Execute() {
 
       // Adjust power
       double foundY = Limelight::getY();
-      double power = powerFromAngle(foundY) + 0.01;
+      double power = powerFromAngle(foundY) + 0.04;
+      std::cout << "\n" << power << "\n";
       intake->setExtended(false);
       shooter->shoot(power);
 

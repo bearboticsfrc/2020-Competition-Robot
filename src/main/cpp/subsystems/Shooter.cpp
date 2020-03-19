@@ -45,7 +45,7 @@ Shooter::Shooter(Hopper *hopper) :
     motor.GetPIDController().SetI(0.0);
     motor.GetPIDController().SetD(0.0);
 
-    motor.SetSmartCurrentLimit(50);
+    motor.SetSmartCurrentLimit(80);
 
     motor.SetInverted(true);
 
@@ -66,7 +66,7 @@ SpinningState::SpinningState(Shooter *shooter, double targetRpm, std::function<b
 {
     std::cout << "Transitioning to spinning state\n";
     shooter->motor.GetPIDController().SetReference(targetRpm, rev::ControlType::kVelocity);
-    shooter->accelerator.Set(ControlMode::PercentOutput, 0.75);
+    shooter->accelerator.Set(ControlMode::PercentOutput, (double)0.9);
 }
 
 ShootingState::ShootingState(Shooter *shooter) :
@@ -83,7 +83,6 @@ template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
     frc::SmartDashboard::PutNumber("Shooter Speed", motor.GetEncoder().GetVelocity());
-
     state = std::visit(overloaded {
         [this](StoppedState s) {
             return ShooterState(s);
@@ -119,7 +118,7 @@ void Shooter::Periodic() {
 
 void Shooter::shoot(double speed, std::function<bool()> runCheck) {
     if (!std::holds_alternative<ShootingState>(state)) {
-        state = ShooterState(SpinningState(this, speed * 5330.0, runCheck));
+        state = ShooterState(SpinningState(this, speed * 5400.0, runCheck));
     }
 }
 

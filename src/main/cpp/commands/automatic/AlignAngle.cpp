@@ -48,7 +48,7 @@ void Aligner::update(double target) {
 }
 
 Aligner::Aligner(Drivetrain *drivetrain) :
-  frc2::PIDController(0.017, 0.0, 0.0),
+  frc2::PIDController(0.03, 0.0, 0.0),
   drivetrain(drivetrain)
 {
   EnableContinuousInput(0.0, 360.0);

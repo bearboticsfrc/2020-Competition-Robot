@@ -30,7 +30,7 @@ void ManualShooter::Execute() {
   bool shoot = shouldShoot();
 
   if (shoot) {
-    shooter->shoot(1.0);
+    shooter->shoot(0.85);
   }
 }
 
