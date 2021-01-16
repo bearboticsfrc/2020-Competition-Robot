@@ -7,8 +7,10 @@
 
 #include "subsystems/Limelight.h"
 #include <networktables/NetworkTableInstance.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
-Limelight::Limelight() {}
+Limelight::Limelight() {
+}
 
 bool Limelight::targetFound() {
     return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
@@ -34,4 +36,6 @@ void Limelight::setLights(bool enabled) {
 }
 
 // This method will be called once per scheduler run
-void Limelight::Periodic() {}
+void Limelight::Periodic() {
+    
+}

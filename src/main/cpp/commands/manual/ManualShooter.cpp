@@ -18,7 +18,7 @@ ManualShooter::ManualShooter(Shooter *s, std::function<bool()> shouldShoot) :
   shouldShoot(shouldShoot)
 {
   initDashboardValue("ShootSpeed", 0.1);
-  AddRequirements(shooter);
+  AddRequirements({shooter});
   // Use addRequirements() here to declare subsystem dependencies.
 }
 
@@ -30,7 +30,7 @@ void ManualShooter::Execute() {
   bool shoot = shouldShoot();
 
   if (shoot) {
-    shooter->shoot(0.85);
+    shooter->shoot(frc::SmartDashboard::GetNumber("ShootSpeed", 0));
   }
 }
 

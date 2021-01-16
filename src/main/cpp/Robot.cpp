@@ -69,7 +69,10 @@ void Robot::TeleopInit() {
 /**
  * This function is called periodically during operator control.
  */
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  
+  frc::SmartDashboard::PutNumber("Limelighty", Limelight::getY());
+}
 
 /**
  * This function is called periodically during test mode.
