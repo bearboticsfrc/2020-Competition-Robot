@@ -51,3 +51,12 @@ public:
 
 private:
 };
+
+class Barrel
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                  Barrel> {
+public:
+  Barrel(Drivetrain *drivetrain);
+
+private:
+};

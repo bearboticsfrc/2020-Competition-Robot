@@ -28,6 +28,7 @@ enum class AutonomousChoice {
     EnemyTrench,
     SimpleForward,
     SimpleBackward,
+    Barrel,
 };
 
 class Choosers {

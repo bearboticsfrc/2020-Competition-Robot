@@ -25,6 +25,11 @@ frc::Trajectory generateTrajectory2() {
   return trajectory;
 }
 
+frc::Trajectory generateTrajectoryBarrel() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/2-5 Barrel Racing Path.wpilib.json");
+  return trajectory;
+}
+
 frc::DifferentialDriveKinematics getKinematics() {
   return frc::DifferentialDriveKinematics { 24_in };
 }
@@ -49,4 +54,8 @@ frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain) {
 
 frc2::RamseteCommand getTrajectoryCommand2(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectory2());
+}
+
+frc2::RamseteCommand getTrajectoryCommandBarrel(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBarrel());
 }

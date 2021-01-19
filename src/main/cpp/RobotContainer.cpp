@@ -41,6 +41,7 @@ RobotContainer::RobotContainer() :
   m_enemyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_simpleForward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, true),
   m_simpleBackward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, false),
+  m_barrelRacing((&m_drivetrain)),
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
@@ -84,6 +85,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return &m_simpleForward;
     case AutonomousChoice::SimpleBackward:
       return &m_simpleBackward;
+    case AutonomousChoice::Barrel:
+      return &m_barrelRacing;
     default:
       std::cerr << "UNHANDLED OPTION FOR AUTONOMOUS\n";
       return nullptr;
