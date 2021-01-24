@@ -29,6 +29,7 @@ enum class AutonomousChoice {
     SimpleForward,
     SimpleBackward,
     Barrel,
+    StraightLine,
 };
 
 class Choosers {

@@ -60,3 +60,12 @@ public:
 
 private:
 };
+
+class StraightLine
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                  StraightLine> {
+public:
+  StraightLine(Drivetrain *drivetrain);
+
+private:
+};
