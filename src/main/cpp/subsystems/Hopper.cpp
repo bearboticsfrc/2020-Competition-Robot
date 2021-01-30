@@ -9,6 +9,7 @@
 #include <rev/CANSparkMaxLowLevel.h>
 #include <rev/CANSparkMax.h>
 #include <rev/ControlType.h>
+#include "units_include.h"
 
 using MotorType = rev::CANSparkMax::MotorType;
 using hopper_consts::INTAKE_MOTOR_ID;

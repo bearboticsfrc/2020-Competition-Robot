@@ -12,6 +12,7 @@
 #include <frc/GenericHID.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include <iostream>
+#include "units_include.h"
 
 const int GYRO_ID = 10;
 

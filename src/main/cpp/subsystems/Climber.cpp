@@ -7,6 +7,7 @@
 
 #include "subsystems/Climber.h"
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "units_include.h"
 
 // TODO: Determine motor IDs
 const int ARM_ID = 17;

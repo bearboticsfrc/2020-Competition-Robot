@@ -8,6 +8,7 @@
 #pragma once
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
+#include "units_include.h"
 
 using ButtonGetter = std::function<bool()>;
 

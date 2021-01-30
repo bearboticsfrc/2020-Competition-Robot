@@ -10,6 +10,9 @@
 #include <frc2/command/SubsystemBase.h>
 #include "rev/CANSparkMax.h"
 #include <frc/geometry/Pose2d.h>
+#include <units/velocity.h>
+#include <units/length.h>
+#include "units_include.h"
 
 namespace ctre {
   namespace phoenix {

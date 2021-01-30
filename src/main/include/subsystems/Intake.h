@@ -10,6 +10,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/Solenoid.h>
 #include <rev/CANSparkMax.h>
+#include "units_include.h"
 
 class Hopper;
 

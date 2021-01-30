@@ -1,4 +1,5 @@
 #include <wpi/StringRef.h>
+#include "units_include.h"
 
 namespace rev {
     class CANSparkMax;
