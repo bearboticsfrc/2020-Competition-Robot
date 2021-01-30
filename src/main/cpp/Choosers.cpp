@@ -21,6 +21,10 @@ Choosers::Choosers() {
     m_autonomousChooser.AddOption("Friendly Trench", AutonomousChoice::FriendlyTrench);
     m_autonomousChooser.AddOption("Simple Forwards", AutonomousChoice::SimpleForward);
     m_autonomousChooser.AddOption("Simple Backward", AutonomousChoice::SimpleBackward);
+    m_autonomousChooser.AddOption("Barrel", AutonomousChoice::Barrel);
+    m_autonomousChooser.AddOption("Straight Line", AutonomousChoice::StraightLine);
+    m_autonomousChooser.AddOption("Slalom", AutonomousChoice::Slalom);
+    m_autonomousChooser.AddOption("Bounce", AutonomousChoice::Bounce);
 
     frc::SmartDashboard::PutData("DriveChooser", &m_driveChooser);
     frc::SmartDashboard::PutData("ShooterChooser", &m_shooterChooser);
