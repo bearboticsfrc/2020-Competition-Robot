@@ -89,6 +89,8 @@ class RobotContainer {
   SimpleAutonomous m_simpleBackward;
   Barrel m_barrelRacing;
   StraightLine m_straightLine;
+  Slalom m_slalom;
+  Bounce m_bounce;
 
   /* --- Buttons --- */
   frc2::Button m_alignAndShootButton;

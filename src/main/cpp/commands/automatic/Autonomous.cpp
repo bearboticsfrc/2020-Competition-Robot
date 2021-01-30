@@ -100,6 +100,30 @@ StraightLine::StraightLine(Drivetrain *drivetrain) {
   );
 }
 
+Slalom::Slalom(Drivetrain *drivetrain) {
+  // Add your commands here, e.g.
+  // AddCommands(FooCommand(), BarCommand());
+
+  AddCommands(
+    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectorySlalom().States()[0].pose); } },
+    getTrajectoryCommandSlalom(*drivetrain)
+    // TODO: Drive back
+    //AlignAndShoot(drivetrain, s, intake),
+  );
+}
+
+Bounce::Bounce(Drivetrain *drivetrain) {
+  // Add your commands here, e.g.
+  // AddCommands(FooCommand(), BarCommand());
+
+  AddCommands(
+    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryBounce().States()[0].pose); } },
+    getTrajectoryCommandBounce(*drivetrain)
+    // TODO: Drive back
+    //AlignAndShoot(drivetrain, s, intake),
+  );
+}
+
 EnemyTrench::EnemyTrench(Drivetrain *drivetrain, Intake *intake, Arduino *arduino, Shooter *shooter) {
   AddCommands(
     frc2::InstantCommand{ [=] { 

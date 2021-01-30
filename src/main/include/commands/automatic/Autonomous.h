@@ -69,3 +69,21 @@ public:
 
 private:
 };
+
+class Slalom
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                  Slalom> {
+public:
+  Slalom(Drivetrain *drivetrain);
+
+private:
+};
+
+class Bounce
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                  Bounce> {
+public:
+  Bounce(Drivetrain *drivetrain);
+
+private:
+};

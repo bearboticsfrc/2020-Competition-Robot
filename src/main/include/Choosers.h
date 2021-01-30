@@ -30,6 +30,8 @@ enum class AutonomousChoice {
     SimpleBackward,
     Barrel,
     StraightLine,
+    Slalom,
+    Bounce,
 };
 
 class Choosers {
