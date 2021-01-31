@@ -8,6 +8,7 @@
 #include "subsystems/Intake.h"
 #include "subsystems/Hopper.h"
 #include <rev/CANSparkMaxLowLevel.h>
+#include "units_include.h"
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using intake_consts::MOTOR_ID;

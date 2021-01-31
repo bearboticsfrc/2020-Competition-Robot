@@ -7,6 +7,7 @@
 
 #include "commands/manual/ManualDrive.h"
 #include "Robot.h"
+#include "units_include.h"
 
 ManualDrive::ManualDrive(Drivetrain *drive, Input *in) :
   drivetrain(drive),

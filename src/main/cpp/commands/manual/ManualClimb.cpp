@@ -8,6 +8,7 @@
 #include "commands/manual/ManualClimb.h"
 #include "subsystems/Climber.h"
 #include "Input.h"
+#include "units_include.h"
 
 ManualClimb::ManualClimb(Climber *climber, Input *input) :
   climber(climber),

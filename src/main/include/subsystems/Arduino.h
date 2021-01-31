@@ -11,6 +11,7 @@
 #include <frc/I2C.h>
 #include <stdint.h>
 #include <tuple>
+#include "units_include.h"
 
 struct SensorFrame {
 	double x;

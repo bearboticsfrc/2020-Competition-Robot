@@ -25,6 +25,28 @@ frc::Trajectory generateTrajectory2() {
   return trajectory;
 }
 
+frc::Trajectory generateTrajectoryBarrel() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/2-5 Barrel Racing Path.wpilib.json");
+  return trajectory;
+}
+
+frc::Trajectory generateTrajectoryStraightLine() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/StraightLine.wpilib.json");
+  return trajectory;
+}
+
+frc::Trajectory generateTrajectorySlalom() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/2-6 Slalom Path.wpilib.json");
+  return trajectory;
+}
+
+frc::Trajectory generateTrajectoryBounce() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/2-7 Bounce Path.wpilib.json");
+  return trajectory;
+}
+
+
+
 frc::DifferentialDriveKinematics getKinematics() {
   return frc::DifferentialDriveKinematics { 24_in };
 }
@@ -50,3 +72,20 @@ frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain) {
 frc2::RamseteCommand getTrajectoryCommand2(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectory2());
 }
+
+frc2::RamseteCommand getTrajectoryCommandBarrel(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBarrel());
+}
+
+frc2::RamseteCommand getTrajectoryCommandStraightLine(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryStraightLine());
+}
+
+frc2::RamseteCommand getTrajectoryCommandSlalom(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectorySlalom());
+}
+
+frc2::RamseteCommand getTrajectoryCommandBounce(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce());
+}
+

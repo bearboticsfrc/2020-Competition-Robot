@@ -34,13 +34,7 @@
 
 double powerFromAngle(double y) {
   return 
-    1.865e-7 * std::pow(y, 6) +
-    -0.00000941972639267 * std::pow(y, 5) +
-     0.000154104299104 * std::pow(y, 4) +
-    -0.000812733158646 * std::pow(y, 3) +
-     0.000707164302267 * std::pow(y, 2) +
-    -0.0174193883624 * y +
-     0.983779942723;
+    0.00117085 * (y * y) - 0.0317961 * y + 1.01553;
 }
 
 AutoShoot::AutoShoot(Shooter *s, Intake *i) :
