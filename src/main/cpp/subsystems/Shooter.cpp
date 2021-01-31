@@ -19,7 +19,6 @@
 #include <rev/CANSparkMaxLowLevel.h>
 #include <rev/CANSparkMax.h>
 #include <rev/ControlType.h>
-#include "units_include.h"
 
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;

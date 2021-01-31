@@ -51,39 +51,3 @@ public:
 
 private:
 };
-
-class Barrel
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                  Barrel> {
-public:
-  Barrel(Drivetrain *drivetrain);
-
-private:
-};
-
-class StraightLine
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                  StraightLine> {
-public:
-  StraightLine(Drivetrain *drivetrain);
-
-private:
-};
-
-class Slalom
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                  Slalom> {
-public:
-  Slalom(Drivetrain *drivetrain);
-
-private:
-};
-
-class Bounce
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                  Bounce> {
-public:
-  Bounce(Drivetrain *drivetrain);
-
-private:
-};

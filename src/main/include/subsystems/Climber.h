@@ -10,7 +10,6 @@
 #include <frc2/command/SubsystemBase.h>
 #include <ctre/Phoenix.h>
 #include <rev/CANSparkMax.h>
-#include "units_include.h"
 
 
 //TODO: What is the rotation direction

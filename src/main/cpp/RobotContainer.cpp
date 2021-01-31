@@ -12,7 +12,6 @@
 #include <frc/GenericHID.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include <iostream>
-#include "units_include.h"
 
 const int GYRO_ID = 10;
 
@@ -42,10 +41,6 @@ RobotContainer::RobotContainer() :
   m_enemyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_simpleForward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, true),
   m_simpleBackward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, false),
-  m_barrelRacing((&m_drivetrain)),
-  m_straightLine((&m_drivetrain)),
-  m_slalom((&m_drivetrain)),
-  m_bounce((&m_drivetrain)),
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
@@ -89,14 +84,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return &m_simpleForward;
     case AutonomousChoice::SimpleBackward:
       return &m_simpleBackward;
-    case AutonomousChoice::Barrel:
-      return &m_barrelRacing;
-    case AutonomousChoice::StraightLine:
-      return &m_straightLine;
-    case AutonomousChoice::Slalom:
-      return &m_slalom;
-    case AutonomousChoice::Bounce:
-      return &m_bounce;
     default:
       std::cerr << "UNHANDLED OPTION FOR AUTONOMOUS\n";
       return nullptr;

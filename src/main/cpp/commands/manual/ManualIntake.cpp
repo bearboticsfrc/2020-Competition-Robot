@@ -7,7 +7,6 @@
 
 #include "commands/manual/ManualIntake.h"
 #include "subsystems/Intake.h"
-#include "units_include.h"
 
 ManualIntake::ManualIntake(Intake *intake, std::function<bool()> shouldIntake, std::function<bool()> shouldUptake, std::function<bool()> shouldReverse) :
   intake(intake),

@@ -11,7 +11,6 @@
 #include <string>
 #include <frc/DriverStation.h>
 #include "subsystems/ColorSensor.h"
-#include "units_include.h"
 
 static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
 

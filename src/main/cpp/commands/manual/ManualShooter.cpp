@@ -12,7 +12,6 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Util.h"
-#include "units_include.h"
 
 ManualShooter::ManualShooter(Shooter *s, std::function<bool()> shouldShoot) :
   shooter(s),

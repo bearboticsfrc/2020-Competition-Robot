@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/ControlPanelManip.h"
-#include "units_include.h"
 
 // TODO: DETERMINE ACTUAL IDS
 const int EXT_SOLENOID_ID = 5;
