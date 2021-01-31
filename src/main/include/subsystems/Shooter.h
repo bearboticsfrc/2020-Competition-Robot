@@ -12,6 +12,7 @@
 #include <ctre/Phoenix.h>
 #include <chrono>
 #include <variant>
+#include "units_include.h"
 
 class Hopper;
 

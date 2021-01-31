@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/ShowColors.h"
+#include "units_include.h"
 
 ShowColors::ShowColors(ColorSensor *cs) :
   colorSensor(cs)

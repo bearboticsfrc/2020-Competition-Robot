@@ -12,6 +12,7 @@
 #include <frc2/command/Command.h>
 
 #include "RobotContainer.h"
+#include "units_include.h"
 
 extern frc::Joystick joystick;
 

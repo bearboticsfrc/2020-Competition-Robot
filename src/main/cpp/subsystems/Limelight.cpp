@@ -8,6 +8,7 @@
 #include "subsystems/Limelight.h"
 #include <networktables/NetworkTableInstance.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "units_include.h"
 
 Limelight::Limelight() {
 }

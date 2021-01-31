@@ -11,6 +11,7 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <ctre/phoenix/sensors/PigeonIMU.h>
 #include <cameraserver/CameraServer.h>
+#include <frc2/command/RamseteCommand.h>
 
 #include "commands/manual/ManualDrive.h"
 #include "commands/manual/ManualShooter.h"
@@ -36,7 +37,7 @@
 #include "Choosers.h"
 #include "Input.h"
 #include <vector>
-
+#include "units_include.h"
 
 using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
 
@@ -86,6 +87,10 @@ class RobotContainer {
   EnemyTrench m_enemyTrench;
   SimpleAutonomous m_simpleForward;
   SimpleAutonomous m_simpleBackward;
+  Barrel m_barrelRacing;
+  StraightLine m_straightLine;
+  Slalom m_slalom;
+  Bounce m_bounce;
 
   /* --- Buttons --- */
   frc2::Button m_alignAndShootButton;
