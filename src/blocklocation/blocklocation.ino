@@ -7,15 +7,16 @@ Pixy2 pixy;
 
 void setup()
 {
-  Serial.begin(115200);
+  //Serial.begin(115200);
   Wire.begin(80);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
+  //Serial.println("Hello World");
   pixy.init();
 }
 
 void receiveEvent(int bytes) {
-  Serial.println("Receive event");
+  //Serial.println("Receive event");
 
   char buf[4] = { 0, 0, 0, 0 };
   for (int i = 0; i < 3; ++i) {

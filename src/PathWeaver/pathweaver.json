@@ -1,0 +1,8 @@
+{
+  "lengthUnit": "Meter",
+  "maxVelocity": 2.4,
+  "maxAcceleration": 0.96,
+  "wheelBase": 0.56515,
+  "gameName": "At Home Grid",
+  "outputDir": "../../../GitHub/Bearbotics/2020-Competition-Robot/src/main/deploy"
+}
