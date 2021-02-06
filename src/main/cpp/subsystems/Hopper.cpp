@@ -9,6 +9,7 @@
 #include <rev/CANSparkMaxLowLevel.h>
 #include <rev/CANSparkMax.h>
 #include <rev/ControlType.h>
+#include "units_include.h"
 
 using MotorType = rev::CANSparkMax::MotorType;
 using hopper_consts::INTAKE_MOTOR_ID;
@@ -40,7 +41,7 @@ void Hopper::setMode(HopperMode mode) {
             break;
         case HopperMode::Agitating:
             intakeMotor.Set(0.25);
-            agitateMotor.Set(0.75);
+            agitateMotor.Set(0.50);
             break;
     }
 }

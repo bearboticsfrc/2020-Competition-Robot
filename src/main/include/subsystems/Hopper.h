@@ -9,6 +9,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include "units_include.h"
 // TODO: Determine motor IDs
  namespace hopper_consts {
   const int INTAKE_MOTOR_ID = 13;

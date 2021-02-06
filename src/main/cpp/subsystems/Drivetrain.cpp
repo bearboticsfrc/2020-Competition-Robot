@@ -15,6 +15,7 @@
 #include <ctre/phoenix/sensors/PigeonIMU.h>
 #include <vector>
 #include <cmath>
+#include "units_include.h"
 
 using MotorType = rev::CANSparkMaxLowLevel::MotorType;
 using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;

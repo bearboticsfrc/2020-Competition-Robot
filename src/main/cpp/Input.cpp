@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Input.h"
+#include "units_include.h"
 
 using RumbleType = frc::GenericHID::RumbleType;
 using JoystickHand = frc::GenericHID::JoystickHand;

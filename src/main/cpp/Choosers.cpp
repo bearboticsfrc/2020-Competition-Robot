@@ -1,5 +1,6 @@
 #include "Choosers.h"
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "units_include.h"
 
 Choosers::Choosers() {
     m_driveChooser.AddOption("Disabled", DriveChoice::Disabled);
