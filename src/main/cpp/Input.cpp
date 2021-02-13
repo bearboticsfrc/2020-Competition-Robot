@@ -35,27 +35,23 @@ double applyFilters(double value) {
 }
 
 double Input::GetX() const {
-    return applyFilters(joystick.GetX());
+    return applyFilters(xboxController.GetX(JoystickHand::kLeftHand));
 }
 
 double Input::GetY() const {
-    return applyFilters(joystick.GetY());
-}
-
-double Input::GetZ() const {
-    return applyFilters(joystick.GetZ());
+    return applyFilters(xboxController.GetY(JoystickHand::kLeftHand));
 }
 
 void Input::SetRumble(double rumble) {
-    xboxController.SetRumble(RumbleType::kLeftRumble, rumble);
-    xboxController.SetRumble(RumbleType::kRightRumble, rumble);
+    xboxController1.SetRumble(RumbleType::kLeftRumble, rumble);
+    xboxController1.SetRumble(RumbleType::kRightRumble, rumble);
 }
 
 double Input::GetWinchSpeed() const {
     // Up is 0 (360)
     // Down is 180
 
-    if (xboxController.GetPOV() == 270) {
+    if (xboxController1.GetPOV() == 270) {
         return -1.0;
     } else {
         return 0.0;
@@ -63,7 +59,7 @@ double Input::GetWinchSpeed() const {
 }
 
 double Input::GetArmSpeed() const {
-    switch (xboxController.GetPOV()) {
+    switch (xboxController1.GetPOV()) {
         case 0: return 1.0;
         case 180: return -1.0;
         default: return 0.0;
@@ -71,21 +67,21 @@ double Input::GetArmSpeed() const {
 }
 
 ButtonGetter Input::AutoShootButton() const {
-    return [this]() { return xboxController.GetBumper(JoystickHand::kRightHand); };
+    return [this]() { return xboxController1.GetBumper(JoystickHand::kRightHand); };
 }
 ButtonGetter Input::ManualShootButton() const {
-    return [this]() { return xboxController.GetTriggerAxis(JoystickHand::kRightHand) > 0.5; };
+    return [this]() { return xboxController1.GetTriggerAxis(JoystickHand::kRightHand) > 0.5; };
 }
 
 ButtonGetter Input::ToggleIntakePositionButton() const {
-    return [this]() { return xboxController.GetBumper(JoystickHand::kLeftHand); };
+    return [this]() { return xboxController1.GetBumper(JoystickHand::kLeftHand); };
 }
 ButtonGetter Input::RunIntakeButton() const {
-    return [this]() { return xboxController.GetTriggerAxis(JoystickHand::kLeftHand) > 0.5; };
+    return [this]() { return xboxController1.GetTriggerAxis(JoystickHand::kLeftHand) > 0.5; };
 }
 ButtonGetter Input::RunUptakeButton() const {
-    return [this]() { return xboxController.GetXButton(); };
+    return [this]() { return xboxController1.GetXButton(); };
 }
 ButtonGetter Input::ReverseIntakeButton() const {
-    return [this]() { return xboxController.GetYButton(); };
+    return [this]() { return xboxController1.GetYButton(); };
 }

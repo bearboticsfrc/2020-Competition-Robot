@@ -13,7 +13,7 @@
 class Shooter;
 
 namespace frc {
-  class Joystick;
+  class XboxController;
 }
 
 /**

@@ -8,13 +8,13 @@
 #pragma once
 
 #include <frc/TimedRobot.h>
-#include <frc/Joystick.h>
+#include <frc/XboxController.h>
 #include <frc2/command/Command.h>
 
 #include "RobotContainer.h"
 #include "units_include.h"
 
-extern frc::Joystick joystick;
+extern frc::XboxController xboxController;
 
 class Robot : public frc::TimedRobot {
  public:

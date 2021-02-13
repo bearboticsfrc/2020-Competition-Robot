@@ -14,7 +14,7 @@
 class Drivetrain;
 
 namespace frc {
-  class Joystick;
+  class XboxController;
 }
 
 /**
@@ -27,7 +27,7 @@ namespace frc {
 class ManualDrive
     : public frc2::CommandHelper<frc2::CommandBase, ManualDrive> {
  public:
-  ManualDrive(Drivetrain *drivetrain, Input *joystick);
+  ManualDrive(Drivetrain *drivetrain, Input *xboxController);
 
   void Initialize() override;
 

@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <frc/Joystick.h>
 #include <frc/XboxController.h>
 #include "units_include.h"
 
@@ -16,7 +15,6 @@ class Input {
  public:
   double GetX() const;
   double GetY() const;
-  double GetZ() const;
 
   void SetRumble(double rumble);
 
@@ -32,6 +30,6 @@ class Input {
   ButtonGetter ReverseIntakeButton() const;
 
  private:
-  frc::Joystick joystick = frc::Joystick(0);
-  frc::XboxController xboxController = frc::XboxController(1);
+  frc::XboxController xboxController = frc::XboxController(0);
+  frc::XboxController xboxController1 = frc::XboxController(1);
 };

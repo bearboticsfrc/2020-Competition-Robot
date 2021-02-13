@@ -23,7 +23,7 @@ void ManualDrive::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void ManualDrive::Execute() {
   double forward = -input->GetY();
-  double turn = 0.5 * input->GetZ();
+  double turn = 0.5 * input->GetX();
 
   double leftSpeed = forward + turn;
   double rightSpeed = forward - turn;
