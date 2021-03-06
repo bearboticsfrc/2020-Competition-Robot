@@ -69,7 +69,7 @@ void BallTrack::Execute() {
 
   int path;
   int successes = 0; 
-
+  // **UPDATE VALUES FOR COMP BOT**
   while (successes < 5) {
     if (ballX <= 182 && ballX >= 178) {
       successes++;

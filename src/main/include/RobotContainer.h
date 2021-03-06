@@ -24,6 +24,7 @@
 #include "commands/automatic/MovableAutonomous.h"
 #include "commands/automatic/AlignAndShoot.h"
 #include "commands/automatic/AlignShootDriveback.h"
+#include "commands/automatic/BallTrack.h"
 #include "commands/ShowColors.h"
 
 #include "subsystems/Climber.h"
@@ -91,6 +92,11 @@ class RobotContainer {
   StraightLine m_straightLine;
   Slalom m_slalom;
   Bounce m_bounce;
+  ForwardBounce m_forwardBounce;
+  ARed m_aRed;
+  BRed m_bRed;
+  ABlue m_aBlue;
+  BBlue m_bBlue;
 
   /* --- Buttons --- */
   frc2::Button m_alignAndShootButton;

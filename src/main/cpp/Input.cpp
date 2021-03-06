@@ -11,7 +11,7 @@
 using RumbleType = frc::GenericHID::RumbleType;
 using JoystickHand = frc::GenericHID::JoystickHand;
 
-const double DEADZONE = 0.05;
+const double DEADZONE = 0.075;
 
 template<class T> int signum(T value) {
     return (value > T{0}) - (value < T{0});

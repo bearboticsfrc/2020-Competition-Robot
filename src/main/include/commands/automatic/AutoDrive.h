@@ -11,6 +11,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include <memory>
+#include <frc/geometry/Pose2d.h>
 
 class Drivetrain;
 
@@ -23,7 +24,11 @@ frc2::RamseteCommand getTrajectoryCommand2(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandBarrel(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandStraightLine(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandSlalom(Drivetrain &drivetrain);
-frc2::RamseteCommand getTrajectoryCommandBounce(Drivetrain &drivetrain);
+frc2::RamseteCommand getTrajectoryCommandForwardBounce(Drivetrain &drivetrain);
+frc2::RamseteCommand getTrajectoryCommandBounce1(Drivetrain &drivetrain);
+frc2::RamseteCommand getTrajectoryCommandBounce2(Drivetrain &drivetrain);
+frc2::RamseteCommand getTrajectoryCommandBounce3(Drivetrain &drivetrain);
+frc2::RamseteCommand getTrajectoryCommandBounce4(Drivetrain &drivetrain);
 frc2::RamseteCommand getReverseTrajectoryCommand(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandARed(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandABlue(Drivetrain &drivetrain);
@@ -35,7 +40,11 @@ frc::Trajectory generateTrajectory2();
 frc::Trajectory generateTrajectoryBarrel();
 frc::Trajectory generateTrajectoryStraightLine();
 frc::Trajectory generateTrajectorySlalom();
-frc::Trajectory generateTrajectoryBounce();
+frc::Trajectory generateTrajectoryForwardBounce();
+frc::Trajectory generateTrajectoryBounce1();
+frc::Trajectory generateTrajectoryBounce2();
+frc::Trajectory generateTrajectoryBounce3();
+frc::Trajectory generateTrajectoryBounce4();
 frc::Trajectory generateReverseTrajectory();
 frc::Trajectory generateTrajectoryARed();
 frc::Trajectory generateTrajectoryABlue();

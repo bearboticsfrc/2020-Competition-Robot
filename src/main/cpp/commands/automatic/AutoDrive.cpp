@@ -42,8 +42,23 @@ frc::Trajectory generateTrajectorySlalom() {
   return trajectory;
 }
 
-frc::Trajectory generateTrajectoryBounce() {
-  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/2-7 Bounce Path.wpilib.json");
+frc::Trajectory generateTrajectoryBounce1() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce1.wpilib.json");
+  return trajectory;
+}
+
+frc::Trajectory generateTrajectoryBounce2() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce2.wpilib.json");
+  return trajectory;
+}
+
+frc::Trajectory generateTrajectoryBounce3() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce3.wpilib.json");
+  return trajectory;
+}
+
+frc::Trajectory generateTrajectoryBounce4() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce4.wpilib.json");
   return trajectory;
 }
 
@@ -92,7 +107,9 @@ frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain, frc::Trajector
 frc2::RamseteCommand getReverseTrajectoryCommand(Drivetrain &drivetrain, frc::Trajectory trajectory) {
   return frc2::RamseteCommand(
     trajectory,
-    [&drivetrain]() { return drivetrain.GetPose(); },
+    [&drivetrain]() { frc::Pose2d pose = drivetrain.GetPose();
+    pose = frc::Pose2d(pose.Translation(), pose.Rotation().Degrees() + units::degree_t(180));
+    return pose; },
     frc::RamseteController(
       2.0,
       0.6
@@ -124,13 +141,25 @@ frc2::RamseteCommand getTrajectoryCommandSlalom(Drivetrain &drivetrain) {
 }
 
 // make trajectory command for each segment of the path
-frc2::RamseteCommand getTrajectoryCommandBounce(Drivetrain &drivetrain) {
-  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce());
+frc2::RamseteCommand getTrajectoryCommandBounce1(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce1());
 }
 
-frc2::RamseteCommand getReverseTrajectoryCommand(Drivetrain &drivetrain){
-  return getReverseTrajectoryCommand(drivetrain, generateTrajectoryBounce());
+frc2::RamseteCommand getTrajectoryCommandBounce2(Drivetrain &drivetrain){
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce2());
 }
+
+frc2::RamseteCommand getTrajectoryCommandBounce3(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce3());
+}
+
+frc2::RamseteCommand getTrajectoryCommandBounce4(Drivetrain &drivetrain){
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce4());
+}
+
+/*frc2::RamseteCommand getReverseTrajectoryCommand(Drivetrain &drivetrain){
+  return getReverseTrajectoryCommand(drivetrain, generateTrajectoryBounce());
+}*/
 
 frc2::RamseteCommand getTrajectoryCommandARed(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectoryARed());

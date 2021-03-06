@@ -33,6 +33,11 @@ enum class AutonomousChoice {
     StraightLine,
     Slalom,
     Bounce,
+    ForwardBounce,
+    ARed,
+    BRed,
+    ABlue,
+    BBlue
 };
 
 class Choosers {

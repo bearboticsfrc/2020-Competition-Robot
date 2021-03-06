@@ -87,3 +87,12 @@ public:
 
 private:
 };
+
+class ForwardBounce
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                  ForwardBounce> {
+public:
+  ForwardBounce(Drivetrain *drivetrain);
+
+private:
+};
