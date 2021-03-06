@@ -36,6 +36,7 @@ RobotContainer::RobotContainer() :
   m_alignTarget(&m_drivetrain, &m_intake),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
+  m_constantSpeed(&m_manualDrive, &choosers),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   m_friendlyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
@@ -43,13 +44,17 @@ RobotContainer::RobotContainer() :
   m_simpleForward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, true),
   m_simpleBackward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, false),
   m_barrelRacing((&m_drivetrain)),
-  m_straightLine((&m_drivetrain)),
   m_slalom((&m_drivetrain)),
   m_bounce((&m_drivetrain)),
+  m_aRed(&m_drivetrain),
+  m_bRed(&m_drivetrain),
+  m_aBlue(&m_drivetrain),
+  m_bBlue(&m_drivetrain), 
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
   m_reverseIntakeButton(m_input.ReverseIntakeButton()),
+  m_setConstantSpeedButton(m_input.SetConstantSpeedButton()),
   camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
 {
   std::cout << "Constructor\n";
@@ -69,7 +74,7 @@ RobotContainer::RobotContainer() :
 void RobotContainer::ConfigureButtonBindings() {
   m_alignAndShootButton.ToggleWhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake)/*.WithInterrupt([this] { return !m_input.AutoShootButton()(); })*/);
   m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
-  
+  m_setConstantSpeedButton.WhenPressed(frc2::InstantCommand{ [this] { m_constantSpeed.activate();} });
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
@@ -91,12 +96,18 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return &m_simpleBackward;
     case AutonomousChoice::Barrel:
       return &m_barrelRacing;
-    case AutonomousChoice::StraightLine:
-      return &m_straightLine;
     case AutonomousChoice::Slalom:
       return &m_slalom;
     case AutonomousChoice::Bounce:
       return &m_bounce;
+    case AutonomousChoice::ARed:
+      return &m_aRed;
+    case AutonomousChoice::BRed:
+      return &m_bRed;
+    case AutonomousChoice::ABlue:
+      return &m_aBlue;
+    case AutonomousChoice::BBlue:
+      return &m_bBlue;
     default:
       std::cerr << "UNHANDLED OPTION FOR AUTONOMOUS\n";
       return nullptr;

@@ -55,7 +55,7 @@ void AutoShoot::Initialize() {
   successes = 0;
   speedSuccesses = 0;
 
-  intake->setExtended(true);
+  //intake->setExtended(true);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -81,7 +81,7 @@ void AutoShoot::Execute() {
       double foundY = Limelight::getY();
       double power = powerFromAngle(foundY) + 0.04;
       std::cout << "\n" << power << "\n";
-      intake->setExtended(false);
+      //intake->setExtended(false);
       shooter->shoot(power);
 
       

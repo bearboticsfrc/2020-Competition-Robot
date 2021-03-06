@@ -23,15 +23,24 @@ Choosers::Choosers() {
     m_autonomousChooser.AddOption("Simple Forwards", AutonomousChoice::SimpleForward);
     m_autonomousChooser.AddOption("Simple Backward", AutonomousChoice::SimpleBackward);
     m_autonomousChooser.AddOption("Barrel", AutonomousChoice::Barrel);
-    m_autonomousChooser.AddOption("Straight Line", AutonomousChoice::StraightLine);
     m_autonomousChooser.AddOption("Slalom", AutonomousChoice::Slalom);
     m_autonomousChooser.AddOption("Bounce", AutonomousChoice::Bounce);
+    m_autonomousChooser.AddOption("ARed", AutonomousChoice::ARed);
+    m_autonomousChooser.AddOption("BRed", AutonomousChoice::BRed);
+    m_autonomousChooser.AddOption("ABlue", AutonomousChoice::ABlue);
+    m_autonomousChooser.AddOption("BBlue", AutonomousChoice::BBlue);
+
+    m_constantSpeedChooser.AddOption("0% Speed", ConstantSpeedChoice::Default);
+    m_constantSpeedChooser.AddOption("5% Speed", ConstantSpeedChoice::Option1);
+    m_constantSpeedChooser.AddOption("10% Speed", ConstantSpeedChoice::Option2);
+    m_constantSpeedChooser.AddOption("15% Speed", ConstantSpeedChoice::Option3);
 
     frc::SmartDashboard::PutData("DriveChooser", &m_driveChooser);
     frc::SmartDashboard::PutData("ShooterChooser", &m_shooterChooser);
     frc::SmartDashboard::PutData("IntakeChooser", &m_intakeChooser);
     frc::SmartDashboard::PutData("AutoChooser", &m_autonomousChooser);
     frc::SmartDashboard::PutData("ClimbChooser", &m_climbChooser);
+    frc::SmartDashboard::PutData("Constant Speed Chooser", &m_constantSpeedChooser);
 }
 
 DriveChoice Choosers::driveChoice() {
@@ -52,4 +61,8 @@ ClimbChoice Choosers::climbChoice() {
 
 AutonomousChoice Choosers::autonomousChoice(){
     return m_autonomousChooser.GetSelected();
+}
+
+ConstantSpeedChoice Choosers::constantSpeedChoice(){
+    return m_constantSpeedChooser.GetSelected();
 }

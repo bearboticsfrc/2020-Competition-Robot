@@ -14,6 +14,8 @@
 #include <frc/kinematics/DifferentialDriveKinematics.h>
 #include <frc2/command/RamseteCommand.h>
 #include "subsystems/Drivetrain.h"
+#include <frc/geometry/Pose2d.h>
+
 
 frc::Trajectory generateTrajectory() {
   frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Unnamed.wpilib.json");
@@ -30,21 +32,53 @@ frc::Trajectory generateTrajectoryBarrel() {
   return trajectory;
 }
 
-frc::Trajectory generateTrajectoryStraightLine() {
-  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/StraightLine.wpilib.json");
-  return trajectory;
-}
-
 frc::Trajectory generateTrajectorySlalom() {
   frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/2-6 Slalom Path.wpilib.json");
   return trajectory;
 }
 
-frc::Trajectory generateTrajectoryBounce() {
-  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/2-7 Bounce Path.wpilib.json");
+frc::Trajectory generateTrajectoryBounce1() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce1.wpilib.json");
   return trajectory;
 }
 
+frc::Trajectory generateTrajectoryBounce2() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce2.wpilib.json");
+  return trajectory;
+}
+
+frc::Trajectory generateTrajectoryBounce3() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce3.wpilib.json");
+  return trajectory;
+}
+
+frc::Trajectory generateTrajectoryBounce4() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce4.wpilib.json");
+  return trajectory;
+}
+
+frc::Trajectory generateTrajectoryARed() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/RedA.wpilib.json");
+  return trajectory;
+}
+
+
+frc::Trajectory generateTrajectoryBRed() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/RedB.wpilib.json");
+  return trajectory;
+}
+
+
+frc::Trajectory generateTrajectoryABlue() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/BlueA.wpilib.json");
+  return trajectory;
+}
+
+
+frc::Trajectory generateTrajectoryBBlue() {
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/BlueB.wpilib.json");
+  return trajectory;
+}
 
 
 frc::DifferentialDriveKinematics getKinematics() {
@@ -77,15 +111,40 @@ frc2::RamseteCommand getTrajectoryCommandBarrel(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectoryBarrel());
 }
 
-frc2::RamseteCommand getTrajectoryCommandStraightLine(Drivetrain &drivetrain) {
-  return getTrajectoryCommand(drivetrain, generateTrajectoryStraightLine());
-}
-
 frc2::RamseteCommand getTrajectoryCommandSlalom(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectorySlalom());
 }
 
-frc2::RamseteCommand getTrajectoryCommandBounce(Drivetrain &drivetrain) {
-  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce());
+// make trajectory command for each segment of the path
+frc2::RamseteCommand getTrajectoryCommandBounce1(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce1());
+}
+
+frc2::RamseteCommand getTrajectoryCommandBounce2(Drivetrain &drivetrain){
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce2());
+}
+
+frc2::RamseteCommand getTrajectoryCommandBounce3(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce3());
+}
+
+frc2::RamseteCommand getTrajectoryCommandBounce4(Drivetrain &drivetrain){
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBounce4());
+}
+
+frc2::RamseteCommand getTrajectoryCommandARed(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryARed());
+}
+
+frc2::RamseteCommand getTrajectoryCommandBRed(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBRed());
+}
+
+frc2::RamseteCommand getTrajectoryCommandABlue(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryABlue());
+}
+
+frc2::RamseteCommand getTrajectoryCommandBBlue(Drivetrain &drivetrain) {
+  return getTrajectoryCommand(drivetrain, generateTrajectoryBBlue());
 }
 

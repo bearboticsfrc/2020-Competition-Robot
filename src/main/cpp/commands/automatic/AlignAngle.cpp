@@ -42,7 +42,6 @@ void Aligner::update(double target) {
   if (target < 0.0){
     output *= -1;
   }
-
   if (output > 0.2) {
     output = 0.2;
   } else if (output < -0.2) {

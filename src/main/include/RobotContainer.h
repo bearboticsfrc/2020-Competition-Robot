@@ -24,7 +24,9 @@
 #include "commands/automatic/MovableAutonomous.h"
 #include "commands/automatic/AlignAndShoot.h"
 #include "commands/automatic/AlignShootDriveback.h"
+#include "commands/automatic/BallTrack.h"
 #include "commands/ShowColors.h"
+#include "commands/ConstantSpeed.h"
 
 #include "subsystems/Climber.h"
 #include "subsystems/Drivetrain.h"
@@ -53,6 +55,7 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
+  frc2::Command* GetConstantSpeedCommand();
   std::vector<frc2::Command*> GetTeleopCommands();
 
  private:
@@ -80,6 +83,7 @@ class RobotContainer {
   AutoShoot m_autoShoot;
   AlignTarget m_alignTarget;
   BallPickup m_ballPickup;
+  ConstantSpeed m_constantSpeed;
   ShowColors m_showColors;
   Autonomous m_autonomous;
   MovableAutonomous m_movableAutonomous;
@@ -88,14 +92,18 @@ class RobotContainer {
   SimpleAutonomous m_simpleForward;
   SimpleAutonomous m_simpleBackward;
   Barrel m_barrelRacing;
-  StraightLine m_straightLine;
   Slalom m_slalom;
   Bounce m_bounce;
+  ARed m_aRed;
+  BRed m_bRed;
+  ABlue m_aBlue;
+  BBlue m_bBlue;
 
   /* --- Buttons --- */
   frc2::Button m_alignAndShootButton;
   frc2::Button m_toggleIntakeButton;
   frc2::Button m_reverseIntakeButton;
+  frc2::Button m_setConstantSpeedButton;
 
   /* --- Choosers --- */
   Choosers choosers;
