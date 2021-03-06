@@ -28,6 +28,7 @@ class Input {
   ButtonGetter RunIntakeButton() const;
   ButtonGetter RunUptakeButton() const;
   ButtonGetter ReverseIntakeButton() const;
+  ButtonGetter SetConstantSpeedButton() const;
 
  private:
   frc::XboxController xboxController = frc::XboxController(0);

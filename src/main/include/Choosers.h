@@ -1,3 +1,5 @@
+#pragma once
+
 #include <frc/smartdashboard/SendableChooser.h>
 #include "units_include.h"
 
@@ -38,6 +40,13 @@ enum class AutonomousChoice {
     BBlue
 };
 
+enum class ConstantSpeedChoice {
+    Default,
+    Option1,
+    Option2,
+    Option3 
+};
+
 class Choosers {
 public:
     Choosers();
@@ -52,10 +61,13 @@ public:
 
     AutonomousChoice autonomousChoice();
 
+    ConstantSpeedChoice constantSpeedChoice();
+
 private:
   frc::SendableChooser<DriveChoice> m_driveChooser;
   frc::SendableChooser<ShooterChoice> m_shooterChooser;
   frc::SendableChooser<IntakeChoice> m_intakeChooser;
   frc::SendableChooser<ClimbChoice> m_climbChooser;
   frc::SendableChooser<AutonomousChoice> m_autonomousChooser;
+  frc::SendableChooser<ConstantSpeedChoice> m_constantSpeedChooser;
 };

@@ -11,7 +11,8 @@
 
 ManualDrive::ManualDrive(Drivetrain *drive, Input *in) :
   drivetrain(drive),
-  input(in)
+  input(in),
+  useConstantSpeed(false)
 {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({ drive });
@@ -22,7 +23,13 @@ void ManualDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void ManualDrive::Execute() {
+  //double forward = -input->GetY();
   double forward = -input->GetY();
+
+  if (useConstantSpeed == true) {
+    forward = constantSpeed;
+  }
+  
   double turn = 0.4 * input->GetX();
 
   double leftSpeed = forward + turn;
@@ -36,3 +43,8 @@ void ManualDrive::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ManualDrive::IsFinished() { return false; }
+
+void ManualDrive::setConstantSpeed(double speed) {
+  useConstantSpeed = true;
+  constantSpeed = speed;
+}

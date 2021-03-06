@@ -85,3 +85,6 @@ ButtonGetter Input::RunUptakeButton() const {
 ButtonGetter Input::ReverseIntakeButton() const {
     return [this]() { return xboxController1.GetYButton(); };
 }
+ButtonGetter Input::SetConstantSpeedButton() const {
+    return [this]() { return xboxController.GetXButton(); };
+}

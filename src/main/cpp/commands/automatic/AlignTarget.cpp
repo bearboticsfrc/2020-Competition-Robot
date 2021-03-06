@@ -22,7 +22,7 @@ AlignTarget::AlignTarget(Drivetrain *drivetrain, Intake *intake) :
 // Called when the command is initially scheduled.
 void AlignTarget::Initialize() {
   Limelight::setLights(true);
-  intake->setExtended(true);
+  //intake->setExtended(true); // delete this?
   aligner.Reset();
 
   successes = 0;

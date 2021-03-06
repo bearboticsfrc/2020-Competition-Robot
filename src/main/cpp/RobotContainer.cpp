@@ -36,6 +36,7 @@ RobotContainer::RobotContainer() :
   m_alignTarget(&m_drivetrain, &m_intake),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
+  m_constantSpeed(&m_manualDrive, &choosers),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   m_friendlyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
@@ -53,6 +54,7 @@ RobotContainer::RobotContainer() :
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
   m_reverseIntakeButton(m_input.ReverseIntakeButton()),
+  m_setConstantSpeedButton(m_input.SetConstantSpeedButton()),
   camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
 {
   std::cout << "Constructor\n";
@@ -72,7 +74,7 @@ RobotContainer::RobotContainer() :
 void RobotContainer::ConfigureButtonBindings() {
   m_alignAndShootButton.ToggleWhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake)/*.WithInterrupt([this] { return !m_input.AutoShootButton()(); })*/);
   m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
-  
+  m_setConstantSpeedButton.WhenPressed(frc2::InstantCommand{ [this] { m_constantSpeed.activate();} });
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

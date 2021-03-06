@@ -36,8 +36,13 @@ class ManualDrive
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  void setConstantSpeed(double speed);
  
  private:
   Drivetrain *drivetrain;
   Input *input;
+
+  bool useConstantSpeed;
+  double constantSpeed;
 };
