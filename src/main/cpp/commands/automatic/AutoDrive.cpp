@@ -32,11 +32,6 @@ frc::Trajectory generateTrajectoryBarrel() {
   return trajectory;
 }
 
-frc::Trajectory generateTrajectoryStraightLine() {
-  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/StraightLine.wpilib.json");
-  return trajectory;
-}
-
 frc::Trajectory generateTrajectorySlalom() {
   frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/2-6 Slalom Path.wpilib.json");
   return trajectory;
@@ -104,22 +99,6 @@ frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain, frc::Trajector
   );
 }
 
-frc2::RamseteCommand getReverseTrajectoryCommand(Drivetrain &drivetrain, frc::Trajectory trajectory) {
-  return frc2::RamseteCommand(
-    trajectory,
-    [&drivetrain]() { frc::Pose2d pose = drivetrain.GetPose();
-    pose = frc::Pose2d(pose.Translation(), pose.Rotation().Degrees() + units::degree_t(180));
-    return pose; },
-    frc::RamseteController(
-      2.0,
-      0.6
-    ),
-    getKinematics(),
-    [&drivetrain](units::meters_per_second_t left, units::meters_per_second_t right) { drivetrain.SetSpeeds(-left, -right); },
-    { &drivetrain }
-  );
-}
-
 frc2::RamseteCommand getTrajectoryCommand(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectory());
 }
@@ -130,10 +109,6 @@ frc2::RamseteCommand getTrajectoryCommand2(Drivetrain &drivetrain) {
 
 frc2::RamseteCommand getTrajectoryCommandBarrel(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectoryBarrel());
-}
-
-frc2::RamseteCommand getTrajectoryCommandStraightLine(Drivetrain &drivetrain) {
-  return getTrajectoryCommand(drivetrain, generateTrajectoryStraightLine());
 }
 
 frc2::RamseteCommand getTrajectoryCommandSlalom(Drivetrain &drivetrain) {
@@ -156,10 +131,6 @@ frc2::RamseteCommand getTrajectoryCommandBounce3(Drivetrain &drivetrain) {
 frc2::RamseteCommand getTrajectoryCommandBounce4(Drivetrain &drivetrain){
   return getTrajectoryCommand(drivetrain, generateTrajectoryBounce4());
 }
-
-/*frc2::RamseteCommand getReverseTrajectoryCommand(Drivetrain &drivetrain){
-  return getReverseTrajectoryCommand(drivetrain, generateTrajectoryBounce());
-}*/
 
 frc2::RamseteCommand getTrajectoryCommandARed(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectoryARed());

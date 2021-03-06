@@ -86,16 +86,6 @@ Barrel::Barrel(Drivetrain *drivetrain) {
   );
 }
 
-StraightLine::StraightLine(Drivetrain *drivetrain) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
-
-  AddCommands(
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryStraightLine().States()[0].pose); } },
-    getTrajectoryCommandStraightLine(*drivetrain)
-  );
-}
-
 Slalom::Slalom(Drivetrain *drivetrain) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
@@ -117,25 +107,6 @@ Bounce::Bounce(Drivetrain *drivetrain) {
     getTrajectoryCommandBounce2(*drivetrain),
     frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryBounce3().States()[0].pose); } },
     getTrajectoryCommandBounce3(*drivetrain),
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryBounce4().States()[0].pose); } },
-    getTrajectoryCommandBounce4(*drivetrain)
-  );
-}
-
-ForwardBounce::ForwardBounce(Drivetrain *drivetrain) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
-
-  AddCommands(
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryBounce1().States()[0].pose); } },
-    getTrajectoryCommandBounce1(*drivetrain),
-    AlignAngle(units::degree_t(180.0), drivetrain),
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryBounce2().States()[0].pose); } },
-    getTrajectoryCommandBounce2(*drivetrain),
-    AlignAngle(units::degree_t(180.0), drivetrain),
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryBounce3().States()[0].pose); } },
-    getTrajectoryCommandBounce3(*drivetrain),
-    AlignAngle(units::degree_t(180.0), drivetrain),
     frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryBounce4().States()[0].pose); } },
     getTrajectoryCommandBounce4(*drivetrain)
   );

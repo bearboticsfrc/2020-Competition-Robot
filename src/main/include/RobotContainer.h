@@ -89,10 +89,8 @@ class RobotContainer {
   SimpleAutonomous m_simpleForward;
   SimpleAutonomous m_simpleBackward;
   Barrel m_barrelRacing;
-  StraightLine m_straightLine;
   Slalom m_slalom;
   Bounce m_bounce;
-  ForwardBounce m_forwardBounce;
   ARed m_aRed;
   BRed m_bRed;
   ABlue m_aBlue;

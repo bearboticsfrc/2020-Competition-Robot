@@ -43,10 +43,8 @@ RobotContainer::RobotContainer() :
   m_simpleForward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, true),
   m_simpleBackward(&m_drivetrain, &m_intake, &m_arduino, &m_shooter, false),
   m_barrelRacing((&m_drivetrain)),
-  m_straightLine((&m_drivetrain)),
   m_slalom((&m_drivetrain)),
   m_bounce((&m_drivetrain)),
-  m_forwardBounce((&m_drivetrain)),
   m_aRed(&m_drivetrain),
   m_bRed(&m_drivetrain),
   m_aBlue(&m_drivetrain),
@@ -96,14 +94,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return &m_simpleBackward;
     case AutonomousChoice::Barrel:
       return &m_barrelRacing;
-    case AutonomousChoice::StraightLine:
-      return &m_straightLine;
     case AutonomousChoice::Slalom:
       return &m_slalom;
     case AutonomousChoice::Bounce:
       return &m_bounce;
-    case AutonomousChoice::ForwardBounce:
-      return &m_forwardBounce;
     case AutonomousChoice::ARed:
       return &m_aRed;
     case AutonomousChoice::BRed:
