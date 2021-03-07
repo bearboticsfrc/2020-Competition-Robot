@@ -9,10 +9,10 @@
 #include "Robot.h"
 #include "units_include.h"
 
-ManualDrive::ManualDrive(Drivetrain *drive, Input *in) :
+ManualDrive::ManualDrive(Drivetrain *drive, Input *in, ConstantSpeed *constantSpeed) :
   drivetrain(drive),
   input(in),
-  useConstantSpeed(false)
+  constantSpeed(constantSpeed)
 {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({ drive });
@@ -26,8 +26,8 @@ void ManualDrive::Execute() {
   //double forward = -input->GetY();
   double forward = -input->GetY();
 
-  if (useConstantSpeed == true) {
-    forward = constantSpeed;
+  if (constantSpeed->isActivated()) {
+    forward = constantSpeed->getSpeed();
     std::cout << "Using Constant Speed\n";
   }
   
@@ -44,11 +44,3 @@ void ManualDrive::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ManualDrive::IsFinished() { return false; }
-
-void ManualDrive::setConstantSpeed(double speed) {
-  std::cout << "Constant Speed Set at " << speed << "\n";
-  useConstantSpeed = true;
-  std::cout << "if this shows up it didn't crash\n";
-  constantSpeed = speed;
-  std::cout << "test ouput\n";
-}

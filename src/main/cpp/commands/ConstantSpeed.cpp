@@ -5,16 +5,14 @@
 #include "commands/ConstantSpeed.h"
 #include "units_include.h"
 
-ConstantSpeed::ConstantSpeed(ManualDrive *manualDrive, Choosers *choosers) :
-  manualdrive(manualdrive),
+ConstantSpeed::ConstantSpeed(Choosers *choosers) :
   choosers(choosers),
-  activated(false)
- {
-
+  active(false)
+{
 } 
 
 void ConstantSpeed::activate() {
-  activated = !activated;
+  active = !active;
   std::cout << "Constant Speed Activated";
   switch(choosers->constantSpeedChoice()){
     case ConstantSpeedChoice::Default:
@@ -33,9 +31,14 @@ void ConstantSpeed::activate() {
       std::cerr << "UNHANDLED OPTION FOR CONSTANT SPEED\n";
       speed = 0.0;
   }
-  if (activated){
-    manualdrive->setConstantSpeed(speed);
-  }
+  
   std::cout << "Constant Speed Finished\n";
 }
 
+bool ConstantSpeed::isActivated() {
+  return active;
+}
+
+double ConstantSpeed::getSpeed() {
+  return speed;
+}

@@ -27,8 +27,10 @@ RobotContainer::RobotContainer() :
   m_intake(&m_hopper),
   m_colorSensor(),
   m_arduino(),
+  m_constantSpeed(&choosers),
+
   /* --- Commands --- */
-  m_manualDrive(&m_drivetrain, &m_input),
+  m_manualDrive(&m_drivetrain, &m_input, &m_constantSpeed),
   m_manualShooter(&m_shooter, m_input.ManualShootButton()),
   m_manualIntake(&m_intake, m_input.RunIntakeButton(), m_input.RunUptakeButton(), m_input.ReverseIntakeButton()),
   m_manualClimb(&m_climber, &m_input),
@@ -36,7 +38,6 @@ RobotContainer::RobotContainer() :
   m_alignTarget(&m_drivetrain, &m_intake),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
-  m_constantSpeed(&m_manualDrive, &choosers),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   m_friendlyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
