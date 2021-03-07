@@ -56,7 +56,7 @@ frc::Trajectory generateTrajectoryBounce4() {
   frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce4.wpilib.json");
   return trajectory;
 }
-
+/*
 frc::Trajectory generateTrajectoryARed() {
   frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/RedA.wpilib.json");
   return trajectory;
@@ -78,7 +78,7 @@ frc::Trajectory generateTrajectoryABlue() {
 frc::Trajectory generateTrajectoryBBlue() {
   frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/BlueB.wpilib.json");
   return trajectory;
-}
+}*/
 
 
 frc::DifferentialDriveKinematics getKinematics() {
@@ -131,7 +131,7 @@ frc2::RamseteCommand getTrajectoryCommandBounce3(Drivetrain &drivetrain) {
 frc2::RamseteCommand getTrajectoryCommandBounce4(Drivetrain &drivetrain){
   return getTrajectoryCommand(drivetrain, generateTrajectoryBounce4());
 }
-
+/*
 frc2::RamseteCommand getTrajectoryCommandARed(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectoryARed());
 }
@@ -146,5 +146,5 @@ frc2::RamseteCommand getTrajectoryCommandABlue(Drivetrain &drivetrain) {
 
 frc2::RamseteCommand getTrajectoryCommandBBlue(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectoryBBlue());
-}
+}*/
 

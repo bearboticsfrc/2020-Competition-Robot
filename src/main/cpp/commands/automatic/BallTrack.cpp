@@ -85,7 +85,7 @@ void BallTrack::Execute() {
       path = 3;
     }
   }
-
+/*
   switch (path)
   {
   case 0:
@@ -102,7 +102,7 @@ void BallTrack::Execute() {
     break;
   default:
     break;
-  }
+  }*/
 }
 // Called once the command ends or is interrupted.
 void BallTrack::End(bool interrupted) {}
@@ -111,7 +111,7 @@ void BallTrack::End(bool interrupted) {}
 bool BallTrack::IsFinished() {
   return false;
 }
-
+/*
 ARed::ARed(Drivetrain *drivetrain) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
@@ -154,4 +154,4 @@ BBlue::BBlue(Drivetrain *drivetrain) {
     getTrajectoryCommandBBlue(*drivetrain)
     // TODO: Drive back
   );
-}
+} */

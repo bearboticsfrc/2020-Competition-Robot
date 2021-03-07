@@ -28,9 +28,10 @@ void ManualDrive::Execute() {
 
   if (useConstantSpeed == true) {
     forward = constantSpeed;
+    std::cout << "Using Constant Speed\n";
   }
   
-  double turn = 0.4 * input->GetX();
+  double turn = 0.5 * input->GetZ();
 
   double leftSpeed = forward + turn;
   double rightSpeed = forward - turn;
@@ -45,6 +46,9 @@ void ManualDrive::End(bool interrupted) {}
 bool ManualDrive::IsFinished() { return false; }
 
 void ManualDrive::setConstantSpeed(double speed) {
+  std::cout << "Constant Speed Set at " << speed << "\n";
   useConstantSpeed = true;
+  std::cout << "if this shows up it didn't crash\n";
   constantSpeed = speed;
+  std::cout << "test ouput\n";
 }

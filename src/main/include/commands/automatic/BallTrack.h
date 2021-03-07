@@ -33,7 +33,7 @@ class BallTrack
   Arduino* m_arduino;
   Drivetrain* m_drivetrain;
 };
-
+/*
 class ARed
     : public frc2::CommandHelper<frc2::SequentialCommandGroup, 
                                  ARed>{
@@ -69,4 +69,4 @@ class BBlue
 
    private:
 };
-    
+    */

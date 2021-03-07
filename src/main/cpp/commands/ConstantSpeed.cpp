@@ -15,7 +15,7 @@ ConstantSpeed::ConstantSpeed(ManualDrive *manualDrive, Choosers *choosers) :
 
 void ConstantSpeed::activate() {
   activated = !activated;
-
+  std::cout << "Constant Speed Activated";
   switch(choosers->constantSpeedChoice()){
     case ConstantSpeedChoice::Default:
       speed = 0.0;
@@ -33,5 +33,9 @@ void ConstantSpeed::activate() {
       std::cerr << "UNHANDLED OPTION FOR CONSTANT SPEED\n";
       speed = 0.0;
   }
+  if (activated){
+    manualdrive->setConstantSpeed(speed);
+  }
+  std::cout << "Constant Speed Finished\n";
 }
 

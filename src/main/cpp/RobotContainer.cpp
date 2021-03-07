@@ -46,10 +46,10 @@ RobotContainer::RobotContainer() :
   m_barrelRacing((&m_drivetrain)),
   m_slalom((&m_drivetrain)),
   m_bounce((&m_drivetrain)),
-  m_aRed(&m_drivetrain),
+  /*m_aRed(&m_drivetrain),
   m_bRed(&m_drivetrain),
   m_aBlue(&m_drivetrain),
-  m_bBlue(&m_drivetrain), 
+  m_bBlue(&m_drivetrain), */
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
@@ -100,14 +100,14 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return &m_slalom;
     case AutonomousChoice::Bounce:
       return &m_bounce;
-    case AutonomousChoice::ARed:
+   /* case AutonomousChoice::ARed:
       return &m_aRed;
     case AutonomousChoice::BRed:
       return &m_bRed;
     case AutonomousChoice::ABlue:
       return &m_aBlue;
     case AutonomousChoice::BBlue:
-      return &m_bBlue;
+      return &m_bBlue; */
     default:
       std::cerr << "UNHANDLED OPTION FOR AUTONOMOUS\n";
       return nullptr;

@@ -90,5 +90,5 @@ ButtonGetter Input::ReverseIntakeButton() const {
     return [this]() { return xboxController.GetYButton(); };
 }
 ButtonGetter Input::SetConstantSpeedButton() const {
-    return [this]() { return joystick.GetRawButton(10); };
+    return [this]() { return joystick.GetRawButton(11); };
 }
