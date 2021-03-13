@@ -4,8 +4,18 @@
 
 #include "commands/Compressor.h"
 
-Compressor::Compressor(Choosers *choosers) {
+Compressor::Compressor(Choosers *choosers) :
+choosers(choosers) 
+{
   // Use addRequirements() here to declare subsystem dependencies.
+  std::cout << ":)\n";
+}
+
+// Called when the command is initially scheduled.
+void Compressor::Initialize() {}
+
+// Called repeatedly when this Command is scheduled to run
+void Compressor::Execute() {
   frc::Compressor compressor{0};
 
   switch (choosers->compressorChoice()) {
@@ -29,12 +39,6 @@ Compressor::Compressor(Choosers *choosers) {
     compressor.Start();
   }
 }
-
-// Called when the command is initially scheduled.
-void Compressor::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void Compressor::Execute() {}
 
 // Called once the command ends or is interrupted.
 void Compressor::End(bool interrupted) {}

@@ -20,7 +20,6 @@ class Compressor
     : public frc2::CommandHelper<frc2::CommandBase, Compressor> {
  public:
   Compressor(Choosers *choosers);
-  //void activate(Choosers *choosers);
 
   bool isActive;
   
@@ -31,4 +30,7 @@ class Compressor
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  private:
+  Choosers *choosers;
 };

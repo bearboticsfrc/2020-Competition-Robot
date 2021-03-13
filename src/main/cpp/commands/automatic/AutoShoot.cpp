@@ -14,6 +14,7 @@
 #include "subsystems/Intake.h"
 #include "subsystems/Limelight.h"
 #include <variant>
+#include "Util.h"
 
 // 21.2   91%
 // 16.8   90%
@@ -48,7 +49,7 @@ AutoShoot::AutoShoot(Shooter *s, Intake *i) :
 // Called when the command is initially scheduled.
 void AutoShoot::Initialize() {
   frc::SmartDashboard::PutNumber("FoundY", 0.0);
-  frc::SmartDashboard::PutNumber("Shooter Power Adjustment", 0.0);
+  initDashboardValue("Shooter Power Adjustment", 0.0);
 
   Limelight::setLights(true);
   acquired = false;
@@ -82,6 +83,7 @@ void AutoShoot::Execute() {
       double powerAdjustment = frc::SmartDashboard::GetNumber("Shooter Power Adjustment", 0.0);
       double foundY = Limelight::getY();
       double power = powerFromAngle(foundY) + 0.04 + powerAdjustment;
+      std::cout << "\n" << powerAdjustment << "\n";
       std::cout << "\n" << power << "\n";
       //intake->setExtended(false);
       shooter->shoot(power);
