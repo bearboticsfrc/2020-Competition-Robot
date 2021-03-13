@@ -47,6 +47,11 @@ enum class ConstantSpeedChoice {
     Option3 
 };
 
+enum class CompressorChoice {
+    On,
+    Off
+};
+
 class Choosers {
 public:
     Choosers();
@@ -63,6 +68,8 @@ public:
 
     ConstantSpeedChoice constantSpeedChoice();
 
+    CompressorChoice compressorChoice();
+
 private:
   frc::SendableChooser<DriveChoice> m_driveChooser;
   frc::SendableChooser<ShooterChoice> m_shooterChooser;
@@ -70,4 +77,5 @@ private:
   frc::SendableChooser<ClimbChoice> m_climbChooser;
   frc::SendableChooser<AutonomousChoice> m_autonomousChooser;
   frc::SendableChooser<ConstantSpeedChoice> m_constantSpeedChooser;
+  frc::SendableChooser<CompressorChoice> m_compressorChooser;
 };

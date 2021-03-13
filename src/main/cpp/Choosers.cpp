@@ -35,12 +35,16 @@ Choosers::Choosers() {
     m_constantSpeedChooser.AddOption("10% Speed", ConstantSpeedChoice::Option2);
     m_constantSpeedChooser.AddOption("15% Speed", ConstantSpeedChoice::Option3);
 
+    m_compressorChooser.AddOption("On", CompressorChoice::On);
+    m_compressorChooser.AddOption("Off", CompressorChoice::Off);
+
     frc::SmartDashboard::PutData("DriveChooser", &m_driveChooser);
     frc::SmartDashboard::PutData("ShooterChooser", &m_shooterChooser);
     frc::SmartDashboard::PutData("IntakeChooser", &m_intakeChooser);
     frc::SmartDashboard::PutData("AutoChooser", &m_autonomousChooser);
     frc::SmartDashboard::PutData("ClimbChooser", &m_climbChooser);
     frc::SmartDashboard::PutData("Constant Speed Chooser", &m_constantSpeedChooser);
+    frc::SmartDashboard::PutData("Compressor Chooser", &m_compressorChooser);
 }
 
 DriveChoice Choosers::driveChoice() {
@@ -65,4 +69,8 @@ AutonomousChoice Choosers::autonomousChoice(){
 
 ConstantSpeedChoice Choosers::constantSpeedChoice(){
     return m_constantSpeedChooser.GetSelected();
+}
+
+CompressorChoice Choosers::compressorChoice(){
+    return m_compressorChooser.GetSelected();
 }

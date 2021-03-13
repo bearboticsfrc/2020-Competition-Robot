@@ -48,6 +48,7 @@ AutoShoot::AutoShoot(Shooter *s, Intake *i) :
 // Called when the command is initially scheduled.
 void AutoShoot::Initialize() {
   frc::SmartDashboard::PutNumber("FoundY", 0.0);
+  frc::SmartDashboard::PutNumber("Shooter Power Adjustment", 0.0);
 
   Limelight::setLights(true);
   acquired = false;
@@ -78,8 +79,9 @@ void AutoShoot::Execute() {
       startTime = std::chrono::steady_clock::now();
 
       // Adjust power
+      double powerAdjustment = frc::SmartDashboard::GetNumber("Shooter Power Adjustment", 0.0);
       double foundY = Limelight::getY();
-      double power = powerFromAngle(foundY) + 0.04;
+      double power = powerFromAngle(foundY) + 0.04 + powerAdjustment;
       std::cout << "\n" << power << "\n";
       //intake->setExtended(false);
       shooter->shoot(power);
