@@ -19,6 +19,7 @@ void Record::SaveState(InputState state) {
 }
 
 void Record::WriteInputs( ) {
+    SaveYZ(0, 0);
     // loop through inputs and write to a file
     std::ofstream output_file;
     output_file.open("/home/lvuser/deploy/track.txt", std::ofstream::trunc);
