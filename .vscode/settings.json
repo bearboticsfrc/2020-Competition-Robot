@@ -17,6 +17,7 @@
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
   "files.associations": {
     "*.inc": "cpp",
-    "vector": "cpp"
+    "vector": "cpp",
+    "*.tcc": "cpp"
   }
 }

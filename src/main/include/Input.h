@@ -31,6 +31,7 @@ class Input {
   ButtonGetter RunUptakeButton() const;
   ButtonGetter ReverseIntakeButton() const;
   ButtonGetter SetConstantSpeedButton() const;
+  ButtonGetter ToggleRecordButton() const;
 
  private:
   frc::Joystick joystick = frc::Joystick(0);

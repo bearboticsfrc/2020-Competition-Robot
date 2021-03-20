@@ -25,6 +25,7 @@
 #include "commands/automatic/AlignAndShoot.h"
 #include "commands/automatic/AlignShootDriveback.h"
 #include "commands/automatic/BallTrack.h"
+#include "commands/automatic/PlaybackDrive.h"
 #include "commands/ShowColors.h"
 #include "commands/ConstantSpeed.h"
 
@@ -38,6 +39,7 @@
 #include "subsystems/ControlPanelManip.h"
 #include "Choosers.h"
 #include "Input.h"
+#include "Record.h"
 #include <vector>
 #include "units_include.h"
 
@@ -73,6 +75,7 @@ class RobotContainer {
   Intake m_intake;
   ColorSensor m_colorSensor;
   Arduino m_arduino;
+
   //ControlPanelManip m_controlPanelManip;
 
   /* --- Commands --- */
@@ -84,6 +87,7 @@ class RobotContainer {
   AlignTarget m_alignTarget;
   BallPickup m_ballPickup;
   ConstantSpeed m_constantSpeed;
+  Record m_record;
   ShowColors m_showColors;
   Autonomous m_autonomous;
   MovableAutonomous m_movableAutonomous;
@@ -99,11 +103,13 @@ class RobotContainer {
   ABlue m_aBlue;
   BBlue m_bBlue;
 */
+  PlaybackDrive m_playback;
   /* --- Buttons --- */
   frc2::Button m_alignAndShootButton;
   frc2::Button m_toggleIntakeButton;
   frc2::Button m_reverseIntakeButton;
   frc2::Button m_setConstantSpeedButton;
+  frc2::Button m_toggleRecordButton;
 
   /* --- Choosers --- */
   Choosers choosers;

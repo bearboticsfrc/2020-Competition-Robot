@@ -9,15 +9,9 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "Input.h"
-#include "commands/ConstantSpeed.h"
 #include "Record.h"
 
 class Drivetrain;
-
-namespace frc {
-  class Joystick;
-}
 
 /**
  * An example command.
@@ -26,10 +20,10 @@ namespace frc {
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ManualDrive
-    : public frc2::CommandHelper<frc2::CommandBase, ManualDrive> {
+class PlaybackDrive
+    : public frc2::CommandHelper<frc2::CommandBase, PlaybackDrive> {
  public:
-  ManualDrive(Drivetrain *drivetrain, Input *joystick, ConstantSpeed *constantSpeed, Record *record);
+  PlaybackDrive(Drivetrain *drivetrain);
 
   void Initialize() override;
 
@@ -41,7 +35,6 @@ class ManualDrive
  
  private:
   Drivetrain *drivetrain;
-  Input *input;
-  ConstantSpeed *constantSpeed;
-  Record *record;
+  std::vector<InputState> inputs;
+  std::vector<InputState>::iterator iterator;
 };

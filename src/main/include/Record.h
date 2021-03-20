@@ -27,8 +27,11 @@ class Record {
   void SaveYZ(double y, double z);
   void SaveState(InputState state);
   void WriteInputs();
+  void ClearInputs();
+  void activate();
+
 
  private:
   std::vector<InputState> inputs;
-
+  bool active;
 };

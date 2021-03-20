@@ -9,11 +9,11 @@
 #include "Robot.h"
 #include "units_include.h"
 
-ManualDrive::ManualDrive(Drivetrain *drive, Input *in, ConstantSpeed *constantSpeed) :
+ManualDrive::ManualDrive(Drivetrain *drive, Input *in, ConstantSpeed *constantSpeed, Record *record) :
   drivetrain(drive),
   input(in),
   constantSpeed(constantSpeed),
-  record()
+  record(record)
 {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({ drive });
@@ -37,7 +37,7 @@ void ManualDrive::Execute() {
   double leftSpeed = forward + turn;
   double rightSpeed = forward - turn;
 
-  record.SaveYZ(input->GetY(), input->GetZ());
+  record->SaveYZ(input->GetY(), input->GetZ());
   drivetrain->SetSpeeds(leftSpeed, rightSpeed);
 }
 

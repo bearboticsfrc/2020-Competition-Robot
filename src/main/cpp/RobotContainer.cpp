@@ -28,9 +28,10 @@ RobotContainer::RobotContainer() :
   m_colorSensor(),
   m_arduino(),
   m_constantSpeed(&choosers),
+  m_record(),
 
   /* --- Commands --- */
-  m_manualDrive(&m_drivetrain, &m_input, &m_constantSpeed),
+  m_manualDrive(&m_drivetrain, &m_input, &m_constantSpeed, &m_record),
   m_manualShooter(&m_shooter, m_input.ManualShootButton()),
   m_manualIntake(&m_intake, m_input.RunIntakeButton(), m_input.RunUptakeButton(), m_input.ReverseIntakeButton()),
   m_manualClimb(&m_climber, &m_input),
@@ -51,12 +52,14 @@ RobotContainer::RobotContainer() :
   m_bRed(&m_drivetrain),
   m_aBlue(&m_drivetrain),
   m_bBlue(&m_drivetrain), */
+  m_playback((&m_drivetrain)),
   
   /* --- Buttons --- */
   m_alignAndShootButton(m_input.AutoShootButton()),
   m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
   m_reverseIntakeButton(m_input.ReverseIntakeButton()),
   m_setConstantSpeedButton(m_input.SetConstantSpeedButton()),
+  m_toggleRecordButton(m_input.ToggleRecordButton()),
   camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
 {
   std::cout << "Constructor\n";
@@ -77,6 +80,7 @@ void RobotContainer::ConfigureButtonBindings() {
   m_alignAndShootButton.ToggleWhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake)/*.WithInterrupt([this] { return !m_input.AutoShootButton()(); })*/);
   m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
   m_setConstantSpeedButton.WhenPressed(frc2::InstantCommand{ [this] { m_constantSpeed.activate();} });
+  m_toggleRecordButton.WhenPressed(frc2::InstantCommand{ [this] { std::cout << "button\n"; m_record.activate();} });
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
@@ -110,6 +114,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return &m_aBlue;
     case AutonomousChoice::BBlue:
       return &m_bBlue; */
+    case AutonomousChoice::Playback:
+      return &m_playback;
     default:
       std::cerr << "UNHANDLED OPTION FOR AUTONOMOUS\n";
       return nullptr;
