@@ -11,6 +11,7 @@
 #include <frc2/command/CommandHelper.h>
 #include "Input.h"
 #include "commands/ConstantSpeed.h"
+#include "Record.h"
 
 class Drivetrain;
 
@@ -42,4 +43,5 @@ class ManualDrive
   Drivetrain *drivetrain;
   Input *input;
   ConstantSpeed *constantSpeed;
+  Record record;
 };

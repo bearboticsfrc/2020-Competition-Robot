@@ -12,7 +12,8 @@
 ManualDrive::ManualDrive(Drivetrain *drive, Input *in, ConstantSpeed *constantSpeed) :
   drivetrain(drive),
   input(in),
-  constantSpeed(constantSpeed)
+  constantSpeed(constantSpeed),
+  record()
 {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({ drive });
@@ -36,6 +37,7 @@ void ManualDrive::Execute() {
   double leftSpeed = forward + turn;
   double rightSpeed = forward - turn;
 
+  record.SaveYZ(input->GetY(), input->GetZ());
   drivetrain->SetSpeeds(leftSpeed, rightSpeed);
 }
 
