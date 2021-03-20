@@ -45,7 +45,9 @@ enum class ConstantSpeedChoice {
     Default,
     Option1,
     Option2,
-    Option3 
+    Option3,
+    Option4,
+    Option5 
 };
 
 enum class CompressorChoice {

@@ -19,13 +19,19 @@ void ConstantSpeed::activate() {
       speed = 0.0;
       break;
     case ConstantSpeedChoice::Option1:
-      speed = .05;
-      break;
-    case ConstantSpeedChoice::Option2:
       speed = .1;
       break;
+    case ConstantSpeedChoice::Option2:
+      speed = .2;
+      break;
     case ConstantSpeedChoice::Option3:
-      speed = .15;
+      speed = .3;
+      break;
+    case ConstantSpeedChoice::Option4:
+      speed = .4;
+      break;
+    case ConstantSpeedChoice::Option5:
+      speed = .5;
       break;
     default:
       std::cerr << "UNHANDLED OPTION FOR CONSTANT SPEED\n";

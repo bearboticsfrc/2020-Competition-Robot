@@ -32,9 +32,11 @@ Choosers::Choosers() {
     m_autonomousChooser.AddOption("Teleop Playback", AutonomousChoice::Playback);
 
     m_constantSpeedChooser.AddOption("0% Speed", ConstantSpeedChoice::Default);
-    m_constantSpeedChooser.AddOption("5% Speed", ConstantSpeedChoice::Option1);
-    m_constantSpeedChooser.AddOption("10% Speed", ConstantSpeedChoice::Option2);
-    m_constantSpeedChooser.AddOption("15% Speed", ConstantSpeedChoice::Option3);
+    m_constantSpeedChooser.AddOption("10% Speed", ConstantSpeedChoice::Option1);
+    m_constantSpeedChooser.AddOption("20% Speed", ConstantSpeedChoice::Option2);
+    m_constantSpeedChooser.AddOption("30% Speed", ConstantSpeedChoice::Option3);
+    m_constantSpeedChooser.AddOption("40% Speed", ConstantSpeedChoice::Option4);
+    m_constantSpeedChooser.AddOption("50% Speed", ConstantSpeedChoice::Option5);
 
     m_compressorChooser.AddOption("On", CompressorChoice::On);
     m_compressorChooser.AddOption("Off", CompressorChoice::Off);
