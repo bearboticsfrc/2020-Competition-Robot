@@ -146,3 +146,63 @@ SimpleAutonomous::SimpleAutonomous(Drivetrain *drivetrain, Intake *intake, Ardui
     DriveDistance(drivetrain, distance)
   );
 }
+
+ARed::ARed(Drivetrain *drivetrain, Intake *intake) {
+  // Add your commands here, e.g.
+  // AddCommands(FooCommand(), BarCommand());
+
+  AddCommands(
+    frc2::InstantCommand{ [=] {  
+    drivetrain->SetPose(generateTrajectoryARed().States()[0].pose); 
+    intake->setExtended(true);
+    intake->setMode(IntakeMode::Intake);
+    } },
+    getTrajectoryCommandARed(*drivetrain)
+    // TODO: Drive back
+  );
+}
+
+BRed::BRed(Drivetrain *drivetrain, Intake *intake) {
+  // Add your commands here, e.g.
+  // AddCommands(FooCommand(), BarCommand());
+
+  AddCommands(
+    frc2::InstantCommand{ [=] { 
+    drivetrain->SetPose(generateTrajectoryBRed().States()[0].pose); 
+    intake->setExtended(true);
+    intake->setMode(IntakeMode::Intake);
+    } },
+    getTrajectoryCommandBRed(*drivetrain)
+    // TODO: Drive back
+  );
+}
+
+ABlue::ABlue(Drivetrain *drivetrain, Intake *intake) {
+  // Add your commands here, e.g.
+  // AddCommands(FooCommand(), BarCommand());
+
+  AddCommands(
+    frc2::InstantCommand{ [=] { 
+    drivetrain->SetPose(generateTrajectoryABlue().States()[0].pose); 
+    intake->setExtended(true);
+    intake->setMode(IntakeMode::Intake);
+    } },
+    getTrajectoryCommandABlue(*drivetrain)
+    // TODO: Drive back
+  );
+}
+
+BBlue::BBlue(Drivetrain *drivetrain, Intake *intake) {
+  // Add your commands here, e.g.
+  // AddCommands(FooCommand(), BarCommand());
+
+  AddCommands(
+    frc2::InstantCommand{ [=] { 
+    drivetrain->SetPose(generateTrajectoryBBlue().States()[0].pose); 
+    intake->setExtended(true);
+    intake->setMode(IntakeMode::Intake);
+    } },
+    getTrajectoryCommandBBlue(*drivetrain)
+    // TODO: Drive back
+  );
+}

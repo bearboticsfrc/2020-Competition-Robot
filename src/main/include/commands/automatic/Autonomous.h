@@ -96,3 +96,39 @@ public:
 
 private:
 };
+
+class ARed
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, 
+                                 ARed>{
+ public:
+   ARed(Drivetrain *drivetrain, Intake *intake);
+
+   private:
+};
+
+class BRed
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, 
+                                 BRed>{
+ public:
+   BRed(Drivetrain *drivetrain, Intake *intake);
+
+   private:
+};
+
+class ABlue
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, 
+                                 ABlue>{
+ public:
+   ABlue(Drivetrain *drivetrain, Intake *intake);
+
+   private:
+};
+
+class BBlue
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup, 
+                                 BBlue>{
+ public:
+   BBlue(Drivetrain *drivetrain, Intake *intake);
+
+   private:
+};

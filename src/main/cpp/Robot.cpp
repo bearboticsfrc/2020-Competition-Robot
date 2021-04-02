@@ -71,8 +71,20 @@ void Robot::TeleopInit() {
  * This function is called periodically during operator control.
  */
 void Robot::TeleopPeriodic() {
-  
   frc::SmartDashboard::PutNumber("Limelighty", Limelight::getY());
+  auto data = m_container.m_arduino.readData();
+  if (data.second){
+    if (data.first.size() != 0) {
+      //std::cout << "frame: \n";
+      for (SensorFrame frame : data.first) {
+        std::cout << "x: " << frame.x << "\n";
+        //std::cout << "y: " << frame.y << "\n";
+        //std::cout << "width: " << frame.width << "\n";
+        //std::cout << "height: " << frame.height << "\n";
+
+      }
+    }
+  }
 }
 
 /**

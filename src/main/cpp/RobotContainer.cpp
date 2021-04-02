@@ -48,10 +48,10 @@ RobotContainer::RobotContainer() :
   m_barrelRacing((&m_drivetrain)),
   m_slalom((&m_drivetrain)),
   m_bounce((&m_drivetrain)),
-  /*m_aRed(&m_drivetrain),
-  m_bRed(&m_drivetrain),
-  m_aBlue(&m_drivetrain),
-  m_bBlue(&m_drivetrain), */
+  m_aRed(&m_drivetrain, &m_intake),
+  m_bRed(&m_drivetrain, &m_intake),
+  m_aBlue(&m_drivetrain, &m_intake),
+  m_bBlue(&m_drivetrain, &m_intake), 
   m_playback((&m_drivetrain)),
   
   /* --- Buttons --- */
@@ -66,6 +66,7 @@ RobotContainer::RobotContainer() :
   std::cout.flush();
   // Initialize all of your commands and subsystems here
   m_gyro.SetYaw(0.0);
+  frc::SmartDashboard::PutData("Ball Track", &m_balltrack);
 
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -106,14 +107,14 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return &m_slalom;
     case AutonomousChoice::Bounce:
       return &m_bounce;
-   /* case AutonomousChoice::ARed:
+    case AutonomousChoice::ARed:
       return &m_aRed;
     case AutonomousChoice::BRed:
       return &m_bRed;
     case AutonomousChoice::ABlue:
       return &m_aBlue;
     case AutonomousChoice::BBlue:
-      return &m_bBlue; */
+      return &m_bBlue; 
     case AutonomousChoice::Playback:
       return &m_playback;
     default:

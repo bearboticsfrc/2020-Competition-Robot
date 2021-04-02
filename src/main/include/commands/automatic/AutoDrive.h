@@ -27,11 +27,11 @@ frc2::RamseteCommand getTrajectoryCommandBounce1(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandBounce2(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandBounce3(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandBounce4(Drivetrain &drivetrain);
-/*frc2::RamseteCommand getTrajectoryCommandARed(Drivetrain &drivetrain);
-frc2::RamseteCommand getTrajectoryCommandABlue(Drivetrain &drivetrain);
+frc2::RamseteCommand getTrajectoryCommandARed(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandBRed(Drivetrain &drivetrain);
+frc2::RamseteCommand getTrajectoryCommandABlue(Drivetrain &drivetrain);
 frc2::RamseteCommand getTrajectoryCommandBBlue(Drivetrain &drivetrain);
-*/
+
 frc::Trajectory generateTrajectory();
 frc::Trajectory generateTrajectory2();
 frc::Trajectory generateTrajectoryBarrel();
@@ -40,7 +40,7 @@ frc::Trajectory generateTrajectoryBounce1();
 frc::Trajectory generateTrajectoryBounce2();
 frc::Trajectory generateTrajectoryBounce3();
 frc::Trajectory generateTrajectoryBounce4();
-/*frc::Trajectory generateTrajectoryARed();
-frc::Trajectory generateTrajectoryABlue();
+frc::Trajectory generateTrajectoryARed();
 frc::Trajectory generateTrajectoryBRed();
-frc::Trajectory generateTrajectoryBBlue();*/
+frc::Trajectory generateTrajectoryABlue();
+frc::Trajectory generateTrajectoryBBlue();

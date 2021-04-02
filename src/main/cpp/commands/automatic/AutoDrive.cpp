@@ -56,30 +56,29 @@ frc::Trajectory generateTrajectoryBounce4() {
   frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/Bounce4.wpilib.json");
   return trajectory;
 }
-/*
+
 frc::Trajectory generateTrajectoryARed() {
-  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/RedA.wpilib.json");
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/ARed.wpilib.json");
   return trajectory;
 }
 
 
 frc::Trajectory generateTrajectoryBRed() {
-  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/RedB.wpilib.json");
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/BRed.wpilib.json");
   return trajectory;
 }
 
 
 frc::Trajectory generateTrajectoryABlue() {
-  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/BlueA.wpilib.json");
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/ABlue.wpilib.json");
   return trajectory;
 }
 
 
 frc::Trajectory generateTrajectoryBBlue() {
-  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/BlueB.wpilib.json");
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson("/home/lvuser/deploy/BBlue.wpilib.json");
   return trajectory;
-}*/
-
+}
 
 frc::DifferentialDriveKinematics getKinematics() {
   return frc::DifferentialDriveKinematics { 24_in };
@@ -131,7 +130,7 @@ frc2::RamseteCommand getTrajectoryCommandBounce3(Drivetrain &drivetrain) {
 frc2::RamseteCommand getTrajectoryCommandBounce4(Drivetrain &drivetrain){
   return getTrajectoryCommand(drivetrain, generateTrajectoryBounce4());
 }
-/*
+
 frc2::RamseteCommand getTrajectoryCommandARed(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectoryARed());
 }
@@ -146,5 +145,6 @@ frc2::RamseteCommand getTrajectoryCommandABlue(Drivetrain &drivetrain) {
 
 frc2::RamseteCommand getTrajectoryCommandBBlue(Drivetrain &drivetrain) {
   return getTrajectoryCommand(drivetrain, generateTrajectoryBBlue());
-}*/
+}
+
 

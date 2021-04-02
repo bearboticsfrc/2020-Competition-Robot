@@ -3,26 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/automatic/BallTrack.h"
-#include "commands/automatic/AutoDrive.h"
-#include <frc/trajectory/TrajectoryConfig.h>
-#include <frc/trajectory/TrajectoryGenerator.h>
-#include <frc/trajectory/TrajectoryUtil.h>
-#include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
-#include <frc/kinematics/DifferentialDriveKinematics.h>
-#include <frc2/command/RamseteCommand.h>
-#include "subsystems/Drivetrain.h"
-#include <frc2/command/InstantCommand.h>
-#include <frc/geometry/Pose2d.h>
 
-BallTrack::BallTrack(Arduino *arduino, Drivetrain *drivetrain) 
- : m_arduino{arduino},m_drivetrain{drivetrain}
+BallTrack::BallTrack(Arduino *arduino, Drivetrain *drivetrain, ARed *aRed, BRed *bRed, ABlue *aBlue, BBlue *bBlue)
+ : m_arduino{arduino},m_drivetrain{drivetrain}, choosers(choosers), m_aRed{aRed}, m_bRed{bRed}, m_aBlue{aBlue}, m_bBlue{bBlue}
  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(m_drivetrain);
   
 }
-
-
 
 // Called when the command is initially scheduled.
 void BallTrack::Initialize() {}
@@ -38,13 +26,40 @@ void BallTrack::Execute() {
   if (data.second && data.first.size() != 0){
       for (SensorFrame frame : data.first) {
         ballX = frame.x;
-        ballY = frame.y;
-        ballWidth = frame.width;
-        ballHeight = frame.height;
+        //ballY = frame.y;
+        //ballWidth = frame.width;
+        //ballHeight = frame.height;
 
       }
       double turn = (ballX - 150) / 250;
       double speed = 0.0;
+
+      int path;
+      int successes = 0; 
+
+      if (successes < 5) {
+      if (ballX <= 174 && ballX >= 166) {
+        successes++;
+        std::cout << "ARed\n";
+        path = 0;
+      }else if (ballX <= 37 && ballX >=35) {
+        successes++;
+        std::cout << "BRed\n";
+        path = 1;
+      }else if (ballX <= 275 && ballX >= 271) {
+        successes++;
+        std::cout << "ABlue\n";
+        path = 2;
+      }else if (ballX <= 218 && ballX >= 222) {
+        successes++;
+        std::cout << "BBlue\n";
+        path = 3;
+      }
+    } 
+    else {
+      std::cout << "checking chooser choice\n";
+      chooserCheck(path);
+    }
 /*
       if (turn > 150.0 / 500.0)
       {
@@ -54,55 +69,18 @@ void BallTrack::Execute() {
       if (turn < -150.0 / 500.0)
       {
         turn = -150.0 / 500.0;
-      }*/
+      }
 
       if (abs(ballX - 150) < 30 && ballWidth > 20) {
         speed = 5 / ballWidth;
-      }
+      }*/
 
       
       //m_drivetrain->drive(speed + turn, speed -turn);
 
-  } /*else {
-    m_drivetrain->drive(0,0);
-  }*/
-
-  int path;
-  int successes = 0; 
-  // **UPDATE VALUES FOR COMP BOT**
-  while (successes < 5) {
-    if (ballX <= 182 && ballX >= 178) {
-      successes++;
-      path = 0;
-    }else if (ballX <= 37 && ballX >=35) {
-      successes++;
-      path = 1;
-    }else if (ballX <= 275 && ballX >= 271) {
-      successes++;
-      path = 2;
-    }else if (ballX <= 218 && ballX >= 222) {
-      successes++;
-      path = 3;
-    }
-  }
-/*
-  switch (path)
-  {
-  case 0:
-    frc::Trajectory generateTrajectoryARed();
-    break;
-  case 1:
-    frc::Trajectory generateTrajectoryABlue();
-    break;
-  case 2:
-    frc::Trajectory generateTrajectoryBRed();
-    break;
-  case 3:
-    frc::Trajectory generateTrajectoryBBlue();
-    break;
-  default:
-    break;
-  }*/
+  } //else {
+    //m_drivetrain->drive(0,0);
+  //}
 }
 // Called once the command ends or is interrupted.
 void BallTrack::End(bool interrupted) {}
@@ -111,47 +89,40 @@ void BallTrack::End(bool interrupted) {}
 bool BallTrack::IsFinished() {
   return false;
 }
-/*
-ARed::ARed(Drivetrain *drivetrain) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
 
-  AddCommands(
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryARed().States()[0].pose); } },
-    getTrajectoryCommandARed(*drivetrain)
-    // TODO: Drive back
-  );
+void BallTrack::chooserCheck(int path) {
+  switch (choosers->ballTrackChoice()) {
+    case BallTrackChoice::On:
+      std::cout << "using ball tracking\n";
+      RunPath(path);
+      break;
+      case BallTrackChoice::Off:
+        std::cout << "ball tracking off\n";
+        break;
+      default:
+        std::cout << "not using ball tracking\n";
+    } 
 }
 
-BRed::BRed(Drivetrain *drivetrain) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
-
-  AddCommands(
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryBRed().States()[0].pose); } },
-    getTrajectoryCommandBRed(*drivetrain)
-    // TODO: Drive back
-  );
+frc2::Command* BallTrack::RunPath(int path) {
+  switch (path) {
+    case 0:
+      std::cout << "Running ARed\n";
+      return m_aRed;
+    case 1:
+      std::cout << "Running BRed\n";
+      return m_bRed;
+    case 2:
+      std::cout << "Running ABlue\n";
+      return m_aBlue;
+    case 3:
+      std::cout << "Running BBlue\n";
+      return m_bBlue;
+    default:
+      std::cout << "Hi Christian\n";
+      return m_aRed;
+  }
 }
 
-ABlue::ABlue(Drivetrain *drivetrain) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
 
-  AddCommands(
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryABlue().States()[0].pose); } },
-    getTrajectoryCommandABlue(*drivetrain)
-    // TODO: Drive back
-  );
-}
 
-BBlue::BBlue(Drivetrain *drivetrain) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
-
-  AddCommands(
-    frc2::InstantCommand{ [=] { drivetrain->SetPose(generateTrajectoryBBlue().States()[0].pose); } },
-    getTrajectoryCommandBBlue(*drivetrain)
-    // TODO: Drive back
-  );
-} */

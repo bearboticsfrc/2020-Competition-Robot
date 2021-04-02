@@ -59,6 +59,7 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
   frc2::Command* GetConstantSpeedCommand();
   std::vector<frc2::Command*> GetTeleopCommands();
+  Arduino m_arduino;
 
  private:
   /* --- Controls --- */
@@ -74,7 +75,6 @@ class RobotContainer {
   Shooter m_shooter;
   Intake m_intake;
   ColorSensor m_colorSensor;
-  Arduino m_arduino;
 
   //ControlPanelManip m_controlPanelManip;
 
@@ -98,12 +98,12 @@ class RobotContainer {
   Barrel m_barrelRacing;
   Slalom m_slalom;
   Bounce m_bounce;
-  /*ARed m_aRed;
+  ARed m_aRed;
   BRed m_bRed;
   ABlue m_aBlue;
   BBlue m_bBlue;
-*/
   PlaybackDrive m_playback;
+  BallTrack m_balltrack = BallTrack(&m_arduino, &m_drivetrain, &m_aRed, &m_bRed, &m_aBlue, &m_bBlue);
   /* --- Buttons --- */
   frc2::Button m_alignAndShootButton;
   frc2::Button m_toggleIntakeButton;

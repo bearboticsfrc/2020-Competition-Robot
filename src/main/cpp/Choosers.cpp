@@ -41,6 +41,9 @@ Choosers::Choosers() {
     m_compressorChooser.AddOption("On", CompressorChoice::On);
     m_compressorChooser.AddOption("Off", CompressorChoice::Off);
 
+    m_ballTrackChooser.AddOption("On", BallTrackChoice::On);
+    m_ballTrackChooser.AddOption("Off", BallTrackChoice::Off);
+
     frc::SmartDashboard::PutData("DriveChooser", &m_driveChooser);
     frc::SmartDashboard::PutData("ShooterChooser", &m_shooterChooser);
     frc::SmartDashboard::PutData("IntakeChooser", &m_intakeChooser);
@@ -48,6 +51,7 @@ Choosers::Choosers() {
     frc::SmartDashboard::PutData("ClimbChooser", &m_climbChooser);
     frc::SmartDashboard::PutData("Constant Speed Chooser", &m_constantSpeedChooser);
     frc::SmartDashboard::PutData("Compressor Chooser", &m_compressorChooser);
+    frc::SmartDashboard::PutData("BallTrackChooser", &m_ballTrackChooser);
 }
 
 DriveChoice Choosers::driveChoice() {
@@ -76,4 +80,8 @@ ConstantSpeedChoice Choosers::constantSpeedChoice(){
 
 CompressorChoice Choosers::compressorChoice(){
     return m_compressorChooser.GetSelected();
+}
+
+BallTrackChoice Choosers::ballTrackChoice(){
+    return m_ballTrackChooser.GetSelected();
 }

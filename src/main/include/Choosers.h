@@ -55,6 +55,11 @@ enum class CompressorChoice {
     Off
 };
 
+enum class BallTrackChoice {
+  On,
+  Off
+};
+
 class Choosers {
 public:
     Choosers();
@@ -73,6 +78,8 @@ public:
 
     CompressorChoice compressorChoice();
 
+    BallTrackChoice ballTrackChoice();
+
 private:
   frc::SendableChooser<DriveChoice> m_driveChooser;
   frc::SendableChooser<ShooterChoice> m_shooterChooser;
@@ -81,4 +88,5 @@ private:
   frc::SendableChooser<AutonomousChoice> m_autonomousChooser;
   frc::SendableChooser<ConstantSpeedChoice> m_constantSpeedChooser;
   frc::SendableChooser<CompressorChoice> m_compressorChooser;
+  frc::SendableChooser<BallTrackChoice> m_ballTrackChooser;
 };
