@@ -98,7 +98,7 @@ void AutoShoot::Execute() {
 }
 // Called once the command ends or is interrupted.
 void AutoShoot::End(bool interrupted) {
-  Limelight::setLights(false);
+ /* Limelight::setLights(false);*/
 }
 
 // Returns true when the command should end.

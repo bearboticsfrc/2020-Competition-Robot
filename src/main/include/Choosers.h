@@ -26,6 +26,7 @@ enum class ClimbChoice {
 enum class AutonomousChoice {
     Disabled,
     Default,
+    AlignShootDriveback,
     Movable,
     FriendlyTrench,
     EnemyTrench,

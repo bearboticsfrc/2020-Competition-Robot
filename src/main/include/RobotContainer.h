@@ -90,6 +90,7 @@ class RobotContainer {
   Record m_record;
   ShowColors m_showColors;
   Autonomous m_autonomous;
+  AlignShootDriveback m_alignshootdriveback;
   MovableAutonomous m_movableAutonomous;
   FriendlyTrench m_friendlyTrench;
   EnemyTrench m_enemyTrench;

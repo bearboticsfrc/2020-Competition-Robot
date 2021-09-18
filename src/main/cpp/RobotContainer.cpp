@@ -40,6 +40,7 @@ RobotContainer::RobotContainer() :
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
   m_showColors(&m_colorSensor),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
+  m_alignshootdriveback(&m_drivetrain, &m_shooter, &m_intake),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   m_friendlyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_enemyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
@@ -90,6 +91,8 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       return nullptr;
     case AutonomousChoice::Default:
       return &m_autonomous;
+    case AutonomousChoice::AlignShootDriveback:
+      return &m_alignshootdriveback;
     case AutonomousChoice::Movable:
       return &m_movableAutonomous;
     case AutonomousChoice::FriendlyTrench:

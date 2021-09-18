@@ -41,7 +41,7 @@ void AlignTarget::Execute() {
     //aligner.update(lastTargetYaw.to<double>());
     aligner.update(Limelight::getX());
 
-    if (std::abs(/*lastTargetYaw.to<double>() - drivetrainAngle*/Limelight::getX()) < 2.0) {
+    if (std::abs(/*lastTargetYaw.to<double>() - drivetrainAngle*/Limelight::getX()) < 1.0) {
       std::cout << "Position error: " << aligner.GetPositionError() << "\n";
       successes += 1;
     }
@@ -56,7 +56,7 @@ void AlignTarget::Execute() {
 
 // Called once the command ends or is interrupted.
 void AlignTarget::End(bool interrupted) {
-  Limelight::setLights(false);
+ /*Limelight::setLights(false);*/
   drivetrain->SetSpeeds(0.0, 0.0);
 }
 
