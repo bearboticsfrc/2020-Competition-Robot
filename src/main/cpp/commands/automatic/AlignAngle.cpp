@@ -108,19 +108,20 @@ double AlignAngle::GetAngleError() const {
 void AlignAngle::Execute() {
   double diff = GetAngleError();
 
-  const double TURN_SPEED = 0.5;
+  const double TURN_SPEED = 0.3;
   const double MAX_ERROR = 1.0;
-
+  const double Experimental_Speed = 0.02;
+std::cout << "Angle error =" << diff << "\n";
   if (diff > MAX_ERROR * 5) {
     double s = 0.07 + ((diff - MAX_ERROR * 5) * (TURN_SPEED - 0.07) / 90.0);
     drivetrain->SetSpeeds(-s, s);
   } else if (diff > MAX_ERROR) {
-    drivetrain->SetSpeeds(-0.07, 0.07);
+    drivetrain->SetSpeeds(-Experimental_Speed, Experimental_Speed);
   } else if (diff < -MAX_ERROR * 5) {
     double s = 0.07 + ((MAX_ERROR * 5 - diff) * (TURN_SPEED - 0.07) / 90.0);
     drivetrain->SetSpeeds(s, -s);
   } else if (diff < -MAX_ERROR) {
-    drivetrain->SetSpeeds(0.07, -0.07);
+    drivetrain->SetSpeeds(Experimental_Speed, -Experimental_Speed);
   } else {
     drivetrain->SetSpeeds(0.0, 0.0);
     successes += 1;

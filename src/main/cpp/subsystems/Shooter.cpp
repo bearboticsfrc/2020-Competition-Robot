@@ -92,7 +92,7 @@ void Shooter::Periodic() {
             double speedError = motor.GetEncoder().GetVelocity() - s.targetRpm;
             frc::SmartDashboard::PutNumber("Shoot Speed Error", speedError);
 
-            if (std::abs(speedError) < 150.0) {
+            if (std::abs(speedError) < 450.0) {
                 ++s.spinSuccesses;
             } else {
                 s.spinSuccesses = 0;

@@ -30,6 +30,7 @@ Choosers::Choosers() {
     m_autonomousChooser.AddOption("ABlue", AutonomousChoice::ABlue);
     m_autonomousChooser.AddOption("BBlue", AutonomousChoice::BBlue);
     m_autonomousChooser.AddOption("Teleop Playback", AutonomousChoice::Playback);
+    m_autonomousChooser.AddOption("AlignshootDriveback", AutonomousChoice::AlignShootDriveback);
 
     m_constantSpeedChooser.AddOption("0% Speed", ConstantSpeedChoice::Default);
     m_constantSpeedChooser.AddOption("10% Speed", ConstantSpeedChoice::Option1);

@@ -11,6 +11,7 @@
 #include <ctre/Phoenix.h>
 #include <rev/CANSparkMax.h>
 #include "units_include.h"
+#include "frc/servo.h"
 
 
 //TODO: What is the rotation direction
@@ -37,6 +38,7 @@ class Climber : public frc2::SubsystemBase {
 
   rev::CANSparkMax armMotor;
   VictorSPX winchMotor;
-
+  frc::Servo clamp{9};
+//1460 hold value, 1800 release value
   bool extended = false;
 };

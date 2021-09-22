@@ -27,6 +27,8 @@ Climber::Climber() :
 
     // TODO: Reset encoders, maybe?
     armMotor.GetEncoder().SetPosition(0.0);
+
+    clamp.Set(0.0);
 }
 
 // This method will be called once per scheduler run
@@ -41,10 +43,15 @@ void Climber::SetSpeed(double speed) {
 
 void Climber::SetArmSpeed(double speed) {
     if (speed < 0) {
+        clamp.Set(0.8);
         armMotor.Set(speed * 0.3);
     }
     else {
+        if (speed != 0.0) {
+            clamp.Set(0.8); }
         armMotor.Set(speed * 0.2);
+        
+    
     }
     
 }
