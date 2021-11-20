@@ -30,22 +30,17 @@ void BallTrack::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void BallTrack::Execute() {
   double ballX = 0; 
-  double ballY= 0;
   double ballWidth = 0;
-  double ballHeight = 0;
   
   auto data = m_arduino->readData();
   if (data.second && data.first.size() != 0){
       for (SensorFrame frame : data.first) {
         ballX = frame.x;
-        ballY = frame.y;
         ballWidth = frame.width;
-        ballHeight = frame.height;
-
       }
       double turn = (ballX - 150) / 250;
       double speed = 0.0;
-/*
+
       if (turn > 150.0 / 500.0)
       {
         turn = 150.0 / 500.0;
@@ -54,55 +49,20 @@ void BallTrack::Execute() {
       if (turn < -150.0 / 500.0)
       {
         turn = -150.0 / 500.0;
-      }*/
+      }
 
-      if (abs(ballX - 150) < 30 && ballWidth > 20) {
+      if (abs(ballX - 150) < 30 && ballWidth > 20) 
+      {
         speed = 5 / ballWidth;
       }
 
       
-      //m_drivetrain->drive(speed + turn, speed -turn);
+      m_drivetrain->SetSpeeds(speed + turn, speed -turn);
 
-  } /*else {
-    m_drivetrain->drive(0,0);
-  }*/
-
-  int path;
-  int successes = 0; 
-  // **UPDATE VALUES FOR COMP BOT**
-  while (successes < 5) {
-    if (ballX <= 182 && ballX >= 178) {
-      successes++;
-      path = 0;
-    }else if (ballX <= 37 && ballX >=35) {
-      successes++;
-      path = 1;
-    }else if (ballX <= 275 && ballX >= 271) {
-      successes++;
-      path = 2;
-    }else if (ballX <= 218 && ballX >= 222) {
-      successes++;
-      path = 3;
-    }
+  } else {
+    m_drivetrain->SetSpeeds(0.0,0.0);
   }
-/*
-  switch (path)
-  {
-  case 0:
-    frc::Trajectory generateTrajectoryARed();
-    break;
-  case 1:
-    frc::Trajectory generateTrajectoryABlue();
-    break;
-  case 2:
-    frc::Trajectory generateTrajectoryBRed();
-    break;
-  case 3:
-    frc::Trajectory generateTrajectoryBBlue();
-    break;
-  default:
-    break;
-  }*/
+
 }
 // Called once the command ends or is interrupted.
 void BallTrack::End(bool interrupted) {}

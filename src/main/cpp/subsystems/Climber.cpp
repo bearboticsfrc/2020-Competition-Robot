@@ -44,7 +44,7 @@ void Climber::SetSpeed(double speed) {
 void Climber::SetArmSpeed(double speed) {
     if (speed < 0) {
         clamp.Set(0.8);
-        armMotor.Set(speed * 0.3);
+        armMotor.Set(speed * 0.15);
     }
     else {
         if (speed != 0.0) {

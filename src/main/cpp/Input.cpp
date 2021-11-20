@@ -35,15 +35,15 @@ double applyFilters(double value) {
 }
 
 double Input::GetX() const {
-    return applyFilters(joystick.GetX());
+    return applyFilters(driveXboxController.GetX(frc::GenericHID::JoystickHand::kLeftHand));
 }
 
 double Input::GetY() const {
-    return applyFilters(joystick.GetY());
+    return applyFilters(driveXboxController.GetY(frc::GenericHID::JoystickHand::kLeftHand));
 }
 
 double Input::GetZ() const {
-    return applyFilters(joystick.GetZ());
+    return applyFilters(driveXboxController.GetX(frc::GenericHID::JoystickHand::kRightHand));
 }
 
 void Input::SetRumble(double rumble) {
@@ -90,8 +90,8 @@ ButtonGetter Input::ReverseIntakeButton() const {
     return [this]() { return xboxController.GetYButton(); };
 }
 ButtonGetter Input::SetConstantSpeedButton() const {
-    return [this]() { return joystick.GetRawButton(12); };
+    return [this]() { return driveXboxController.GetRawButton(12); };
 }
 ButtonGetter Input::ToggleRecordButton() const {
-    return [this]() { return joystick.GetRawButton(11); };
+    return [this]() { return driveXboxController.GetRawButton(11); };
 }

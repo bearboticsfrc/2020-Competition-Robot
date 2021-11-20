@@ -73,6 +73,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
   
   frc::SmartDashboard::PutNumber("Limelighty", Limelight::getY());
+  auto data = m_container.m_arduino.readData();
 }
 
 /**

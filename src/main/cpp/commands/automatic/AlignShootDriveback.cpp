@@ -15,5 +15,5 @@
 AlignShootDriveback::AlignShootDriveback(Drivetrain *drivetrain, Shooter *shooter, Intake *intake) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
-  AddCommands(AlignAndShoot(drivetrain, shooter, intake), SortaDrive(drivetrain, 3.0));
+  AddCommands(AlignAndShoot(drivetrain, shooter, intake), SortaDrive(drivetrain, 1.0));
 }

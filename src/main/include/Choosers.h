@@ -39,7 +39,8 @@ enum class AutonomousChoice {
     BRed,
     ABlue,
     BBlue,
-    Playback
+    Playback,
+    BallTrack
 };
 
 enum class ConstantSpeedChoice {

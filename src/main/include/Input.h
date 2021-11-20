@@ -35,5 +35,6 @@ class Input {
 
  private:
   frc::Joystick joystick = frc::Joystick(0);
+  frc::XboxController driveXboxController = frc::XboxController(0);
   frc::XboxController xboxController = frc::XboxController(1);
 };

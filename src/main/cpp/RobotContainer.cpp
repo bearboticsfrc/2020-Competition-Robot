@@ -49,6 +49,7 @@ RobotContainer::RobotContainer() :
   m_barrelRacing((&m_drivetrain)),
   m_slalom((&m_drivetrain)),
   m_bounce((&m_drivetrain)),
+  m_balltrack(&m_arduino, &m_drivetrain),
   /*m_aRed(&m_drivetrain),
   m_bRed(&m_drivetrain),
   m_aBlue(&m_drivetrain),
@@ -74,6 +75,7 @@ RobotContainer::RobotContainer() :
   frc::SmartDashboard::PutData("Align Target", &m_alignTarget);
   frc::SmartDashboard::PutData("Ball Pickup", &m_ballPickup);
   frc::SmartDashboard::PutData("Auto shoot", &m_autoShoot);
+  frc::SmartDashboard::PutData("Ball Track", &m_balltrack);
 }
 
 
