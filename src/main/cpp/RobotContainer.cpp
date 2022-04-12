@@ -27,11 +27,14 @@ RobotContainer::RobotContainer() :
   m_intake(&m_hopper),
   m_colorSensor(),
   m_arduino(),
+
+  m_input(new JoystickInput()),
+
   /* --- Commands --- */
-  m_manualDrive(&m_drivetrain, &m_input),
-  m_manualShooter(&m_shooter, m_input.ManualShootButton()),
-  m_manualIntake(&m_intake, m_input.RunIntakeButton(), m_input.RunUptakeButton(), m_input.ReverseIntakeButton()),
-  m_manualClimb(&m_climber, &m_input),
+  m_manualDrive(&m_drivetrain, m_input),
+  m_manualShooter(&m_shooter, m_input->ManualShootButton()),
+  m_manualIntake(&m_intake, m_input->RunIntakeButton(), m_input->RunUptakeButton(), m_input->ReverseIntakeButton()),
+  m_manualClimb(&m_climber, m_input),
   m_autoShoot(&m_shooter, &m_intake),
   m_alignTarget(&m_drivetrain, &m_intake),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
@@ -47,10 +50,10 @@ RobotContainer::RobotContainer() :
   m_slalom((&m_drivetrain)),
   m_bounce((&m_drivetrain)),
   /* --- Buttons --- */
-  m_alignAndShootButton(m_input.AutoShootButton()),
-  m_toggleIntakeButton(m_input.ToggleIntakePositionButton()),
-  m_reverseIntakeButton(m_input.ReverseIntakeButton()),
-  camera(frc::CameraServer::GetInstance()->StartAutomaticCapture())
+  m_alignAndShootButton(m_input->AutoShootButton()),
+  m_toggleIntakeButton(m_input->ToggleIntakePositionButton()),
+  m_reverseIntakeButton(m_input->ReverseIntakeButton()),
+  camera(frc::CameraServer::StartAutomaticCapture())
 {
   std::cout << "Constructor\n";
   std::cout.flush();

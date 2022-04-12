@@ -12,6 +12,7 @@
 // Determine limelight distance calculations
 // Determine speeds/distance calculation
 
+#include <iostream>
 #include "Util.h"
 #include "subsystems/Shooter.h"
 #include "subsystems/Hopper.h"
@@ -66,7 +67,7 @@ SpinningState::SpinningState(Shooter *shooter, double targetRpm, std::function<b
     runCheck(runCheck)
 {
     std::cout << "Transitioning to spinning state\n";
-    shooter->motor.GetPIDController().SetReference(targetRpm, rev::ControlType::kVelocity);
+    shooter->motor.GetPIDController().SetReference(targetRpm, rev::CANSparkMax::ControlType::kVelocity);
     shooter->accelerator.Set(ControlMode::PercentOutput, (double)0.9);
 }
 

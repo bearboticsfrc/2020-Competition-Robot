@@ -35,7 +35,7 @@
 #include "subsystems/Hopper.h"
 #include "subsystems/ControlPanelManip.h"
 #include "Choosers.h"
-#include "Input.h"
+#include "JoystickInput.h"
 #include <vector>
 #include "units_include.h"
 
@@ -56,8 +56,6 @@ class RobotContainer {
   std::vector<frc2::Command*> GetTeleopCommands();
 
  private:
-  /* --- Controls --- */
-  Input m_input;
 
   /* --- Sensors --- */
   PigeonIMU m_gyro;
@@ -71,6 +69,9 @@ class RobotContainer {
   ColorSensor m_colorSensor;
   Arduino m_arduino;
   //ControlPanelManip m_controlPanelManip;
+
+  /* --- Controls --- */
+  JoystickInput* m_input;
 
   /* --- Commands --- */
   ManualDrive m_manualDrive;

@@ -16,7 +16,7 @@ using intake_consts::SOLENOID_ID;
 
 Intake::Intake(Hopper *hopper) :
     motor(MOTOR_ID, MotorType::kBrushless),
-    solenoid(SOLENOID_ID),
+    solenoid(frc::PneumaticsModuleType::CTREPCM, SOLENOID_ID),
     hopper(hopper)
 {
     motor.SetSmartCurrentLimit(40);

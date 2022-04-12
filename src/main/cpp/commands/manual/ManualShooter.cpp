@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <functional>
 #include "commands/manual/ManualShooter.h"
 #include "Robot.h"
 #include <rev/CANSparkMax.h>

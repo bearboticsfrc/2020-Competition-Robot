@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <iostream>
 #include "commands/automatic/AutoShoot.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/SubsystemBase.h>

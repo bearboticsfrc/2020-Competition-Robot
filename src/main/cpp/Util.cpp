@@ -5,7 +5,7 @@
 
 const bool PID_TUNING = false;
 
-void initDashboardValue(wpi::StringRef name, double defaultValue) {
+void initDashboardValue(std::string_view name, double defaultValue) {
     if (frc::SmartDashboard::GetNumber(name, 0.0) == 0.0) {
         frc::SmartDashboard::PutNumber(name, defaultValue);
     }

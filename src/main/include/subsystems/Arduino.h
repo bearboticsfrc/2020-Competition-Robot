@@ -8,6 +8,7 @@
 #ifndef SRC_SUBSYSTEMS_ARDUINO_H_
 #define SRC_SUBSYSTEMS_ARDUINO_H_
 
+#include <vector>
 #include <frc/I2C.h>
 #include <stdint.h>
 #include <tuple>

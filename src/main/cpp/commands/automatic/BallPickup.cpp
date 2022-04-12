@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <iostream>
 #include "commands/automatic/BallPickup.h"
 #include "subsystems/Arduino.h"
 #include "subsystems/Drivetrain.h"

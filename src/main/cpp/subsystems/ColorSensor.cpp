@@ -52,7 +52,7 @@ std::string color_to_string(WheelColor color) {
 }
 
 WheelColor get_target_color(){
-    std::string gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+    std::string gameData = frc::DriverStation::GetGameSpecificMessage();
     if(gameData.length() > 0)
     {
         switch (gameData[0])

@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <iostream>
 #include "commands/automatic/AlignTarget.h"
 #include "commands/automatic/AlignAngle.h"
 #include "subsystems/Limelight.h"

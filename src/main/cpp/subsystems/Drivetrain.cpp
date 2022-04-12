@@ -7,7 +7,7 @@
 
 #include "subsystems/Drivetrain.h"
 #include "Util.h"
-#include <rev/CANSparkMaxLowLevel.h>
+#include "rev/CANSparkMax.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/geometry/Transform2d.h>
 #include <frc/geometry/Translation2d.h>
@@ -154,7 +154,7 @@ void Drivetrain::updatePose(units::meter_t leftChange, units::meter_t rightChang
     pose = frc::Pose2d(pose.Translation(), frc::Rotation2d(units::radian_t(yaw_rad)));
 
     auto avg = (leftChange + rightChange) / 2.0;
-    pose += frc::Transform2d(
+    pose = pose + frc::Transform2d(
         frc::Translation2d(
             avg,
             units::meter_t(0.0)
@@ -188,14 +188,14 @@ double deadzoneCompensate(double raw) {
 }
 
 void Drivetrain::SetSpeeds(double leftSpeed, double rightSpeed) {
-    leftFront.GetPIDController().SetReference(leftSpeed * 5700.0, rev::ControlType::kVelocity);
-    rightFront.GetPIDController().SetReference(rightSpeed * 5700.0, rev::ControlType::kVelocity);
+    leftFront.GetPIDController().SetReference(leftSpeed * 5700.0, rev::CANSparkMax::ControlType::kVelocity);
+    rightFront.GetPIDController().SetReference(rightSpeed * 5700.0, rev::CANSparkMax::ControlType::kVelocity);
 }
 
 void Drivetrain::SetSpeeds(units::meters_per_second_t lSpeed, units::meters_per_second_t rSpeed) {
     auto l = lSpeed.to<double>() / METERS_PER_REV * 60.0;
     auto r = rSpeed.to<double>() / METERS_PER_REV * 60.0;
 
-    leftFront.GetPIDController().SetReference(l, rev::ControlType::kVelocity);
-    rightFront.GetPIDController().SetReference(r, rev::ControlType::kVelocity);
+    leftFront.GetPIDController().SetReference(l, rev::CANSparkMax::ControlType::kVelocity);
+    rightFront.GetPIDController().SetReference(r, rev::CANSparkMax::ControlType::kVelocity);
 }
