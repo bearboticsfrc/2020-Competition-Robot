@@ -15,6 +15,7 @@ const int WINCH_ID = 16;
 
 Climber::Climber() :
     armMotor(ARM_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
+    armMotorEncoder(armMotor.GetEncoder()),
     winchMotor(WINCH_ID)
 {
     armMotor.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 0.0);
@@ -26,12 +27,12 @@ Climber::Climber() :
     winchMotor.SetInverted(true);
 
     // TODO: Reset encoders, maybe?
-    armMotor.GetEncoder().SetPosition(0.0);
+    armMotorEncoder.SetPosition(0.0);
 }
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {
-    frc::SmartDashboard::PutNumber("Arm Position", armMotor.GetEncoder().GetPosition());
+    frc::SmartDashboard::PutNumber("Arm Position", armMotorEncoder.GetPosition());
 }
 
 void Climber::SetSpeed(double speed) {

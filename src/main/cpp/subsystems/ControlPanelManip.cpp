@@ -25,8 +25,8 @@ ControlPanelManip::ControlPanelManip() :
 }
 
 void ControlPanelManip::setPosition(double pos) {
-    motor.GetPIDController().SetOutputRange(-0.1, 0.1);
-    motor.GetPIDController().SetReference(pos, rev::CANSparkMax::ControlType::kPosition);
+   // motor.GetPIDController().SetOutputRange(-0.1, 0.1);
+   // motor.GetPIDController().SetReference(pos, rev::CANSparkMax::ControlType::kPosition);
 }
 
 // This method will be called once per scheduler run

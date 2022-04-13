@@ -32,6 +32,8 @@ using std::chrono::milliseconds;
 
 Shooter::Shooter(Hopper *hopper) :
     motor(MOTOR_ID, MotorType::kBrushless),
+    motorPIDController(motor.GetPIDController()),
+    motorEncoder(motor.GetEncoder()),
     accelerator(ACCELERATOR_ID),
     feedMotor(FEEDMOTOR_ID),
     hopper(hopper),
@@ -42,10 +44,10 @@ Shooter::Shooter(Hopper *hopper) :
 
     motor.RestoreFactoryDefaults();
 
-    motor.GetPIDController().SetFF(1.0 / 5330.0);
-    motor.GetPIDController().SetP(0.0002);
-    motor.GetPIDController().SetI(0.0);
-    motor.GetPIDController().SetD(0.0);
+    motorPIDController.SetFF(1.0 / 5330.0);
+    motorPIDController.SetP(0.0002);
+    motorPIDController.SetI(0.0);
+    motorPIDController.SetD(0.0);
 
     motor.SetSmartCurrentLimit(80);
 
@@ -67,7 +69,7 @@ SpinningState::SpinningState(Shooter *shooter, double targetRpm, std::function<b
     runCheck(runCheck)
 {
     std::cout << "Transitioning to spinning state\n";
-    shooter->motor.GetPIDController().SetReference(targetRpm, rev::CANSparkMax::ControlType::kVelocity);
+    shooter->motorPIDController.SetReference(targetRpm, rev::CANSparkMax::ControlType::kVelocity);
     shooter->accelerator.Set(ControlMode::PercentOutput, (double)0.9);
 }
 
@@ -84,13 +86,13 @@ template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
-    frc::SmartDashboard::PutNumber("Shooter Speed", motor.GetEncoder().GetVelocity());
+    frc::SmartDashboard::PutNumber("Shooter Speed", motorEncoder.GetVelocity());
     state = std::visit(overloaded {
         [this](StoppedState s) {
             return ShooterState(s);
         },
         [this](SpinningState s) {
-            double speedError = motor.GetEncoder().GetVelocity() - s.targetRpm;
+            double speedError = motorEncoder.GetVelocity() - s.targetRpm;
             frc::SmartDashboard::PutNumber("Shoot Speed Error", speedError);
 
             if (std::abs(speedError) < 150.0) {

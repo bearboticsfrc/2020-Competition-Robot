@@ -68,6 +68,8 @@ class Shooter : public frc2::SubsystemBase {
   friend class ShootingState;
 
   rev::CANSparkMax motor;
+  rev::SparkMaxPIDController motorPIDController;
+  rev::SparkMaxRelativeEncoder motorEncoder;
   VictorSPX accelerator;
   VictorSPX feedMotor;
 

@@ -65,6 +65,14 @@ private:
   rev::CANSparkMax rightBack;
   rev::CANSparkMax rightFront;
 
+  rev::SparkMaxPIDController leftBackPIDController;
+  rev::SparkMaxPIDController leftFrontPIDController;
+  rev::SparkMaxPIDController rightBackPIDController;
+  rev::SparkMaxPIDController rightFrontPIDController;
+
+  rev::SparkMaxRelativeEncoder leftFrontEncoder;
+  rev::SparkMaxRelativeEncoder rightFrontEncoder;
+
   frc::Pose2d pose;
 
 };

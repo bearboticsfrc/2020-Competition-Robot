@@ -25,7 +25,7 @@ RobotContainer::RobotContainer() :
   m_drivetrain(&m_gyro),
   m_shooter(&m_hopper),
   m_intake(&m_hopper),
-  m_colorSensor(),
+  //m_colorSensor(),
   m_arduino(),
 
   m_input(new JoystickInput()),
@@ -38,7 +38,7 @@ RobotContainer::RobotContainer() :
   m_autoShoot(&m_shooter, &m_intake),
   m_alignTarget(&m_drivetrain, &m_intake),
   m_ballPickup(&m_drivetrain, &m_intake, &m_arduino),
-  m_showColors(&m_colorSensor),
+  //m_showColors(&m_colorSensor),
   m_autonomous(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
   m_movableAutonomous(&m_drivetrain, &m_shooter, &m_intake),
   m_friendlyTrench(&m_drivetrain, &m_intake, &m_arduino, &m_shooter),
@@ -52,8 +52,8 @@ RobotContainer::RobotContainer() :
   /* --- Buttons --- */
   m_alignAndShootButton(m_input->AutoShootButton()),
   m_toggleIntakeButton(m_input->ToggleIntakePositionButton()),
-  m_reverseIntakeButton(m_input->ReverseIntakeButton()),
-  camera(frc::CameraServer::StartAutomaticCapture())
+  m_reverseIntakeButton(m_input->ReverseIntakeButton())
+  //camera(frc::CameraServer::StartAutomaticCapture())
 {
   std::cout << "Constructor\n";
   std::cout.flush();
@@ -70,8 +70,8 @@ RobotContainer::RobotContainer() :
 
 
 void RobotContainer::ConfigureButtonBindings() {
-  m_alignAndShootButton.ToggleWhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake)/*.WithInterrupt([this] { return !m_input.AutoShootButton()(); })*/);
-  m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
+ // m_alignAndShootButton.ToggleWhenPressed(AlignAndShoot(&m_drivetrain, &m_shooter, &m_intake)/*.WithInterrupt([this] { return !m_input.AutoShootButton()(); })*/);
+ // m_toggleIntakeButton.WhenPressed(frc2::InstantCommand{ [this] { m_intake.setExtended(!m_intake.getExtended()); } });
   
 }
 

@@ -15,6 +15,7 @@
 void Robot::RobotInit() {
   std::cout << "Hello, world!\n";
   std::cout.flush();
+  Limelight::setLights(false);
 }
 
 /**

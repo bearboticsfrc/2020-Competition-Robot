@@ -36,6 +36,7 @@ class Climber : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   rev::CANSparkMax armMotor;
+  rev::SparkMaxRelativeEncoder armMotorEncoder;
   VictorSPX winchMotor;
 
   bool extended = false;

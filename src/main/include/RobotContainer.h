@@ -35,7 +35,9 @@
 #include "subsystems/Hopper.h"
 #include "subsystems/ControlPanelManip.h"
 #include "Choosers.h"
+#include "Input.h"
 #include "JoystickInput.h"
+#include "XboxControllerInput.h"
 #include <vector>
 #include "units_include.h"
 
@@ -66,12 +68,12 @@ class RobotContainer {
   Drivetrain m_drivetrain;
   Shooter m_shooter;
   Intake m_intake;
-  ColorSensor m_colorSensor;
+  //ColorSensor m_colorSensor;
   Arduino m_arduino;
   //ControlPanelManip m_controlPanelManip;
 
   /* --- Controls --- */
-  JoystickInput* m_input;
+  Input* m_input;
 
   /* --- Commands --- */
   ManualDrive m_manualDrive;
@@ -81,7 +83,7 @@ class RobotContainer {
   AutoShoot m_autoShoot;
   AlignTarget m_alignTarget;
   BallPickup m_ballPickup;
-  ShowColors m_showColors;
+  //ShowColors m_showColors;
   Autonomous m_autonomous;
   MovableAutonomous m_movableAutonomous;
   FriendlyTrench m_friendlyTrench;
@@ -101,7 +103,7 @@ class RobotContainer {
   /* --- Choosers --- */
   Choosers choosers;
 
-  cs::UsbCamera camera;
+  //cs::UsbCamera camera;
 
   void ConfigureButtonBindings();
 };

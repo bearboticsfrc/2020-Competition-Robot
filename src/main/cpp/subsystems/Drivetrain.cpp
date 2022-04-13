@@ -32,7 +32,13 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     leftBack(DriveConsts::LEFT_2_ID, MotorType::kBrushless),
     leftFront(DriveConsts::LEFT_1_ID, MotorType::kBrushless),
     rightBack(DriveConsts::RIGHT_2_ID, MotorType::kBrushless),
-    rightFront(DriveConsts::RIGHT_1_ID, MotorType::kBrushless)
+    rightFront(DriveConsts::RIGHT_1_ID, MotorType::kBrushless),
+    leftBackPIDController(leftBack.GetPIDController()),
+    leftFrontPIDController(leftFront.GetPIDController()),
+    rightBackPIDController(rightBack.GetPIDController()),
+    rightFrontPIDController(rightFront.GetPIDController()),
+    leftFrontEncoder(leftFront.GetEncoder()),
+    rightFrontEncoder(rightFront.GetEncoder())
 {
     initDashboardValue(LB_P_GAIN_NAME, 0.0);
     initDashboardValue(LF_P_GAIN_NAME, 0.0);
@@ -45,8 +51,8 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     rightBack.SetInverted(true);
     rightFront.SetInverted(true);
 
-    leftFront.GetEncoder().SetPosition(0.0);
-    rightFront.GetEncoder().SetPosition(0.0);
+    leftFrontEncoder.SetPosition(0.0);
+    rightFrontEncoder.SetPosition(0.0);
 
     leftBack.Follow(leftFront);
     rightBack.Follow(rightFront);
@@ -56,10 +62,10 @@ Drivetrain::Drivetrain(PigeonIMU *gyro) :
     rightBack.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     rightFront.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
-    leftFront.GetPIDController().SetFF(1.0 / 5700.0);
-    leftFront.GetPIDController().SetP(0.0001);
-    rightFront.GetPIDController().SetFF(1.0 / 5700.0);
-    rightFront.GetPIDController().SetP(0.0001);
+    leftFrontPIDController.SetFF(1.0 / 5700.0);
+    leftFrontPIDController.SetP(0.0001);
+    rightFrontPIDController.SetFF(1.0 / 5700.0);
+    rightFrontPIDController.SetP(0.0001);
 
     leftBack.SetSmartCurrentLimit(60);
     leftFront.SetSmartCurrentLimit(60);
@@ -79,22 +85,22 @@ const auto WHEELBASE = units::meter_t(0.56515) /* 22.25 inches */;
 // This method will be called once per scheduler run
 void Drivetrain::Periodic() {
     if (PID_TUNING) {
-        leftBack.GetPIDController().SetP(
+        leftBackPIDController.SetP(
             frc::SmartDashboard::GetNumber(LB_P_GAIN_NAME, 0.0)
         );
-        leftFront.GetPIDController().SetP(
+        leftFrontPIDController.SetP(
             frc::SmartDashboard::GetNumber(LF_P_GAIN_NAME, 0.0)
         );
-        rightBack.GetPIDController().SetP(
+        rightBackPIDController.SetP(
             frc::SmartDashboard::GetNumber(RB_P_GAIN_NAME, 0.0)
         );
-        rightFront.GetPIDController().SetP(
+        rightFrontPIDController.SetP(
             frc::SmartDashboard::GetNumber(RF_P_GAIN_NAME, 0.0)
         );
     }
 
-    double leftPos = leftFront.GetEncoder().GetPosition();
-    double rightPos = rightFront.GetEncoder().GetPosition();
+    double leftPos = leftFrontEncoder.GetPosition();
+    double rightPos = rightFrontEncoder.GetPosition();
 
     //frc::SmartDashboard::PutNumber("Left Motor Rotations", leftPos);
     //frc::SmartDashboard::PutNumber("Right Motor Rotations", rightPos);
@@ -104,8 +110,8 @@ void Drivetrain::Periodic() {
     //frc::SmartDashboard::PutNumber("Left Motor Current back", leftBack.GetOutputCurrent());
     //frc::SmartDashboard::PutNumber("Right Motor Current back", rightBack.GetOutputCurrent());
 
-    /*frc::SmartDashboard::PutNumber("Left Motor Velocity", leftFront.GetEncoder().GetVelocity());
-    frc::SmartDashboard::PutNumber("Right Motor Velocity", rightFront.GetEncoder().GetVelocity());
+    /*frc::SmartDashboard::PutNumber("Left Motor Velocity", leftFrontEncoder.GetVelocity());
+    frc::SmartDashboard::PutNumber("Right Motor Velocity", rightFrontEncoder.GetVelocity());
 
     frc::SmartDashboard::PutNumber("X", pose.Translation().X().to<double>());
     frc::SmartDashboard::PutNumber("Y", pose.Translation().Y().to<double>());
@@ -132,8 +138,8 @@ void Drivetrain::Periodic() {
 
 units::meter_t Drivetrain::GetAverageEncoder() {
     double total = 
-        (leftFront.GetEncoder().GetPosition() +
-         rightFront.GetEncoder().GetPosition()) / 2.0;
+        (leftFrontEncoder.GetPosition() +
+         rightFrontEncoder.GetPosition()) / 2.0;
 
     return units::meter_t(total * METERS_PER_REV);
 }
@@ -188,14 +194,14 @@ double deadzoneCompensate(double raw) {
 }
 
 void Drivetrain::SetSpeeds(double leftSpeed, double rightSpeed) {
-    leftFront.GetPIDController().SetReference(leftSpeed * 5700.0, rev::CANSparkMax::ControlType::kVelocity);
-    rightFront.GetPIDController().SetReference(rightSpeed * 5700.0, rev::CANSparkMax::ControlType::kVelocity);
+    leftFrontPIDController.SetReference(leftSpeed * 5700.0, rev::CANSparkMax::ControlType::kVelocity);
+    rightFrontPIDController.SetReference(rightSpeed * 5700.0, rev::CANSparkMax::ControlType::kVelocity);
 }
 
 void Drivetrain::SetSpeeds(units::meters_per_second_t lSpeed, units::meters_per_second_t rSpeed) {
     auto l = lSpeed.to<double>() / METERS_PER_REV * 60.0;
     auto r = rSpeed.to<double>() / METERS_PER_REV * 60.0;
 
-    leftFront.GetPIDController().SetReference(l, rev::CANSparkMax::ControlType::kVelocity);
-    rightFront.GetPIDController().SetReference(r, rev::CANSparkMax::ControlType::kVelocity);
+    leftFrontPIDController.SetReference(l, rev::CANSparkMax::ControlType::kVelocity);
+    rightFrontPIDController.SetReference(r, rev::CANSparkMax::ControlType::kVelocity);
 }
