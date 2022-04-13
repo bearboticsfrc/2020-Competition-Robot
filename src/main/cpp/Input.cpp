@@ -8,8 +8,8 @@
 #include "Input.h"
 #include "units_include.h"
 
+/*
 using RumbleType = frc::GenericHID::RumbleType;
-using JoystickHand = frc::GenericHID::JoystickHand;
 
 const double DEADZONE = 0.05;
 
@@ -89,3 +89,4 @@ ButtonGetter Input::RunUptakeButton() const {
 ButtonGetter Input::ReverseIntakeButton() const {
     return [this]() { return xboxController.GetYButton(); };
 }
+*/
